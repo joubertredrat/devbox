@@ -33,3 +33,13 @@ make redis6.2-status
 make redis6.2-logs
 make redis6.2-info
 ```
+
+#### Mongo 4.4
+
+```bash
+make mongo4.4-up
+make mongo4.4-down
+make mongo4.4-status
+make mongo4.4-logs
+make mongo4.4-info
+```

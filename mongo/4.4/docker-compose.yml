@@ -1,0 +1,28 @@
+version: "3.2"
+
+services:
+  db.mongo44.dev.local:
+    image: mongo:4.4-bionic
+    networks:
+      - mongo44_network_local
+    ports:
+      - 37017:27017
+    volumes:
+      - mongo44_db_data:/data/db
+  mongo-express.mongo44.dev.local:
+    image: mongo-express:0.54
+    depends_on:
+      - db.mongo44.dev.local
+    environment:
+      ME_CONFIG_MONGODB_SERVER: db.mongo44.dev.local
+    networks:
+      - mongo44_network_local
+    ports:
+      - 38081:8081
+
+volumes:
+  mongo44_db_data:
+
+networks:
+  mongo44_network_local:
+    driver: bridge

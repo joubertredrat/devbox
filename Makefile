@@ -66,3 +66,24 @@ redis6.2-info:
 	@echo "\tPort: 16379"
 	@echo "\tClient: docker exec -it devbox_db.redis62.dev.local_1 redis-cli"
 	@echo
+
+mongo4.4-up:
+	docker-compose -f mongo/4.4/docker-compose.yml -p devbox up -d
+
+mongo4.4-down:
+	docker-compose -f mongo/4.4/docker-compose.yml -p devbox down --rmi all
+
+mongo4.4-status:
+	docker-compose -f mongo/4.4/docker-compose.yml -p devbox ps
+
+mongo4.4-logs:
+	docker-compose -f mongo/4.4/docker-compose.yml -p devbox logs -f
+
+mongo4.4-info:
+	@echo
+	@echo "\tMongoDB 4.4 information"
+	@echo
+	@echo "\tHost: 0.0.0.0"
+	@echo "\tPort: 37017"
+	@echo "\tMongo express: http://0.0.0.0:38081"
+	@echo
