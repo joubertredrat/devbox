@@ -1,0 +1,43 @@
+version: "3.2"
+
+services:
+  db.postgres132.dev.local:
+    image: postgres:13.2-alpine
+    environment:
+      POSTGRES_DB: dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    networks:
+      - postgres132_network_local
+    ports:
+      - 15432:5432
+    volumes:
+      - postgres132_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+  pgadmin.postgres132.dev.local:
+    image: dpage/pgadmin4
+    depends_on:
+      - db.postgres132.dev.local
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.postgres132.dev.local
+      PGADMIN_DEFAULT_PASSWORD: password
+    networks:
+      - postgres132_network_local
+    ports:
+      - 25432:80
+    volumes:
+      - ./config/servers.json:/pgadmin4/servers.json
+      - ./config/pgpassfile:/pgadmin4/pgpassfile
+      - postgres132_pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres132_db_data:
+  postgres132_pgadmin_data:
+
+networks:
+  postgres132_network_local:
+    driver: bridge
