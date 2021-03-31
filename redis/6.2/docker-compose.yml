@@ -1,0 +1,18 @@
+version: "3.2"
+
+services:
+  db.redis62.dev.local:
+    image: redis:6.2-alpine
+    networks:
+      - redis62_network_local
+    ports:
+      - 16379:6379
+    volumes:
+      - redis62_db_data:/var/lib/redis
+
+volumes:
+  redis62_db_data:
+
+networks:
+  redis62_network_local:
+    driver: bridge

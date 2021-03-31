@@ -45,3 +45,24 @@ postgres13.2-info:
 	@echo "\tPgAdmin user: pgadmin4@pgadmin.postgres132.dev.local"
 	@echo "\tPgAdmin password: password"
 	@echo
+
+redis6.2-up:
+	docker-compose -f redis/6.2/docker-compose.yml -p devbox up -d
+
+redis6.2-down:
+	docker-compose -f redis/6.2/docker-compose.yml -p devbox down --rmi all
+
+redis6.2-status:
+	docker-compose -f redis/6.2/docker-compose.yml -p devbox ps
+
+redis6.2-logs:
+	docker-compose -f redis/6.2/docker-compose.yml -p devbox logs -f
+
+redis6.2-info:
+	@echo
+	@echo "\tRedis 6.2 information"
+	@echo
+	@echo "\tHost: 0.0.0.0"
+	@echo "\tPort: 16379"
+	@echo "\tClient: docker exec -it devbox_db.redis62.dev.local_1 redis-cli"
+	@echo

@@ -23,3 +23,13 @@ make postgres13.2-status
 make postgres13.2-logs
 make postgres13.2-info
 ```
+
+#### Redis 6.2
+
+```bash
+make redis6.2-up
+make redis6.2-down
+make redis6.2-status
+make redis6.2-logs
+make redis6.2-info
+```
