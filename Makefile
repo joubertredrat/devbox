@@ -87,3 +87,24 @@ mongo4.4-info:
 	@echo "\tPort: 37017"
 	@echo "\tMongo express: http://0.0.0.0:38081"
 	@echo
+
+minio-up:
+	docker-compose -f minio/latest/docker-compose.yml -p devbox up -d
+
+minio-down:
+	docker-compose -f minio/latest/docker-compose.yml -p devbox down --rmi all
+
+minio-status:
+	docker-compose -f minio/latest/docker-compose.yml -p devbox ps
+
+minio-logs:
+	docker-compose -f minio/latest/docker-compose.yml -p devbox logs -f
+
+minio-info:
+	@echo
+	@echo "\tMinio information"
+	@echo
+	@echo "\tHost api and web: http://0.0.0.0:29000"
+	@echo "\tAccess key: AKIAIOSFODNN7EXAMPLE"
+	@echo "\tSecret key: wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY"
+	@echo

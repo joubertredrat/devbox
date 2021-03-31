@@ -1,0 +1,23 @@
+version: "3.2"
+
+services:
+  storage.minio-latest.dev.local:
+    image: minio/minio:latest
+    environment:
+      MINIO_REGION: us-east-1
+      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
+      MINIO_SECRET_KEY: wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
+    command: server --address 0.0.0.0:9000 /data
+    networks:
+      - minio-latest_network_local
+    ports:
+      - 29000:9000
+    volumes:
+      - minio-latest_db_data:/data
+
+volumes:
+  minio-latest_db_data:
+
+networks:
+  minio-latest_network_local:
+    driver: bridge
