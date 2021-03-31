@@ -1,0 +1,32 @@
+version: "3.2"
+
+services:
+  db.mysql57.dev.local:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql57_data:/var/lib/mysql
+    networks:
+      - mysql57_network_local
+    ports:
+      - 13306:3306
+  phpmyadmin.mysql57.dev.local:
+    image: phpmyadmin/phpmyadmin:5
+    depends_on:
+      - db.mysql57.dev.local
+    environment:
+      PMA_HOST: db.mysql57.dev.local
+      PMA_USER: root
+      PMA_PASSWORD: password
+    networks:
+      - mysql57_network_local
+    ports:
+      - 23306:80
+
+volumes:
+  mysql57_data:
+
+networks:
+  mysql57_network_local:
+    driver: bridge

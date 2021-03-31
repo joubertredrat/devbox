@@ -1,0 +1,11 @@
+mysql5.7-up:
+	docker-compose -f mysql/5.7/docker-compose.yml -p devbox up -d --force-recreate
+
+mysql5.7-down:
+	docker-compose -f mysql/5.7/docker-compose.yml -p devbox down --rmi all
+
+mysql5.7-status:
+	docker-compose -f mysql/5.7/docker-compose.yml -p devbox ps
+
+mysql5.7-logs:
+	docker-compose -f mysql/5.7/docker-compose.yml -p devbox logs -f
