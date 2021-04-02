@@ -9,6 +9,16 @@ services:
       - 16379:6379
     volumes:
       - redis62_db_data:/var/lib/redis
+  phpredisadmin.redis62.dev.local:
+    image: erikdubbelboer/phpredisadmin:latest
+    networks:
+      - redis62_network_local
+    environment:
+      REDIS_1_NAME: db.redis62.dev.local
+      REDIS_1_HOST: db.redis62.dev.local
+      REDIS_1_PORT: 6379
+    ports:
+      - 26379:80
 
 volumes:
   redis62_db_data:

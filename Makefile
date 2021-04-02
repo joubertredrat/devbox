@@ -64,7 +64,7 @@ redis6.2-info:
 	@echo
 	@echo "\tHost: 0.0.0.0"
 	@echo "\tPort: 16379"
-	@echo "\tClient: docker exec -it devbox_db.redis62.dev.local_1 redis-cli"
+	@echo "\tphpRedisAdmin host: http://0.0.0.0:26379"
 	@echo
 
 mongo4.4-up:
