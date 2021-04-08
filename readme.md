@@ -43,3 +43,12 @@ make mongo4.4-status
 make mongo4.4-logs
 make mongo4.4-info
 ```
+#### Kafka 6.1
+
+```bash
+make kafka6.1-up
+make kafka6.1-down
+make kafka6.1-status
+make kafka6.1-logs
+make kafka6.1-info
+```

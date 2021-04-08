@@ -108,3 +108,25 @@ minio-info:
 	@echo "\tAccess key: AKIAIOSFODNN7EXAMPLE"
 	@echo "\tSecret key: wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY"
 	@echo
+
+kafka6.1-up:
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox up -d
+
+kafka6.1-down:
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox down --rmi all
+
+kafka6.1-status:
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox ps
+
+kafka6.1-logs:
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox logs -f
+
+kafka6.1-info:
+	@echo
+	@echo "\tKafka 6.1 information"
+	@echo
+	@echo "\tHost: 0.0.0.0"
+	@echo "\tPort: 9092"
+	@echo "\tKafdrop: http://0.0.0.0:29000"
+	@echo "\tKafka UI: http://0.0.0.0:28080"
+	@echo
