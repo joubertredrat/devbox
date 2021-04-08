@@ -1,8 +1,8 @@
 mysql5.7-up:
-	docker-compose -f mysql/5.7/docker-compose.yml -p devbox up -d
+	docker-compose -f mysql/5.7/docker-compose.yml -p devbox up -d --force-recreate
 
 mysql5.7-down:
-	docker-compose -f mysql/5.7/docker-compose.yml -p devbox down --rmi all
+	docker-compose -f mysql/5.7/docker-compose.yml -p devbox down
 
 mysql5.7-status:
 	docker-compose -f mysql/5.7/docker-compose.yml -p devbox ps
@@ -21,10 +21,10 @@ mysql5.7-info:
 	@echo
 
 postgres13.2-up:
-	docker-compose -f postgres/13.2/docker-compose.yml -p devbox up -d
+	docker-compose -f postgres/13.2/docker-compose.yml -p devbox up -d --force-recreate
 
 postgres13.2-down:
-	docker-compose -f postgres/13.2/docker-compose.yml -p devbox down --rmi all
+	docker-compose -f postgres/13.2/docker-compose.yml -p devbox down
 
 postgres13.2-status:
 	docker-compose -f postgres/13.2/docker-compose.yml -p devbox ps
@@ -47,10 +47,10 @@ postgres13.2-info:
 	@echo
 
 redis6.2-up:
-	docker-compose -f redis/6.2/docker-compose.yml -p devbox up -d
+	docker-compose -f redis/6.2/docker-compose.yml -p devbox up -d --force-recreate
 
 redis6.2-down:
-	docker-compose -f redis/6.2/docker-compose.yml -p devbox down --rmi all
+	docker-compose -f redis/6.2/docker-compose.yml -p devbox down
 
 redis6.2-status:
 	docker-compose -f redis/6.2/docker-compose.yml -p devbox ps
@@ -68,10 +68,10 @@ redis6.2-info:
 	@echo
 
 mongo4.4-up:
-	docker-compose -f mongo/4.4/docker-compose.yml -p devbox up -d
+	docker-compose -f mongo/4.4/docker-compose.yml -p devbox up -d --force-recreate
 
 mongo4.4-down:
-	docker-compose -f mongo/4.4/docker-compose.yml -p devbox down --rmi all
+	docker-compose -f mongo/4.4/docker-compose.yml -p devbox down
 
 mongo4.4-status:
 	docker-compose -f mongo/4.4/docker-compose.yml -p devbox ps
@@ -89,10 +89,10 @@ mongo4.4-info:
 	@echo
 
 minio-up:
-	docker-compose -f minio/latest/docker-compose.yml -p devbox up -d
+	docker-compose -f minio/latest/docker-compose.yml -p devbox up -d --force-recreate
 
 minio-down:
-	docker-compose -f minio/latest/docker-compose.yml -p devbox down --rmi all
+	docker-compose -f minio/latest/docker-compose.yml -p devbox down
 
 minio-status:
 	docker-compose -f minio/latest/docker-compose.yml -p devbox ps
@@ -110,10 +110,10 @@ minio-info:
 	@echo
 
 kafka6.1-up:
-	docker-compose -f kafka/6.1/docker-compose.yml -p devbox up -d
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox up -d --force-recreate
 
 kafka6.1-down:
-	docker-compose -f kafka/6.1/docker-compose.yml -p devbox down --rmi all
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox down
 
 kafka6.1-status:
 	docker-compose -f kafka/6.1/docker-compose.yml -p devbox ps
