@@ -23,6 +23,16 @@ services:
       - mysql57_network_local
     ports:
       - 23306:80
+  adminer.mysql57.dev.local:
+    image: adminer:4
+    depends_on:
+      - db.mysql57.dev.local
+    environment:
+      ADMINER_DEFAULT_SERVER: db.mysql57.dev.local
+    networks:
+      - mysql57_network_local
+    ports:
+      - 33306:8080
 
 volumes:
   mysql57_data:

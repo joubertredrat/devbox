@@ -18,6 +18,7 @@ mysql5.7-info:
 	@echo "\tPort: 13306"
 	@echo "\tRoot password: password"
 	@echo "\tPhpMyAdmin: http://0.0.0.0:23306"
+	@echo "\tAdminer: http://0.0.0.0:33306"
 	@echo
 
 postgres13.2-up:
