@@ -11,6 +11,8 @@ services:
       - redis62_db_data:/var/lib/redis
   phpredisadmin.redis62.dev.local:
     image: erikdubbelboer/phpredisadmin:latest
+    depends_on:
+      - db.redis62.dev.local
     networks:
       - redis62_network_local
     environment:
@@ -19,6 +21,16 @@ services:
       REDIS_1_PORT: 6379
     ports:
       - 26379:80
+  redis-commander.redis62.dev.local:
+    image: rediscommander/redis-commander:latest
+    depends_on:
+      - db.redis62.dev.local
+    networks:
+      - redis62_network_local
+    environment:
+      REDIS_HOSTS: db.redis62.dev.local:db.redis62.dev.local:6379
+    ports:
+      - 26380:8081
 
 volumes:
   redis62_db_data:

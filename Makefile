@@ -66,6 +66,7 @@ redis6.2-info:
 	@echo "\tHost: 0.0.0.0"
 	@echo "\tPort: 16379"
 	@echo "\tphpRedisAdmin host: http://0.0.0.0:26379"
+	@echo "\tRedis Commander host: http://0.0.0.0:26380"
 	@echo
 
 mongo4.4-up:
