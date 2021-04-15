@@ -14,6 +14,16 @@ make mysql5.7-logs
 make mysql5.7-info
 ```
 
+#### MariaDB 10.5
+
+```bash
+make mariadb10.5-up
+make mariadb10.5-down
+make mariadb10.5-status
+make mariadb10.5-logs
+make mariadb10.5-info
+```
+
 #### Postgres 13.2
 
 ```bash

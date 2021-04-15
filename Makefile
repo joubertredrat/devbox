@@ -21,6 +21,29 @@ mysql5.7-info:
 	@echo "\tAdminer: http://0.0.0.0:33306"
 	@echo
 
+mariadb10.5-up:
+	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox up -d --force-recreate
+
+mariadb10.5-down:
+	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox down
+
+mariadb10.5-status:
+	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox ps
+
+mariadb10.5-logs:
+	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox logs -f
+
+mariadb10.5-info:
+	@echo
+	@echo "\tMariaDB 10.5 information"
+	@echo
+	@echo "\tHost: 0.0.0.0"
+	@echo "\tPort: 13306"
+	@echo "\tRoot password: password"
+	@echo "\tPhpMyAdmin: http://0.0.0.0:23306"
+	@echo "\tAdminer: http://0.0.0.0:33306"
+	@echo
+
 postgres13.2-up:
 	docker-compose -f postgres/13.2/docker-compose.yml -p devbox up -d --force-recreate
 
