@@ -121,14 +121,20 @@ redis6.2-logs:
 	docker-compose -f redis/6.2/docker-compose.yml -p devbox logs -f
 
 redis6.2-info:
-	@echo
-	@echo "\tRedis 6.2 information"
-	@echo
-	@echo "\tHost: 0.0.0.0"
-	@echo "\tPort: 16379"
-	@echo "\tphpRedisAdmin host: http://0.0.0.0:26379"
-	@echo "\tRedis Commander host: http://0.0.0.0:26380"
-	@echo
+	$(call print_breakline)
+
+	$(call print_info,"Redis 6.2 information")
+
+	$(call print_breakline)
+
+	$(call print_info,"Host: 0.0.0.0")
+	$(call print_info,"Port: 16379")
+
+	$(call print_info,"phpRedisAdmin host: http://0.0.0.0:26379")
+
+	$(call print_info,"Redis Commander host: http://0.0.0.0:26380")
+
+	$(call print_breakline)
 
 mongo4.4-up:
 	docker-compose -f mongo/4.4/docker-compose.yml -p devbox up -d --force-recreate
@@ -204,8 +210,10 @@ kafka6.1-info:
 
 	$(call print_breakline)
 
-	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: 9092")
+	$(call print_info,"Brokes Host: 0.0.0.0")
+	$(call print_info,"Broke 1 Ports: 9101 29101")
+	$(call print_info,"Broke 2 Ports: 9092 29102")
+	$(call print_info,"Broke 3 Ports: 9103 29103")
 
 	$(call print_info,"Kafdrop: http://0.0.0.0:29000")
 
