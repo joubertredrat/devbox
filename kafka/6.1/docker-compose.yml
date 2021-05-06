@@ -6,10 +6,12 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - kafka61_zookeeper_data:/data
     networks:
       - kafka61_network_local
     ports:
-      - 22181:2181
+      - 2181:2181
   broker1.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -17,19 +19,15 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper.kafka61.devbox.local:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker1.kafka61.devbox.local:29101,PLAINTEXT_HOST://localhost:9091
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://broker1.kafka61.devbox.local:19092,LISTENER_DOCKER_EXTERNAL://127.0.0.1:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
     volumes:
       - kafka61_broker1_data:/var/lib/kafka/data
     networks:
       - kafka61_network_local
     ports:
-      - 9101:9101
-      - 29101:29101
+      - 9092:9092
   broker2.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -37,19 +35,15 @@ services:
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper.kafka61.devbox.local:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker2.kafka61.devbox.local:29102,PLAINTEXT_HOST://localhost:9102
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://broker2.kafka61.devbox.local:19093,LISTENER_DOCKER_EXTERNAL://127.0.0.1:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
     volumes:
       - kafka61_broker2_data:/var/lib/kafka/data
     networks:
       - kafka61_network_local
     ports:
-      - 9102:9102
-      - 29102:29102
+      - 9093:9093
   broker3.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -57,19 +51,15 @@ services:
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper.kafka61.devbox.local:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker3.kafka61.devbox.local:29103,PLAINTEXT_HOST://localhost:9103
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://broker3.kafka61.devbox.local:19094,LISTENER_DOCKER_EXTERNAL://127.0.0.1:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
     volumes:
       - kafka61_broker3_data:/var/lib/kafka/data
     networks:
       - kafka61_network_local
     ports:
-      - 9103:9103
-      - 29103:29103
+      - 9094:9094
   kafdrop.kafka61.devbox.local:
     image: obsidiandynamics/kafdrop:3.27.0
     depends_on:
@@ -77,11 +67,12 @@ services:
       - broker2.kafka61.devbox.local
       - broker3.kafka61.devbox.local
     environment:
-      KAFKA_BROKERCONNECT: broker1.kafka61.devbox.local:29101
-    networks:
-      - kafka61_network_local
-    ports:
-      - 29000:9000
+      KAFKA_BROKERCONNECT: localhost:9092
+    # networks:
+    #   - kafka61_network_local
+    # ports:
+    #   - 29000:9000
+    network_mode: host
   kafka-ui.kafka61.devbox.local:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
@@ -89,15 +80,17 @@ services:
       - broker2.kafka61.devbox.local
       - broker3.kafka61.devbox.local
     environment:
-      KAFKA_CLUSTERS_0_NAME: broker1.kafka61.devbox.local:29101
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker1.kafka61.devbox.local:29101
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper.kafka61.devbox.local:2181
-    networks:
-      - kafka61_network_local
-    ports:
-      - 28080:8080
+      KAFKA_CLUSTERS_0_NAME: localhost:9092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: localhost:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: localhost:2181
+    # networks:
+    #   - kafka61_network_local
+    # ports:
+    #   - 28080:8080
+    network_mode: host
 
 volumes:
+  kafka61_zookeeper_data:
   kafka61_broker1_data:
   kafka61_broker2_data:
   kafka61_broker3_data:
