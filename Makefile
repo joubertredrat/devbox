@@ -211,12 +211,12 @@ kafka6.1-info:
 	$(call print_breakline)
 
 	$(call print_info,"Brokes Host: 0.0.0.0")
-	$(call print_info,"Broke 1 Ports: 9101 29101")
-	$(call print_info,"Broke 2 Ports: 9092 29102")
-	$(call print_info,"Broke 3 Ports: 9103 29103")
+	$(call print_info,"Broke 1 Port: 9092")
+	$(call print_info,"Broke 2 Port: 9093")
+	$(call print_info,"Broke 3 Port: 9094")
 
-	$(call print_info,"Kafdrop: http://0.0.0.0:29000")
+	$(call print_info,"Kafdrop: http://0.0.0.0:9000")
 
-	$(call print_info,"Kafka UI: http://0.0.0.0:28080")
+	$(call print_info,"Kafka UI: http://0.0.0.0:8080")
 
 	$(call print_breakline)
