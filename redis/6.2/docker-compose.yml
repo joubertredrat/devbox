@@ -1,7 +1,7 @@
 version: "3.2"
 
 services:
-  db.redis62.dev.local:
+  db.redis62.devbox.local:
     image: redis:6.2-alpine
     networks:
       - redis62_network_local
@@ -9,26 +9,26 @@ services:
       - 16379:6379
     volumes:
       - redis62_db_data:/var/lib/redis
-  phpredisadmin.redis62.dev.local:
+  phpredisadmin.redis62.devbox.local:
     image: erikdubbelboer/phpredisadmin:latest
     depends_on:
-      - db.redis62.dev.local
+      - db.redis62.devbox.local
     networks:
       - redis62_network_local
     environment:
-      REDIS_1_NAME: db.redis62.dev.local
-      REDIS_1_HOST: db.redis62.dev.local
+      REDIS_1_NAME: db.redis62.devbox.local
+      REDIS_1_HOST: db.redis62.devbox.local
       REDIS_1_PORT: 6379
     ports:
       - 26379:80
-  redis-commander.redis62.dev.local:
+  redis-commander.redis62.devbox.local:
     image: rediscommander/redis-commander:latest
     depends_on:
-      - db.redis62.dev.local
+      - db.redis62.devbox.local
     networks:
       - redis62_network_local
     environment:
-      REDIS_HOSTS: db.redis62.dev.local:db.redis62.dev.local:6379
+      REDIS_HOSTS: db.redis62.devbox.local:db.redis62.devbox.local:6379
     ports:
       - 26380:8081
 

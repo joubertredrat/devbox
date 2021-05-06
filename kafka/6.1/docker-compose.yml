@@ -1,14 +1,14 @@
 version: "3.8"
 
 services:
-  broker.kafka61.dev.local:
+  broker.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
-      - zookeeper.kafka61.dev.local
+      - zookeeper.kafka61.devbox.local
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper.kafka61.dev.local:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker.kafka61.dev.local:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper.kafka61.devbox.local:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker.kafka61.devbox.local:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -16,30 +16,30 @@ services:
       - kafka61_network_local
     ports:
       - 9092:9092
-  zookeeper.kafka61.dev.local:
+  zookeeper.kafka61.devbox.local:
     image: confluentinc/cp-zookeeper:6.1.1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     networks:
       - kafka61_network_local
-  kafdrop.kafka61.dev.local:
+  kafdrop.kafka61.devbox.local:
     image: obsidiandynamics/kafdrop:3.27.0
     depends_on:
-      - broker.kafka61.dev.local
+      - broker.kafka61.devbox.local
     environment:
-      KAFKA_BROKERCONNECT: broker.kafka61.dev.local:29092
+      KAFKA_BROKERCONNECT: broker.kafka61.devbox.local:29092
     networks:
       - kafka61_network_local
     ports:
       - 29000:9000
-  kafka-ui.kafka61.dev.local:
+  kafka-ui.kafka61.devbox.local:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
-      - broker.kafka61.dev.local
+      - broker.kafka61.devbox.local
     environment:
-      KAFKA_CLUSTERS_0_NAME: broker.kafka61.dev.local:29092
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker.kafka61.dev.local:29092
+      KAFKA_CLUSTERS_0_NAME: broker.kafka61.devbox.local:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker.kafka61.devbox.local:29092
     networks:
       - kafka61_network_local
     ports:

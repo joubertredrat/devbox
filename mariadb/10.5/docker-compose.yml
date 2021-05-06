@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  db.mariadb105.dev.local:
+  db.mariadb105.devbox.local:
     image: mariadb:10.5
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -11,28 +11,44 @@ services:
       - mariadb105_network_local
     ports:
       - 13306:3306
-  phpmyadmin.mariadb105.dev.local:
+  phpmyadmin.mariadb105.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
-      - db.mariadb105.dev.local
+      - db.mariadb105.devbox.local
     environment:
-      PMA_HOST: db.mariadb105.dev.local
+      PMA_HOST: db.mariadb105.devbox.local
       PMA_USER: root
       PMA_PASSWORD: password
     networks:
       - mariadb105_network_local
     ports:
       - 23306:80
-  adminer.mariadb105.dev.local:
+  adminer.mariadb105.devbox.local:
     image: adminer:4
     depends_on:
-      - db.mariadb105.dev.local
+      - db.mariadb105.devbox.local
     environment:
-      ADMINER_DEFAULT_SERVER: db.mariadb105.dev.local
+      ADMINER_DEFAULT_SERVER: db.mariadb105.devbox.local
     networks:
       - mariadb105_network_local
     ports:
       - 33306:8080
+  dbgate.mariadb105.devbox.local:
+    image: dbgate/dbgate:latest
+    depends_on:
+      - db.mariadb105.devbox.local
+    environment:
+      CONNECTIONS: mariadb1
+      LABEL_mariadb1: db.mariadb105.devbox.local
+      SERVER_mariadb1: db.mariadb105.devbox.local
+      USER_mariadb1: root
+      PASSWORD_mariadb1: password
+      PORT_mariadb1: 3306
+      ENGINE_mariadb1: mysql@dbgate-plugin-mysql
+    networks:
+      - mariadb105_network_local
+    ports:
+      - 43306:3000
 
 volumes:
   mariadb105_data:

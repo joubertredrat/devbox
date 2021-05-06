@@ -1,7 +1,7 @@
-version: "3.2"
+version: "3.8"
 
 services:
-  db.mongo44.dev.local:
+  db.mongo44.devbox.local:
     image: mongo:4.4-bionic
     networks:
       - mongo44_network_local
@@ -9,19 +9,46 @@ services:
       - 37017:27017
     volumes:
       - mongo44_db_data:/data/db
-  mongo-express.mongo44.dev.local:
+  mongo-express.mongo44.devbox.local:
     image: mongo-express:0.54
     depends_on:
-      - db.mongo44.dev.local
+      - db.mongo44.devbox.local
     environment:
-      ME_CONFIG_MONGODB_SERVER: db.mongo44.dev.local
+      ME_CONFIG_MONGODB_SERVER: db.mongo44.devbox.local
     networks:
       - mongo44_network_local
     ports:
       - 38081:8081
+  dbgate.mongo44.devbox.local:
+    image: dbgate/dbgate:latest
+    depends_on:
+      - db.mongo44.devbox.local
+    environment:
+      CONNECTIONS: mongo1
+      ENGINE_mongo1: mongo@dbgate-plugin-mongo
+      LABEL_mongo1: db.mongo44.devbox.local
+      SERVER_mongo1: db.mongo44.devbox.local
+      PORT_mongo1: 27017
+    networks:
+      - mongo44_network_local
+    ports:
+      - 48081:3000
+  nosqlclient.mongo44.devbox.local:
+    image: mongoclient/mongoclient:4.0.1
+    depends_on:
+      - db.mongo44.devbox.local
+    environment:
+      MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://db.mongo44.devbox.local:27017
+    volumes:
+      - mongo44_nosqlclient_data:/data/db
+    networks:
+      - mongo44_network_local
+    ports:
+      - 58081:3000
 
 volumes:
   mongo44_db_data:
+  mongo44_nosqlclient_data:
 
 networks:
   mongo44_network_local:

@@ -1,42 +1,72 @@
-version: "3.2"
+version: "3.8"
 
 services:
-  db.postgres132.dev.local:
+  db.postgres132.devbox.local:
     image: postgres:13.2-alpine
     environment:
       POSTGRES_DB: dev
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+    volumes:
+      - postgres132_db_data:/var/lib/postgresql/data
     networks:
       - postgres132_network_local
     ports:
       - 15432:5432
-    volumes:
-      - postgres132_db_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 10s
       retries: 3
-  pgadmin.postgres132.dev.local:
-    image: dpage/pgadmin4
+  pgadmin.postgres132.devbox.local:
+    image: dpage/pgadmin4:5
     depends_on:
-      - db.postgres132.dev.local
+      - db.postgres132.devbox.local
     environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.postgres132.dev.local
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.postgres132.devbox.local
       PGADMIN_DEFAULT_PASSWORD: password
-    networks:
-      - postgres132_network_local
-    ports:
-      - 25432:80
     volumes:
       - ./config/servers.json:/pgadmin4/servers.json
       - ./config/pgpassfile:/pgadmin4/pgpassfile
       - postgres132_pgadmin_data:/var/lib/pgadmin
+    networks:
+      - postgres132_network_local
+    ports:
+      - 25432:80
+  phppgadmin.postgres132.devbox.local:
+    image: bitnami/phppgadmin:7
+    depends_on:
+      - db.postgres132.devbox.local
+    environment:
+      DATABASE_HOST: db.postgres132.devbox.local
+      DATABASE_PORT_NUMBER: 5432
+      volumes:
+        - postgres132_phppgadmin_data:/bitnami
+    networks:
+      - postgres132_network_local
+    ports:
+      - 35432:8080
+  dbgate.postgres132.devbox.local:
+    image: dbgate/dbgate:latest
+    depends_on:
+      - db.postgres132.devbox.local
+    environment:
+      CONNECTIONS: postgres1
+      ENGINE_postgres1: postgres@dbgate-plugin-postgres
+      LABEL_postgres1: db.postgres132.devbox.local
+      SERVER_postgres1: db.postgres132.devbox.local
+      PORT_postgres1: 5432
+      USER_postgres1: postgres
+      PASSWORD_postgres1: password
+    networks:
+      - postgres132_network_local
+    ports:
+      - 45432:3000
 
 volumes:
   postgres132_db_data:
   postgres132_pgadmin_data:
+  postgres132_phppgadmin_data:
 
 networks:
   postgres132_network_local:

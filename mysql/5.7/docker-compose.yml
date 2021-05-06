@@ -1,7 +1,7 @@
-version: "3.2"
+version: "3.8"
 
 services:
-  db.mysql57.dev.local:
+  db.mysql57.devbox.local:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -11,28 +11,44 @@ services:
       - mysql57_network_local
     ports:
       - 13306:3306
-  phpmyadmin.mysql57.dev.local:
+  phpmyadmin.mysql57.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
-      - db.mysql57.dev.local
+      - db.mysql57.devbox.local
     environment:
-      PMA_HOST: db.mysql57.dev.local
+      PMA_HOST: db.mysql57.devbox.local
       PMA_USER: root
       PMA_PASSWORD: password
     networks:
       - mysql57_network_local
     ports:
       - 23306:80
-  adminer.mysql57.dev.local:
+  adminer.mysql57.devbox.local:
     image: adminer:4
     depends_on:
-      - db.mysql57.dev.local
+      - db.mysql57.devbox.local
     environment:
-      ADMINER_DEFAULT_SERVER: db.mysql57.dev.local
+      ADMINER_DEFAULT_SERVER: db.mysql57.devbox.local
     networks:
       - mysql57_network_local
     ports:
       - 33306:8080
+  dbgate.mysql57.devbox.local:
+    image: dbgate/dbgate:latest
+    depends_on:
+      - db.mysql57.devbox.local
+    environment:
+      CONNECTIONS: mysql1
+      LABEL_mysql1: db.mysql57.devbox.local
+      SERVER_mysql1: db.mysql57.devbox.local
+      USER_mysql1: root
+      PASSWORD_mysql1: password
+      PORT_mysql1: 3306
+      ENGINE_mysql1: mysql@dbgate-plugin-mysql
+    networks:
+      - mysql57_network_local
+    ports:
+      - 43306:3000
 
 volumes:
   mysql57_data:
