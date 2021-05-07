@@ -67,12 +67,11 @@ services:
       - broker2.kafka61.devbox.local
       - broker3.kafka61.devbox.local
     environment:
-      KAFKA_BROKERCONNECT: localhost:9092
-    # networks:
-    #   - kafka61_network_local
-    # ports:
-    #   - 29000:9000
-    network_mode: host
+      KAFKA_BROKERCONNECT: broker1.kafka61.devbox.local:19092
+    networks:
+      - kafka61_network_local
+    ports:
+      - 29000:9000
   kafka-ui.kafka61.devbox.local:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
@@ -80,14 +79,13 @@ services:
       - broker2.kafka61.devbox.local
       - broker3.kafka61.devbox.local
     environment:
-      KAFKA_CLUSTERS_0_NAME: localhost:9092
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: localhost:9092
-      KAFKA_CLUSTERS_0_ZOOKEEPER: localhost:2181
-    # networks:
-    #   - kafka61_network_local
-    # ports:
-    #   - 28080:8080
-    network_mode: host
+      KAFKA_CLUSTERS_0_NAME: broker1.kafka61.devbox.local:19092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker1.kafka61.devbox.local:19092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper.kafka61.devbox.local:2181
+    networks:
+      - kafka61_network_local
+    ports:
+      - 28080:8080
 
 volumes:
   kafka61_zookeeper_data:
