@@ -6,17 +6,30 @@ define print_info
 	@echo "\t$(1)"
 endef
 
+.EXPORT_ALL_VARIABLES:
+
+DEVBOX_PROJECT_NAME = devbox
+
+DEVBOX_MYSQL57_ROOT_PASSWORD = password
+DEVBOX_MYSQL57_DB_EXPORT_PORT = 13306
+DEVBOX_MYSQL57_PMA_EXPORT_PORT = 13307
+DEVBOX_MYSQL57_ADMINER_EXPORT_PORT = 13308
+DEVBOX_MYSQL57_DBGATE_EXPORT_PORT = 13309
+
 mysql5.7-up:
-	docker-compose -f mysql/5.7/docker-compose.yml -p devbox up -d --force-recreate
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
 
 mysql5.7-down:
-	docker-compose -f mysql/5.7/docker-compose.yml -p devbox down
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
 
 mysql5.7-status:
-	docker-compose -f mysql/5.7/docker-compose.yml -p devbox ps
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
 
 mysql5.7-logs:
-	docker-compose -f mysql/5.7/docker-compose.yml -p devbox logs -f
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+
+mysql5.7-purge:
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --rmi all --volumes
 
 mysql5.7-info:
 
@@ -27,29 +40,29 @@ mysql5.7-info:
 	$(call print_breakline)
 
 	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: 13306")
+	$(call print_info,"Port: ${DEVBOX_MYSQL57_DB_EXPORT_PORT}")
 	$(call print_info,"User: root")
-	$(call print_info,"Password: password")
+	$(call print_info,"Password: ${DEVBOX_MYSQL57_ROOT_PASSWORD}")
 
-	$(call print_info,"PhpMyAdmin: http://0.0.0.0:23306")
+	$(call print_info,"PhpMyAdmin: http://0.0.0.0:${DEVBOX_MYSQL57_PMA_EXPORT_PORT}")
 
-	$(call print_info,"Adminer: http://0.0.0.0:33306")
+	$(call print_info,"Adminer: http://0.0.0.0:${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT}")
 
-	$(call print_info,"DbGate: http://0.0.0.0:43306")
+	$(call print_info,"DbGate: http://0.0.0.0:${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT}")
 
 	$(call print_breakline)
 
 mariadb10.5-up:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox up -d --force-recreate
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d --force-recreate
 
 mariadb10.5-down:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox down
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
 
 mariadb10.5-status:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox ps
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
 
 mariadb10.5-logs:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p devbox logs -f
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
 
 mariadb10.5-info:
 
