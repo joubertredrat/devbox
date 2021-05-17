@@ -16,6 +16,16 @@ DEVBOX_MYSQL57_PMA_EXPORT_PORT = 13307
 DEVBOX_MYSQL57_ADMINER_EXPORT_PORT = 13308
 DEVBOX_MYSQL57_DBGATE_EXPORT_PORT = 13309
 
+.PHONY: default
+default: help ;
+
+help:
+	$(call print_breakline)
+
+	$(call print_info,"Devbox")
+
+	$(call print_breakline)
+
 mysql5.7-up:
 	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
 
