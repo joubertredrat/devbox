@@ -228,6 +228,9 @@ kafka6.1-status:
 kafka6.1-logs:
 	docker-compose -f kafka/6.1/docker-compose.yml -p devbox logs -f
 
+kafka6.1-purge:
+	docker-compose -f kafka/6.1/docker-compose.yml -p devbox down --rmi all --volumes
+
 kafka6.1-info:
 	$(call print_breakline)
 
