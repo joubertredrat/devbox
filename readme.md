@@ -65,3 +65,6 @@ make kafka6.1-status
 make kafka6.1-logs
 make kafka6.1-info
 ```
+
+## License
+[MIT](/license) license, logo by [Burhan Adiatma](https://www.vecteezy.com/members/gembuls).
