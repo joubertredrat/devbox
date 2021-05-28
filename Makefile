@@ -12,41 +12,48 @@ DOCKER_DEFAULT_PLATFORM = linux/amd64
 
 DEVBOX_PROJECT_NAME = devbox
 
-DEVBOX_MYSQL57_ROOT_PASSWORD = password
-DEVBOX_MYSQL57_DB_EXPORT_PORT = 13306
-DEVBOX_MYSQL57_PMA_EXPORT_PORT = 13307
-DEVBOX_MYSQL57_ADMINER_EXPORT_PORT = 13308
-DEVBOX_MYSQL57_DBGATE_EXPORT_PORT = 13309
+DEVBOX_MYSQL57_ROOT_PASSWORD ?= password
+DEVBOX_MYSQL57_DB_EXPORT_PORT ?= 13306
+DEVBOX_MYSQL57_PMA_EXPORT_PORT ?= 13307
+DEVBOX_MYSQL57_ADMINER_EXPORT_PORT ?= 13308
+DEVBOX_MYSQL57_DBGATE_EXPORT_PORT ?= 13309
 
-DEVBOX_MARIADB105_ROOT_PASSWORD = password
-DEVBOX_MARIADB105_DB_EXPORT_PORT = 13306
-DEVBOX_MARIADB105_PMA_EXPORT_PORT = 13307
-DEVBOX_MARIADB105_ADMINER_EXPORT_PORT = 13308
-DEVBOX_MARIADB105_DBGATE_EXPORT_PORT = 13309
+DEVBOX_MARIADB105_ROOT_PASSWORD ?= password
+DEVBOX_MARIADB105_DB_EXPORT_PORT ?= 13306
+DEVBOX_MARIADB105_PMA_EXPORT_PORT ?= 13307
+DEVBOX_MARIADB105_ADMINER_EXPORT_PORT ?= 13308
+DEVBOX_MARIADB105_DBGATE_EXPORT_PORT ?= 13309
 
-DEVBOX_REDIS62_DB_EXPORT_PORT = 16379
-DEVBOX_REDIS62_PRA_EXPORT_PORT = 16380
-DEVBOX_REDIS62_COMMANDER_EXPORT_PORT = 16381
+DEVBOX_REDIS62_DB_EXPORT_PORT ?= 16379
+DEVBOX_REDIS62_PRA_EXPORT_PORT ?= 16380
+DEVBOX_REDIS62_COMMANDER_EXPORT_PORT ?= 16381
 
-DEVBOX_MONGO44_DB_EXPORT_PORT = 27017
-DEVBOX_MONGO44_EXPRESS_EXPORT_PORT = 27018
-DEVBOX_MONGO44_DBGATE_EXPORT_PORT = 27019
-DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT = 27020
+DEVBOX_MONGO44_DB_EXPORT_PORT ?= 27017
+DEVBOX_MONGO44_EXPRESS_EXPORT_PORT ?= 27018
+DEVBOX_MONGO44_DBGATE_EXPORT_PORT ?= 27019
+DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT ?= 27020
 
-DEVBOX_MINIO_STORAGE_EXPORT_PORT = 29000
-DEVBOX_MINIO_STORAGE_REGION = us-east-1
-DEVBOX_MINIO_STORAGE_ACCESS_KEY = AKIAIOSFODNN7EXAMPLE
-DEVBOX_MINIO_STORAGE_SECRET_KEY = wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
+DEVBOX_MINIO_STORAGE_EXPORT_PORT ?= 29000
+DEVBOX_MINIO_STORAGE_REGION ?= us-east-1
+DEVBOX_MINIO_STORAGE_ACCESS_KEY ?= AKIAIOSFODNN7EXAMPLE
+DEVBOX_MINIO_STORAGE_SECRET_KEY ?= wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
 
 .PHONY: default
 default: help ;
 
 help:
-	$(call print_breakline)
-
-	$(call print_info,"Devbox")
-
-	$(call print_breakline)
+	@echo
+	@echo "Devbox: Easily developer environments using docker"
+	@echo "Help commands:"
+	@echo
+	@echo "  make mysql5.7-help			Help about MySQL 5.7 services"
+	@echo "  make mariadb10.5-help			Help about MariaDB 10.5 services"
+	@echo "  make postgres13.2-help		Help about Postgres 13.2 services"
+	@echo "  make redis6.2-help			Help about Redis 6.2 services"
+	@echo "  make mongo4.4-help			Help about Mongo 4.4 services"
+	@echo "  make kafka6.1-help			Help about Kafka 6.1 services"
+	@echo "  make minio-help			Help about MinIO latest services"
+	@echo
 
 mysql5.7-up:
 	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
@@ -63,26 +70,39 @@ mysql5.7-logs:
 mysql5.7-purge:
 	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
+mysql5.7-help:
+	@echo
+	@echo "Commands:"
+	@echo
+	@echo "  make mysql5.7-up		Start MySQL 5.7 service and management tools"
+	@echo "  make mysql5.7-down		Stop MySQL 5.7 service and management tools"
+	@echo "  make mysql5.7-status		Status from running services"
+	@echo "  make mysql5.7-logs		Logs from running services"
+	@echo "  make mysql5.7-purge		Delete all MySQL 5.7 data"
+	@echo "  make mysql5.7-info		Information about the services for use"
+	@echo "  make mysql5.7-help		This help :)"
+	@echo
+	@echo "Available configurable environment variables:"
+	@echo
+	@echo "  DEVBOX_MYSQL57_ROOT_PASSWORD			Default root password"
+	@echo "  DEVBOX_MYSQL57_DB_EXPORT_PORT			Port to expose MySQL 5.7 in docker for your environment"
+	@echo "  DEVBOX_MYSQL57_PMA_EXPORT_PORT		Port to expose PhpMyAdmin in docker for access in your browser"
+	@echo "  DEVBOX_MYSQL57_ADMINER_EXPORT_PORT		Port to expose Adminer in docker for access in your browser"
+	@echo "  DEVBOX_MYSQL57_DBGATE_EXPORT_PORT		Port to expose DbGate in docker for access in your browser"
+	@echo
+
 mysql5.7-info:
-
-	$(call print_breakline)
-
-	$(call print_info,"MySQL 5.7 information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: ${DEVBOX_MYSQL57_DB_EXPORT_PORT}")
-	$(call print_info,"User: root")
-	$(call print_info,"Password: ${DEVBOX_MYSQL57_ROOT_PASSWORD}")
-
-	$(call print_info,"PhpMyAdmin: http://0.0.0.0:${DEVBOX_MYSQL57_PMA_EXPORT_PORT}")
-
-	$(call print_info,"Adminer: http://0.0.0.0:${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT}")
-
-	$(call print_info,"DbGate: http://0.0.0.0:${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT}")
-
-	$(call print_breakline)
+	@echo
+	@echo "MySQL 5.7 information"
+	@echo
+	@echo "  Host: 		0.0.0.0"
+	@echo "  Port: 		${DEVBOX_MYSQL57_DB_EXPORT_PORT}"
+	@echo "  User: 		root"
+	@echo "  Password: 		${DEVBOX_MYSQL57_ROOT_PASSWORD}"
+	@echo "  PhpMyAdmin: 		http://0.0.0.0:${DEVBOX_MYSQL57_PMA_EXPORT_PORT}"
+	@echo "  Adminer: 		http://0.0.0.0:${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT}"
+	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT}"
+	@echo
 
 mariadb10.5-up:
 	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
@@ -99,26 +119,39 @@ mariadb10.5-logs:
 mariadb10.5-purge:
 	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
+mariadb10.5-help:
+	@echo
+	@echo "Commands:"
+	@echo
+	@echo "  make mariadb10.5-up		Start MariaDB 10.5 service and management tools"
+	@echo "  make mariadb10.5-down		Stop MariaDB 10.5 service and management tools"
+	@echo "  make mariadb10.5-status	Status from running services"
+	@echo "  make mariadb10.5-logs		Logs from running services"
+	@echo "  make mariadb10.5-purge	Delete all MariaDB 10.5 data"
+	@echo "  make mariadb10.5-info		Information about the services for use"
+	@echo "  make mariadb10.5-help		This help :)"
+	@echo
+	@echo "Available configurable environment variables:"
+	@echo
+	@echo "  DEVBOX_MARIADB105_ROOT_PASSWORD		Default root password"
+	@echo "  DEVBOX_MARIADB105_DB_EXPORT_PORT		Port to expose MariaDB 10.5 in docker for your environment"
+	@echo "  DEVBOX_MARIADB105_PMA_EXPORT_PORT		Port to expose PhpMyAdmin in docker for access in your browser"
+	@echo "  DEVBOX_MARIADB105_ADMINER_EXPORT_PORT		Port to expose Adminer in docker for access in your browser"
+	@echo "  DEVBOX_MARIADB105_DBGATE_EXPORT_PORT		Port to expose DbGate in docker for access in your browser"
+	@echo
+
 mariadb10.5-info:
-
-	$(call print_breakline)
-
-	$(call print_info,"MariaDB 10.5 information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: ${DEVBOX_MARIADB105_DB_EXPORT_PORT}")
-	$(call print_info,"User: root")
-	$(call print_info,"Password: ${DEVBOX_MARIADB105_ROOT_PASSWORD}")
-
-	$(call print_info,"PhpMyAdmin: http://0.0.0.0:${DEVBOX_MARIADB105_PMA_EXPORT_PORT}")
-
-	$(call print_info,"Adminer: http://0.0.0.0:${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT}")
-
-	$(call print_info,"DbGate: http://0.0.0.0:${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT}")
-
-	$(call print_breakline)
+	@echo
+	@echo "MariaDB 10.5 information"
+	@echo
+	@echo "  Host: 		0.0.0.0"
+	@echo "  Port: 		${DEVBOX_MARIADB105_DB_EXPORT_PORT}"
+	@echo "  User: 		root"
+	@echo "  Password: 		${DEVBOX_MARIADB105_ROOT_PASSWORD}"
+	@echo "  PhpMyAdmin: 		http://0.0.0.0:${DEVBOX_MARIADB105_PMA_EXPORT_PORT}"
+	@echo "  Adminer: 		http://0.0.0.0:${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT}"
+	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT}"
+	@echo
 
 postgres13.2-up:
 	docker-compose -f postgres/13.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
@@ -174,21 +207,34 @@ redis6.2-logs:
 redis6.2-purge:
 	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
+redis6.2-help:
+	@echo
+	@echo "Commands:"
+	@echo
+	@echo "  make redis6.2-up		Start Redis 6.2 service and management tools"
+	@echo "  make redis6.2-down		Stop Redis 6.2 service and management tools"
+	@echo "  make redis6.2-status		Status from running services"
+	@echo "  make redis6.2-logs		Logs from running services"
+	@echo "  make redis6.2-purge		Delete all Redis 6.2 data"
+	@echo "  make redis6.2-info		Information about the services for use"
+	@echo "  make redis6.2-help		This help :)"
+	@echo
+	@echo "Available configurable environment variables:"
+	@echo
+	@echo "  DEVBOX_REDIS62_DB_EXPORT_PORT			Port to expose Redis 6.2 in docker for your environment"
+	@echo "  DEVBOX_REDIS62_PRA_EXPORT_PORT		Port to expose phpRedisAdmin in docker for access in your browser"
+	@echo "  DEVBOX_REDIS62_COMMANDER_EXPORT_PORT		Port to expose Redis Commander in docker for access in your browser"
+	@echo
+
 redis6.2-info:
-	$(call print_breakline)
-
-	$(call print_info,"Redis 6.2 information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: ${DEVBOX_REDIS62_DB_EXPORT_PORT}")
-
-	$(call print_info,"phpRedisAdmin host: http://0.0.0.0:${DEVBOX_REDIS62_PRA_EXPORT_PORT}")
-
-	$(call print_info,"Redis Commander host: http://0.0.0.0:${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT}")
-
-	$(call print_breakline)
+	@echo
+	@echo "Redis 6.2 information"
+	@echo
+	@echo "  Host: 		0.0.0.0"
+	@echo "  Port: 		${DEVBOX_REDIS62_DB_EXPORT_PORT}"
+	@echo "  phpRedisAdmin: 	http://0.0.0.0:${DEVBOX_REDIS62_PRA_EXPORT_PORT}"
+	@echo "  Redis Commander: 	http://0.0.0.0:${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT}"
+	@echo
 
 mongo4.4-up:
 	docker-compose -f mongo/4.4/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
@@ -205,23 +251,36 @@ mongo4.4-logs:
 mongo4.4-purge:
 	docker-compose -f mongo/4.4/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
+mongo4.4-help:
+	@echo
+	@echo "Commands:"
+	@echo
+	@echo "  make mongo4.4-up		Start MongoDB 4.4 service and management tools"
+	@echo "  make mongo4.4-down		Stop MongoDB 4.4 service and management tools"
+	@echo "  make mongo4.4-status		Status from running services"
+	@echo "  make mongo4.4-logs		Logs from running services"
+	@echo "  make mongo4.4-purge		Delete all MongoDB 4.4 data"
+	@echo "  make mongo4.4-info		Information about the services for use"
+	@echo "  make mongo4.4-help		This help :)"
+	@echo
+	@echo "Available configurable environment variables:"
+	@echo
+	@echo "  DEVBOX_MONGO44_DB_EXPORT_PORT			Port to expose MongoDB 4.4 in docker for your environment"
+	@echo "  DEVBOX_MONGO44_EXPRESS_EXPORT_PORT		Port to expose Mongo Express in docker for access in your browser"
+	@echo "  DEVBOX_MONGO44_DBGATE_EXPORT_PORT		Port to expose DbGate in docker for access in your browser"
+	@echo "  DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT	Port to expose Nosqlclient in docker for access in your browser"
+	@echo
+
 mongo4.4-info:
-	$(call print_breakline)
-
-	$(call print_info,"MongoDB 4.4 information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: ${DEVBOX_MONGO44_DB_EXPORT_PORT}")
-
-	$(call print_info,"Mongo express: http://0.0.0.0:${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT}")
-
-	$(call print_info,"DbGate: http://0.0.0.0:${DEVBOX_MONGO44_DBGATE_EXPORT_PORT}")
-
-	$(call print_info,"Nosqlclient: http://0.0.0.0:${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT}")
-
-	$(call print_breakline)
+	@echo
+	@echo "MongoDB 4.4 information"
+	@echo
+	@echo "  Host: 		0.0.0.0"
+	@echo "  Port: 		${DEVBOX_MONGO44_DB_EXPORT_PORT}"
+	@echo "  Mongo Express: 	http://0.0.0.0:${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT}"
+	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MONGO44_DBGATE_EXPORT_PORT}"
+	@echo "  Nosqlclient: 		http://0.0.0.0:${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT}"
+	@echo
 
 minio-up:
 	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
@@ -238,19 +297,35 @@ minio-logs:
 minio-purge:
 	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
+minio-help:
+	@echo
+	@echo "Commands:"
+	@echo
+	@echo "  make minio-up			Start MinIO latest service and management tools"
+	@echo "  make minio-down		Stop MinIO latest service and management tools"
+	@echo "  make minio-status		Status from running services"
+	@echo "  make minio-logs		Logs from running services"
+	@echo "  make minio-purge		Delete all MinIO latest data"
+	@echo "  make minio-info		Information about the services for use"
+	@echo "  make minio-help		This help :)"
+	@echo
+	@echo "Available configurable environment variables:"
+	@echo
+	@echo "  DEVBOX_MINIO_STORAGE_EXPORT_PORT	Port to expose MinIO latest in docker for your environment"
+	@echo "  DEVBOX_MINIO_STORAGE_REGION		Region to configure into MinIO"
+	@echo "  DEVBOX_MINIO_STORAGE_ACCESS_KEY	Access key to configure into MinIO"
+	@echo "  DEVBOX_MINIO_STORAGE_SECRET_KEY	Secret key to configure into MinIO"
+	@echo
+
 minio-info:
-	$(call print_breakline)
-
-	$(call print_info,"MinIO latest information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Host api and web: http://0.0.0.0:${DEVBOX_MINIO_STORAGE_EXPORT_PORT}")
-	$(call print_info,"Region: ${DEVBOX_MINIO_STORAGE_REGION}")
-	$(call print_info,"Access key: ${DEVBOX_MINIO_STORAGE_ACCESS_KEY}")
-	$(call print_info,"Secret key: ${DEVBOX_MINIO_STORAGE_SECRET_KEY}")
-
-	$(call print_breakline)
+	@echo
+	@echo "MinIO latest information"
+	@echo
+	@echo "  Host api and web: 	http://0.0.0.0:${DEVBOX_MINIO_STORAGE_EXPORT_PORT}"
+	@echo "  Region: 		${DEVBOX_MINIO_STORAGE_REGION}"
+	@echo "  Access key: 		${DEVBOX_MINIO_STORAGE_ACCESS_KEY}"
+	@echo "  Secret key: 		${DEVBOX_MINIO_STORAGE_SECRET_KEY}"
+	@echo
 
 kafka6.1-up:
 	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d --force-recreate
