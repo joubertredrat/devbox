@@ -40,8 +40,8 @@ services:
     environment:
       DATABASE_HOST: db.postgres132.devbox.local
       DATABASE_PORT_NUMBER: 5432
-      volumes:
-        - postgres132_phppgadmin_data:/bitnami
+    volumes:
+      - postgres132_phppgadmin_data:/bitnami
     networks:
       - postgres132_network_local
     ports:

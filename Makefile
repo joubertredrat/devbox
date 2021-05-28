@@ -1,11 +1,3 @@
-define print_breakline
-	@echo
-endef
-
-define print_info
-	@echo "\t$(1)"
-endef
-
 .EXPORT_ALL_VARIABLES:
 
 DOCKER_DEFAULT_PLATFORM = linux/amd64
@@ -37,6 +29,10 @@ DEVBOX_MINIO_STORAGE_EXPORT_PORT ?= 29000
 DEVBOX_MINIO_STORAGE_REGION ?= us-east-1
 DEVBOX_MINIO_STORAGE_ACCESS_KEY ?= AKIAIOSFODNN7EXAMPLE
 DEVBOX_MINIO_STORAGE_SECRET_KEY ?= wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
+
+DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT ?= 22181
+DEVBOX_KAFKA61_KAFROP_EXPORT_PORT ?= 29092
+DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT ?= 29092
 
 .PHONY: default
 default: help ;
@@ -169,28 +165,20 @@ postgres13.2-purge:
 	docker-compose -f postgres/13.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
 postgres13.2-info:
-
-	$(call print_breakline)
-
-	$(call print_info,"Postgres 13.2 information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Host: 0.0.0.0")
-	$(call print_info,"Port: 15432")
-	$(call print_info,"Database: dev")
-	$(call print_info,"User: postgres")
-	$(call print_info,"Password: password")
-
-	$(call print_info,"PgAdmin host: http://0.0.0.0:25432")
-	$(call print_info,"PgAdmin user: pgadmin4@pgadmin.postgres132.dev.local")
-	$(call print_info,"PgAdmin password: password")
-
-	$(call print_info,"phpPgAdmin host: http://0.0.0.0:35432")
-
-	$(call print_info,"DbGate host: http://0.0.0.0:45432")
-
-	$(call print_breakline)
+	@echo
+	@echo "Postgres 13.2 information"
+	@echo
+	@echo "  Host: 		0.0.0.0"
+	@echo "  Port: 		15432"
+	@echo "  Database: 		dev"
+	@echo "  User: 		postgres"
+	@echo "  Password: 		password"
+	@echo "  PgAdmin: 		http://0.0.0.0:25432"
+	@echo "  PgAdmin user: 	pgadmin4@pgadmin.postgres132.dev.local"
+	@echo "  PgAdmin password: 	password"
+	@echo "  phpPgAdmin: 		http://0.0.0.0:35432"
+	@echo "  DbGate: 		http://0.0.0.0:45432"
+	@echo
 
 redis6.2-up:
 	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
@@ -328,10 +316,10 @@ minio-info:
 	@echo
 
 kafka6.1-up:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d --force-recreate
+	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
 
 kafka6.1-down:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
 kafka6.1-status:
 	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
@@ -339,23 +327,33 @@ kafka6.1-status:
 kafka6.1-logs:
 	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
 
-kafka6.1-purge:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --rmi all --volumes
+kafka6.1-help:
+	@echo
+	@echo "Commands:"
+	@echo
+	@echo "  make kafka6.1-up		Start Kafka 6.1 service and management tools"
+	@echo "  make kafka6.1-down		Stop Kafka 6.1 service and management tools"
+	@echo "  make kafka6.1-status		Status from running services"
+	@echo "  make kafka6.1-logs		Logs from running services"
+	@echo "  make kafka6.1-info		Information about the services for use"
+	@echo "  make kafka6.1-help		This help :)"
+	@echo
+	@echo "Available configurable environment variables:"
+	@echo
+	@echo "  DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT		Port to expose Zookeeper in docker for your environment"
+	@echo "  DEVBOX_KAFKA61_KAFROP_EXPORT_PORT		Port to expose Kafdrop in docker for access in your browser"
+	@echo "  DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT		Port to expose Kafka UI in docker for access in your browser"
+	@echo
 
 kafka6.1-info:
-	$(call print_breakline)
-
-	$(call print_info,"Kafka 6.1 information")
-
-	$(call print_breakline)
-
-	$(call print_info,"Brokers Host: 0.0.0.0")
-	$(call print_info,"Broker 1 Port: 9092")
-	$(call print_info,"Broker 2 Port: 9093")
-	$(call print_info,"Broker 3 Port: 9094")
-
-	$(call print_info,"Kafdrop: http://0.0.0.0:29000")
-
-	$(call print_info,"Kafka UI: http://0.0.0.0:28080")
-
-	$(call print_breakline)
+	@echo
+	@echo "Kafka 6.1 information"
+	@echo
+	@echo "  Brokers Host: 	0.0.0.0"
+	@echo "  Broker 1 Port: 	9092"
+	@echo "  Broker 2 Port: 	9093"
+	@echo "  Broker 3 Port: 	9094"
+	@echo "  Zookeeper Port: 	${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT}"
+	@echo "  Kafdrop: 		http://0.0.0.0:${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT}"
+	@echo "  Kafka UI: 		http://0.0.0.0:${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT}"
+	@echo

@@ -11,7 +11,7 @@ services:
     networks:
       - kafka61_network_local
     ports:
-      - 2181:2181
+      - ${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT:-22181}:2181
   broker1.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -71,7 +71,7 @@ services:
     networks:
       - kafka61_network_local
     ports:
-      - 29000:9000
+      - ${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT:-29092}:9000
   kafka-ui.kafka61.devbox.local:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
@@ -85,7 +85,7 @@ services:
     networks:
       - kafka61_network_local
     ports:
-      - 28080:8080
+      - ${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT:-29093}:8080
 
 volumes:
   kafka61_zookeeper_data:
