@@ -4,19 +4,19 @@ services:
   storage.minio-latest.devbox.local:
     image: minio/minio:latest
     environment:
-      MINIO_REGION: us-east-1
-      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
-      MINIO_SECRET_KEY: wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
+      MINIO_REGION: ${DEVBOX_MINIO_STORAGE_REGION:-us-east-1}
+      MINIO_ACCESS_KEY: ${DEVBOX_MINIO_STORAGE_ACCESS_KEY:-AKIAIOSFODNN7EXAMPLE}
+      MINIO_SECRET_KEY: ${DEVBOX_MINIO_STORAGE_ACCESS_KEY:-wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY}
     volumes:
-      - minio-latest_db_data:/data
+      - minio-latest_storage_data:/data
     command: server --address 0.0.0.0:9000 /data
     networks:
       - minio-latest_network_local
     ports:
-      - 29000:9000
+      - ${DEVBOX_MINIO_STORAGE_EXPORT_PORT:-29000}:9000
 
 volumes:
-  minio-latest_db_data:
+  minio-latest_storage_data:
 
 networks:
   minio-latest_network_local:

@@ -3,12 +3,12 @@ version: "3.8"
 services:
   db.mongo44.devbox.local:
     image: mongo:4.4-bionic
+    volumes:
+      - mongo44_db_data:/data/db
     networks:
       - mongo44_network_local
     ports:
-      - 37017:27017
-    volumes:
-      - mongo44_db_data:/data/db
+      - ${DEVBOX_MONGO44_DB_EXPORT_PORT:-27017}:27017
   mongo-express.mongo44.devbox.local:
     image: mongo-express:0.54
     depends_on:
@@ -18,7 +18,7 @@ services:
     networks:
       - mongo44_network_local
     ports:
-      - 38081:8081
+      - ${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT:-37017}:8081
   dbgate.mongo44.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
@@ -32,7 +32,7 @@ services:
     networks:
       - mongo44_network_local
     ports:
-      - 48081:3000
+      - ${DEVBOX_MONGO44_DBGATE_EXPORT_PORT:-47017}:3000
   nosqlclient.mongo44.devbox.local:
     image: mongoclient/mongoclient:4.0.1
     depends_on:
@@ -44,7 +44,7 @@ services:
     networks:
       - mongo44_network_local
     ports:
-      - 58081:3000
+      - ${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT:-57017}:3000
 
 volumes:
   mongo44_db_data:

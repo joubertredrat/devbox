@@ -18,7 +18,7 @@ services:
     environment:
       PMA_HOST: db.mysql57.devbox.local
       PMA_USER: root
-      PMA_PASSWORD: password
+      PMA_PASSWORD: ${DEVBOX_MYSQL57_ROOT_PASSWORD:-password}
     networks:
       - mysql57_network_local
     ports:
@@ -42,7 +42,7 @@ services:
       LABEL_mysql1: db.mysql57.devbox.local
       SERVER_mysql1: db.mysql57.devbox.local
       USER_mysql1: root
-      PASSWORD_mysql1: password
+      PASSWORD_mysql1: ${DEVBOX_MYSQL57_ROOT_PASSWORD:-password}
       PORT_mysql1: 3306
       ENGINE_mysql1: mysql@dbgate-plugin-mysql
     networks:

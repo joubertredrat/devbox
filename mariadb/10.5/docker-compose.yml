@@ -4,13 +4,13 @@ services:
   db.mariadb105.devbox.local:
     image: mariadb:10.5
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${DEVBOX_MARIADB105_ROOT_PASSWORD:-password}
     volumes:
       - mariadb105_data:/var/lib/mysql
     networks:
       - mariadb105_network_local
     ports:
-      - 13306:3306
+      - ${DEVBOX_MARIADB105_DB_EXPORT_PORT:-13306}:3306
   phpmyadmin.mariadb105.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
@@ -18,11 +18,11 @@ services:
     environment:
       PMA_HOST: db.mariadb105.devbox.local
       PMA_USER: root
-      PMA_PASSWORD: password
+      PMA_PASSWORD: ${DEVBOX_MARIADB105_ROOT_PASSWORD:-password}
     networks:
       - mariadb105_network_local
     ports:
-      - 23306:80
+      - ${DEVBOX_MARIADB105_PMA_EXPORT_PORT:-23306}:80
   adminer.mariadb105.devbox.local:
     image: adminer:4
     depends_on:
@@ -32,7 +32,7 @@ services:
     networks:
       - mariadb105_network_local
     ports:
-      - 33306:8080
+      - ${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT:-33306}:8080
   dbgate.mariadb105.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
@@ -42,13 +42,13 @@ services:
       LABEL_mariadb1: db.mariadb105.devbox.local
       SERVER_mariadb1: db.mariadb105.devbox.local
       USER_mariadb1: root
-      PASSWORD_mariadb1: password
+      PASSWORD_mariadb1: ${DEVBOX_MARIADB105_ROOT_PASSWORD:-password}
       PORT_mariadb1: 3306
       ENGINE_mariadb1: mysql@dbgate-plugin-mysql
     networks:
       - mariadb105_network_local
     ports:
-      - 43306:3000
+      - ${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT:-43306}:3000
 
 volumes:
   mariadb105_data:
