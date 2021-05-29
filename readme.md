@@ -3,68 +3,31 @@
 </p>
 <h1 align="center">Devbox</h1>
 
-Easy and fast way to get development environments using Docker
+Easily developer environments using docker
 
-## Services
+## Purpose
 
-#### Mysql 5.7
+I love to install and configure various and different environments for develop, but sometimes, we need to deploy fast and easily this environments, this is the purpose of this project, provide environments and web management tools for easy developing.
 
-```bash
-make mysql5.7-up
-make mysql5.7-down
-make mysql5.7-status
-make mysql5.7-logs
-make mysql5.7-info
-```
+## How to use?
 
-#### MariaDB 10.5
+Download or clone this repository and run `make help` to see all informations.
 
-```bash
-make mariadb10.5-up
-make mariadb10.5-down
-make mariadb10.5-status
-make mariadb10.5-logs
-make mariadb10.5-info
-```
+## Dependencies
 
-#### Postgres 13.2
+* make
+* docker
+* docker-compose
 
-```bash
-make postgres13.2-up
-make postgres13.2-down
-make postgres13.2-status
-make postgres13.2-logs
-make postgres13.2-info
-```
+## Services supported
 
-#### Redis 6.2
-
-```bash
-make redis6.2-up
-make redis6.2-down
-make redis6.2-status
-make redis6.2-logs
-make redis6.2-info
-```
-
-#### Mongo 4.4
-
-```bash
-make mongo4.4-up
-make mongo4.4-down
-make mongo4.4-status
-make mongo4.4-logs
-make mongo4.4-info
-```
-#### Kafka 6.1
-
-```bash
-make kafka6.1-up
-make kafka6.1-down
-make kafka6.1-status
-make kafka6.1-logs
-make kafka6.1-info
-```
+* MySQL [5.7](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/)
+* MariaDB [10.5](https://mariadb.com/kb/en/mariadb-server-105/)
+* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html)
+* Redis [6.2](https://redis.io)
+* MongoDB [4.4](https://docs.mongodb.com/manual/release-notes/4.4/)
+* [MinIO](https://min.io/)
+* Apache Kafka 2.7 on Confluent Platform [6.1.1](https://docs.confluent.io/platform/6.1.1/release-notes/index.html)
 
 ## License
 [MIT](/license) license, logo by [Burhan Adiatma](https://www.vecteezy.com/members/gembuls).
