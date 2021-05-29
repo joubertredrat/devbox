@@ -1,21 +1,21 @@
 {
   "Servers": {
-      "1": {
-          "Name": "db.postgres132.dev.local",
-          "Group": "Servers",
-          "Host": "db.postgres132.dev.local",
-          "Port": 5432,
-          "MaintenanceDB": "postgres",
-          "Username": "postgres",
-          "PassFile": "/pgadmin4/pgpassfile",
-          "SSLMode": "prefer",
-          "SSLCert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
-          "SSLKey": "<STORAGE_DIR>/.postgresql/postgresql.key",
-          "SSLCompression": 0,
-          "Timeout": 10,
-          "UseSSHTunnel": 0,
-          "TunnelPort": "22",
-          "TunnelAuthentication": 0
-      }
+    "1": {
+      "Name": "db.postgres132.devbox.local",
+      "Group": "Servers",
+      "Host": "db.postgres132.devbox.local",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "postgres",
+      "PassFile": "/pgadmin4/pgpassfile",
+      "SSLMode": "prefer",
+      "SSLCert": "<STORAGE_DIR>/.postgresql/postgresql.crt",
+      "SSLKey": "<STORAGE_DIR>/.postgresql/postgresql.key",
+      "SSLCompression": 0,
+      "Timeout": 10,
+      "UseSSHTunnel": 0,
+      "TunnelPort": "22",
+      "TunnelAuthentication": 0
+    }
   }
 }

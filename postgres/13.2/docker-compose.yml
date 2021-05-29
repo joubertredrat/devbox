@@ -4,15 +4,15 @@ services:
   db.postgres132.devbox.local:
     image: postgres:13.2-alpine
     environment:
-      POSTGRES_DB: dev
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: ${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${DEVBOX_POSTGRES132_POSTGRES_DB:-dev}
     volumes:
       - postgres132_db_data:/var/lib/postgresql/data
     networks:
       - postgres132_network_local
     ports:
-      - 15432:5432
+      - ${DEVBOX_POSTGRES132_DB_EXPORT_PORT:-15432}:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -23,29 +23,25 @@ services:
     depends_on:
       - db.postgres132.devbox.local
     environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.postgres132.devbox.local
-      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DEFAULT_EMAIL: ${DEVBOX_POSTGRES132_PGADMIN_EMAIL:-pgadmin4@devbox.local}
+      PGADMIN_DEFAULT_PASSWORD: ${DEVBOX_POSTGRES132_PGADMIN_PASSWORD:-password}
     volumes:
       - ./config/servers.json:/pgadmin4/servers.json
       - ./config/pgpassfile:/pgadmin4/pgpassfile
-      - postgres132_pgadmin_data:/var/lib/pgadmin
     networks:
       - postgres132_network_local
     ports:
-      - 25432:80
-  phppgadmin.postgres132.devbox.local:
-    image: bitnami/phppgadmin:7
+      - ${DEVBOX_POSTGRES132_PGADMIN_EXPORT_PORT:-15433}:80
+  pgweb.postgres132.devbox.local:
+    image: sosedoff/pgweb:latest
     depends_on:
       - db.postgres132.devbox.local
     environment:
-      DATABASE_HOST: db.postgres132.devbox.local
-      DATABASE_PORT_NUMBER: 5432
-    volumes:
-      - postgres132_phppgadmin_data:/bitnami
+      DATABASE_URL: postgres://${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}@db.postgres132.devbox.local:5432/${DEVBOX_POSTGRES132_POSTGRES_DB:-dev}?sslmode=disable
     networks:
       - postgres132_network_local
     ports:
-      - 35432:8080
+      - ${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT:-15434}:8081
   dbgate.postgres132.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
@@ -56,17 +52,15 @@ services:
       LABEL_postgres1: db.postgres132.devbox.local
       SERVER_postgres1: db.postgres132.devbox.local
       PORT_postgres1: 5432
-      USER_postgres1: postgres
-      PASSWORD_postgres1: password
+      USER_postgres1: ${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}
+      PASSWORD_postgres1: ${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}
     networks:
       - postgres132_network_local
     ports:
-      - 45432:3000
+      - ${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT:-15435}:3000
 
 volumes:
   postgres132_db_data:
-  postgres132_pgadmin_data:
-  postgres132_phppgadmin_data:
 
 networks:
   postgres132_network_local:

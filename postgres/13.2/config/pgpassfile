@@ -1,1 +1,1 @@
-db.postgres132.dev.local:5432:postgres:postgres:password
+db.postgres132.devbox.local:5432:dev:postgres:password
