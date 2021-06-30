@@ -43,6 +43,7 @@ DEVBOX_MINIO_STORAGE_SECRET_KEY ?= wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
 DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT ?= 22181
 DEVBOX_KAFKA61_KAFROP_EXPORT_PORT ?= 29092
 DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT ?= 29093
+DEVBOX_KAFKA61_KOWL_EXPORT_PORT ?= 29094
 
 .PHONY: default
 default: help ;
@@ -378,6 +379,7 @@ kafka6.1-help:
 	@echo "  DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT		Port to expose Zookeeper in docker for your environment"
 	@echo "  DEVBOX_KAFKA61_KAFROP_EXPORT_PORT		Port to expose Kafdrop in docker for access in your browser"
 	@echo "  DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT		Port to expose Kafka UI in docker for access in your browser"
+	@echo "  DEVBOX_KAFKA61_KOWL_EXPORT_PORT		Port to expose Kafka UI in docker for access in your browser"
 	@echo
 
 kafka6.1-info:
@@ -391,4 +393,5 @@ kafka6.1-info:
 	@echo "  Zookeeper Port: 	${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT}"
 	@echo "  Kafdrop: 		http://0.0.0.0:${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT}"
 	@echo "  Kafka UI: 		http://0.0.0.0:${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT}"
+	@echo "  Kowl: 		http://0.0.0.0:${DEVBOX_KAFKA61_KOWL_EXPORT_PORT}"
 	@echo
