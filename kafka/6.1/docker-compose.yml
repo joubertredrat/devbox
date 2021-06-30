@@ -69,6 +69,10 @@ services:
     depends_on:
       zookeeper.kafka61.devbox.local:
         condition: service_healthy
+      broker1.kafka61.devbox.local:
+        condition: service_healthy
+      broker2.kafka61.devbox.local:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper.kafka61.devbox.local:2181
@@ -101,6 +105,11 @@ services:
       - kafka61_network_local
     ports:
       - ${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT:-29092}:9000
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "kafdrop.kafka61.devbox.local", "9000"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
   kafka-ui.kafka61.devbox.local:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
@@ -118,6 +127,11 @@ services:
       - kafka61_network_local
     ports:
       - ${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT:-29093}:8080
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "kafka-ui.kafka61.devbox.local", "8080"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
   kowl.kafka61.devbox.local:
     image: quay.io/cloudhut/kowl:master
     depends_on:
