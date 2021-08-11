@@ -26,9 +26,9 @@ DEVBOX_POSTGRES132_PGADMIN_PASSWORD ?= password
 DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT ?= 15434
 DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT ?= 15435
 
-DEVBOX_REDIS62_DB_EXPORT_PORT ?= 16379
-DEVBOX_REDIS62_PRA_EXPORT_PORT ?= 16380
-DEVBOX_REDIS62_COMMANDER_EXPORT_PORT ?= 16381
+DEVBOX_REDIS62_SINGLE_DB_EXPORT_PORT ?= 16379
+DEVBOX_REDIS62_SINGLE_PRA_EXPORT_PORT ?= 16380
+DEVBOX_REDIS62_SINGLE_COMMANDER_EXPORT_PORT ?= 16381
 
 DEVBOX_MONGO44_DB_EXPORT_PORT ?= 27017
 DEVBOX_MONGO44_EXPRESS_EXPORT_PORT ?= 27018
@@ -56,7 +56,7 @@ help:
 	@echo "  make mysql5.7-help			Help about MySQL 5.7 services"
 	@echo "  make mariadb10.5-help			Help about MariaDB 10.5 services"
 	@echo "  make postgres13.2-help		Help about Postgres 13.2 services"
-	@echo "  make redis6.2-help			Help about Redis 6.2 services"
+	@echo "  make redis6.2-single-help		Help about Redis 6.2 single services"
 	@echo "  make mongo4.4-help			Help about Mongo 4.4 services"
 	@echo "  make kafka6.1-help			Help about Kafka 6.1 services"
 	@echo "  make minio-help			Help about MinIO latest services"
@@ -216,48 +216,48 @@ postgres13.2-info:
 	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT}"
 	@echo
 
-redis6.2-up:
-	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+redis6.2-single-up:
+	docker-compose -f redis/6.2/single/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
 
-redis6.2-down:
-	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+redis6.2-single-down:
+	docker-compose -f redis/6.2/single/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
 
-redis6.2-status:
-	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+redis6.2-single-status:
+	docker-compose -f redis/6.2/single/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
 
-redis6.2-logs:
-	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+redis6.2-single-logs:
+	docker-compose -f redis/6.2/single/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
 
-redis6.2-purge:
-	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+redis6.2-single-purge:
+	docker-compose -f redis/6.2/single/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
 
-redis6.2-help:
+redis6.2-single-help:
 	@echo
 	@echo "Commands:"
 	@echo
-	@echo "  make redis6.2-up		Start Redis 6.2 service and management tools"
-	@echo "  make redis6.2-down		Stop Redis 6.2 service and management tools"
-	@echo "  make redis6.2-status		Status from running services"
-	@echo "  make redis6.2-logs		Logs from running services"
-	@echo "  make redis6.2-purge		Delete all Redis 6.2 data"
-	@echo "  make redis6.2-info		Information about the services for use"
-	@echo "  make redis6.2-help		This help :)"
+	@echo "  make redis6.2-single-up		Start Redis 6.2 service and management tools"
+	@echo "  make redis6.2-single-down		Stop Redis 6.2 service and management tools"
+	@echo "  make redis6.2-single-status		Status from running services"
+	@echo "  make redis6.2-single-logs		Logs from running services"
+	@echo "  make redis6.2-single-purge		Delete all Redis 6.2 data"
+	@echo "  make redis6.2-single-info		Information about the services for use"
+	@echo "  make redis6.2-single-help		This help :)"
 	@echo
 	@echo "Available configurable environment variables:"
 	@echo
-	@echo "  DEVBOX_REDIS62_DB_EXPORT_PORT			Port to expose Redis 6.2 in docker for your environment"
-	@echo "  DEVBOX_REDIS62_PRA_EXPORT_PORT		Port to expose phpRedisAdmin in docker for access in your browser"
-	@echo "  DEVBOX_REDIS62_COMMANDER_EXPORT_PORT		Port to expose Redis Commander in docker for access in your browser"
+	@echo "  DEVBOX_REDIS62_SINGLE_DB_EXPORT_PORT			Port to expose Redis 6.2 in docker for your environment"
+	@echo "  DEVBOX_REDIS62_SINGLE_PRA_EXPORT_PORT		Port to expose phpRedisAdmin in docker for access in your browser"
+	@echo "  DEVBOX_REDIS62_SINGLE_COMMANDER_EXPORT_PORT		Port to expose Redis Commander in docker for access in your browser"
 	@echo
 
-redis6.2-info:
+redis6.2-single-info:
 	@echo
-	@echo "Redis 6.2 information"
+	@echo "Redis 6.2 single information"
 	@echo
 	@echo "  Host: 		0.0.0.0"
-	@echo "  Port: 		${DEVBOX_REDIS62_DB_EXPORT_PORT}"
-	@echo "  phpRedisAdmin: 	http://0.0.0.0:${DEVBOX_REDIS62_PRA_EXPORT_PORT}"
-	@echo "  Redis Commander: 	http://0.0.0.0:${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT}"
+	@echo "  Port: 		${DEVBOX_REDIS62_SINGLE_DB_EXPORT_PORT}"
+	@echo "  phpRedisAdmin: 	http://0.0.0.0:${DEVBOX_REDIS62_SINGLE_PRA_EXPORT_PORT}"
+	@echo "  Redis Commander: 	http://0.0.0.0:${DEVBOX_REDIS62_SINGLE_COMMANDER_EXPORT_PORT}"
 	@echo
 
 mongo4.4-up:
