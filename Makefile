@@ -260,6 +260,21 @@ redis6.2-single-info:
 	@echo "  Redis Commander: 	http://0.0.0.0:${DEVBOX_REDIS62_SINGLE_COMMANDER_EXPORT_PORT}"
 	@echo
 
+redis6.2-cluster-up:
+	docker-compose -f redis/6.2/cluster/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+
+redis6.2-cluster-down:
+	docker-compose -f redis/6.2/cluster/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+
+redis6.2-cluster-status:
+	docker-compose -f redis/6.2/cluster/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+
+redis6.2-cluster-logs:
+	docker-compose -f redis/6.2/cluster/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+
+redis6.2-cluster-purge:
+	docker-compose -f redis/6.2/cluster/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+
 mongo4.4-up:
 	docker-compose -f mongo/4.4/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
 

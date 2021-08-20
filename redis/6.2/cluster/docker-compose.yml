@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  node1.redis62-cluster.devbox.local:
+    image: redis:6.2-alpine
+    volumes:
+      - ./config/node1.conf:/usr/local/etc/redis/redis.conf
+      - redis62_cluster_node1_data:/var/lib/redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - redis62_cluster_network_local
+    ports:
+      - 6379:6379
+  node2.redis62-cluster.devbox.local:
+    image: redis:6.2-alpine
+    volumes:
+      - ./config/node2.conf:/usr/local/etc/redis/redis.conf
+      - redis62_cluster_node2_data:/var/lib/redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - redis62_cluster_network_local
+    ports:
+      - 6380:6380
+  node3.redis62-cluster.devbox.local:
+    image: redis:6.2-alpine
+    volumes:
+      - ./config/node3.conf:/usr/local/etc/redis/redis.conf
+      - redis62_cluster_node3_data:/var/lib/redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - redis62_cluster_network_local
+    ports:
+      - 6381:6381
+
+volumes:
+  redis62_cluster_node1_data:
+  redis62_cluster_node2_data:
+  redis62_cluster_node3_data:
+
+networks:
+  redis62_cluster_network_local:
+    driver: bridge
