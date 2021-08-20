@@ -7,13 +7,16 @@ services:
       MINIO_REGION: ${DEVBOX_MINIO_STORAGE_REGION:-us-east-1}
       MINIO_ACCESS_KEY: ${DEVBOX_MINIO_STORAGE_ACCESS_KEY:-AKIAIOSFODNN7EXAMPLE}
       MINIO_SECRET_KEY: ${DEVBOX_MINIO_STORAGE_ACCESS_KEY:-wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY}
+      MINIO_ROOT_USER: ${DEVBOX_MINIO_CONSOLE_ROOT_USER:-root}
+      MINIO_ROOT_PASSWORD: ${DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD:-password}
     volumes:
       - minio-latest_storage_data:/data
-    command: server --address 0.0.0.0:9000 /data
+    command: server --address 0.0.0.0:9000 --console-address 0.0.0.0:9001 /data
     networks:
       - minio-latest_network_local
     ports:
-      - ${DEVBOX_MINIO_STORAGE_EXPORT_PORT:-29000}:9000
+      - ${DEVBOX_MINIO_API_EXPORT_PORT:-29000}:9000
+      - ${DEVBOX_MINIO_CONSOLE_EXPORT_PORT:-29001}:9001
 
 volumes:
   minio-latest_storage_data:
