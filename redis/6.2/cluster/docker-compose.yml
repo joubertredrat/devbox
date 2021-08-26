@@ -8,9 +8,14 @@ services:
       - redis62_cluster_node1_data:/var/lib/redis
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - redis62_cluster_network_local
+      redis62_cluster_network_local:
     ports:
       - 6379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6379", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
   node2.redis62-cluster.devbox.local:
     image: redis:6.2-alpine
     volumes:
@@ -18,9 +23,14 @@ services:
       - redis62_cluster_node2_data:/var/lib/redis
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - redis62_cluster_network_local
+      redis62_cluster_network_local:
     ports:
       - 6380:6380
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6380", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
   node3.redis62-cluster.devbox.local:
     image: redis:6.2-alpine
     volumes:
@@ -28,9 +38,28 @@ services:
       - redis62_cluster_node3_data:/var/lib/redis
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - redis62_cluster_network_local
+      redis62_cluster_network_local:
     ports:
       - 6381:6381
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6381", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  cluster-config.redis62-cluster.devbox.local:
+    image: redis:6.2-alpine
+    depends_on:
+      node1.redis62-cluster.devbox.local:
+        condition: service_healthy
+      node2.redis62-cluster.devbox.local:
+        condition: service_healthy
+      node3.redis62-cluster.devbox.local:
+        condition: service_healthy
+    volumes:
+      - ./config/cluster.sh:/usr/local/etc/redis/cluster.sh
+    command: sh /usr/local/etc/redis/cluster.sh
+    networks:
+      redis62_cluster_network_local:
 
 volumes:
   redis62_cluster_node1_data:
