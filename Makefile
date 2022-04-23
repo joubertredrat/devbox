@@ -4,14 +4,6 @@ DOCKER_DEFAULT_PLATFORM = linux/amd64
 
 DEVBOX_PROJECT_NAME = devbox
 
-DEVBOX_MINIO_API_EXPORT_PORT ?= 29000
-DEVBOX_MINIO_CONSOLE_EXPORT_PORT ?= 29001
-DEVBOX_MINIO_STORAGE_REGION ?= us-east-1
-DEVBOX_MINIO_STORAGE_ACCESS_KEY ?= AKIAIOSFODNN7EXAMPLE
-DEVBOX_MINIO_STORAGE_SECRET_KEY ?= wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
-DEVBOX_MINIO_CONSOLE_ROOT_USER ?= root
-DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD ?= password
-
 DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT ?= 22181
 DEVBOX_KAFKA61_KAFROP_EXPORT_PORT ?= 29092
 DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT ?= 29093
@@ -28,6 +20,7 @@ help:
 	@echo "  make mysql5.7-help			Help about MySQL 5.7 services"
 	@echo "  make mariadb10.5-help			Help about MariaDB 10.5 services"
 	@echo "  make postgres13.2-help		Help about Postgres 13.2 services"
+	@echo "  make postgres14.2-help		Help about Postgres 14.2 services"
 	@echo "  make redis6.2-help			Help about Redis 6.2 services"
 	@echo "  make mongo4.4-help			Help about Mongo 4.4 services"
 	@echo "  make kafka6.1-help			Help about Kafka 6.1 services"
@@ -36,62 +29,12 @@ help:
 
 
 include mariadb/10.5/Makefile
+include minio/latest/Makefile
 include mongo/4.4/Makefile
 include mysql/5.7/Makefile
 include postgres/13.2/Makefile
 include postgres/14.2/Makefile
 include redis/6.2/Makefile
-
-minio-up:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
-
-minio-down:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
-
-minio-status:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
-
-minio-logs:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
-
-minio-purge:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
-
-minio-help:
-	@echo
-	@echo "Commands:"
-	@echo
-	@echo "  make minio-up			Start MinIO latest service and management tools"
-	@echo "  make minio-down		Stop MinIO latest service and management tools"
-	@echo "  make minio-status		Status from running services"
-	@echo "  make minio-logs		Logs from running services"
-	@echo "  make minio-purge		Delete all MinIO latest data"
-	@echo "  make minio-info		Information about the services for use"
-	@echo "  make minio-help		This help :)"
-	@echo
-	@echo "Available configurable environment variables:"
-	@echo
-	@echo "  DEVBOX_MINIO_API_EXPORT_PORT		Port to expose MinIO API latest in docker for your environment"
-	@echo "  DEVBOX_MINIO_CONSOLE_EXPORT_PORT	Port to expose MinIO console web latest in docker for your environment"
-	@echo "  DEVBOX_MINIO_STORAGE_REGION		Region to configure into MinIO"
-	@echo "  DEVBOX_MINIO_STORAGE_ACCESS_KEY	Access key to configure into MinIO"
-	@echo "  DEVBOX_MINIO_STORAGE_SECRET_KEY	Secret key to configure into MinIO"
-	@echo "  DEVBOX_MINIO_CONSOLE_ROOT_USER	Root user to access console web into MinIO"
-	@echo "  DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD	Root password to access console web into MinIO"
-	@echo
-
-minio-info:
-	@echo
-	@echo "MinIO latest information"
-	@echo
-	@echo "  API: 			http://0.0.0.0:${DEVBOX_MINIO_API_EXPORT_PORT}"
-	@echo "  Console web: 		http://0.0.0.0:${DEVBOX_MINIO_CONSOLE_EXPORT_PORT}"
-	@echo "  Region: 		${DEVBOX_MINIO_STORAGE_REGION}"
-	@echo "  Access key: 		${DEVBOX_MINIO_STORAGE_ACCESS_KEY}"
-	@echo "  Secret key: 		${DEVBOX_MINIO_STORAGE_SECRET_KEY}"
-	@echo "  Root user: 		${DEVBOX_MINIO_CONSOLE_ROOT_USER}"
-	@echo "  Root password:	${DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD}"
-	@echo
 
 kafka6.1-up:
 	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
