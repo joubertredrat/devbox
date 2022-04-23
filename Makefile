@@ -219,6 +219,8 @@ postgres13.2-info:
 	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT}"
 	@echo
 
+include postgres/14.2/Makefile
+
 redis6.2-up:
 	docker-compose -f redis/6.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
 
