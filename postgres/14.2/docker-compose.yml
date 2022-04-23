@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  db.postgres142.devbox.local:
+    image: postgres:14.2-alpine
+    environment:
+      POSTGRES_USER: ${DEVBOX_POSTGRES142_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${DEVBOX_POSTGRES142_POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${DEVBOX_POSTGRES142_POSTGRES_DB:-dev}
+    volumes:
+      - postgres142_db_data:/var/lib/postgresql/data
+    networks:
+      - postgres142_network_local
+    ports:
+      - ${DEVBOX_POSTGRES142_DB_EXPORT_PORT:-15442}:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+  pgadmin.postgres142.devbox.local:
+    image: dpage/pgadmin4:5
+    depends_on:
+      - db.postgres142.devbox.local
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DEVBOX_POSTGRES142_PGADMIN_EMAIL:-pgadmin4@devbox.local}
+      PGADMIN_DEFAULT_PASSWORD: ${DEVBOX_POSTGRES142_PGADMIN_PASSWORD:-password}
+    volumes:
+      - ./config/servers.json:/pgadmin4/servers.json
+      - ./config/pgpassfile:/pgadmin4/pgpassfile
+    networks:
+      - postgres142_network_local
+    ports:
+      - ${DEVBOX_POSTGRES142_PGADMIN_EXPORT_PORT:-15443}:80
+  pgweb.postgres142.devbox.local:
+    image: sosedoff/pgweb:latest
+    depends_on:
+      - db.postgres142.devbox.local
+    environment:
+      DATABASE_URL: postgres://${DEVBOX_POSTGRES142_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES142_POSTGRES_PASSWORD:-password}@db.postgres142.devbox.local:5432/${DEVBOX_POSTGRES142_POSTGRES_DB:-dev}?sslmode=disable
+    networks:
+      - postgres142_network_local
+    ports:
+      - ${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT:-15444}:8081
+  dbgate.postgres142.devbox.local:
+    image: dbgate/dbgate:alpine
+    depends_on:
+      - db.postgres142.devbox.local
+    environment:
+      CONNECTIONS: postgres1
+      ENGINE_postgres1: postgres@dbgate-plugin-postgres
+      LABEL_postgres1: db.postgres142.devbox.local
+      SERVER_postgres1: db.postgres142.devbox.local
+      PORT_postgres1: 5432
+      USER_postgres1: ${DEVBOX_POSTGRES142_POSTGRES_USER:-postgres}
+      PASSWORD_postgres1: ${DEVBOX_POSTGRES142_POSTGRES_PASSWORD:-password}
+    networks:
+      - postgres142_network_local
+    ports:
+      - ${DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT:-15445}:3000
+
+volumes:
+  postgres142_db_data:
+
+networks:
+  postgres142_network_local:
+    driver: bridge
