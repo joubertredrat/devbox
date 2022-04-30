@@ -1,3 +1,5 @@
+DEVBOX_MYSQL57_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}4tx
+
 DEVBOX_MYSQL57_ROOT_PASSWORD ?= password
 DEVBOX_MYSQL57_DB_EXPORT_PORT ?= 13306
 DEVBOX_MYSQL57_PMA_EXPORT_PORT ?= 13307
@@ -5,19 +7,19 @@ DEVBOX_MYSQL57_ADMINER_EXPORT_PORT ?= 13308
 DEVBOX_MYSQL57_DBGATE_EXPORT_PORT ?= 13309
 
 mysql5.7-up:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} up -d
 
 mysql5.7-down:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down
 
 mysql5.7-status:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} ps
 
 mysql5.7-logs:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} logs -f
 
 mysql5.7-purge:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down --volumes
 
 mysql5.7-help:
 	@echo

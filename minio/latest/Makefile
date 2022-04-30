@@ -1,3 +1,5 @@
+DEVBOX_MINIO_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}0xc
+
 DEVBOX_MINIO_API_EXPORT_PORT ?= 29000
 DEVBOX_MINIO_CONSOLE_EXPORT_PORT ?= 29001
 DEVBOX_MINIO_STORAGE_REGION ?= us-east-1
@@ -7,19 +9,19 @@ DEVBOX_MINIO_CONSOLE_ROOT_USER ?= root
 DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD ?= password
 
 minio-up:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} up -d
 
 minio-down:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down
 
 minio-status:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} ps
 
 minio-logs:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} logs -f
 
 minio-purge:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down --volumes
 
 minio-help:
 	@echo
