@@ -1,3 +1,5 @@
+DEVBOX_POSTGRES142_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}js3
+
 DEVBOX_POSTGRES142_POSTGRES_USER ?= postgres
 DEVBOX_POSTGRES142_POSTGRES_PASSWORD ?= password
 DEVBOX_POSTGRES142_POSTGRES_DB ?= dev
@@ -9,19 +11,19 @@ DEVBOX_POSTGRES142_PGWEB_EXPORT_PORT ?= 15444
 DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT ?= 15445
 
 postgres14.2-up:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} up -d
 
 postgres14.2-down:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down
 
 postgres14.2-status:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} ps
 
 postgres14.2-logs:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} logs -f
 
 postgres14.2-purge:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down --volumes
 
 postgres14.2-help:
 	@echo

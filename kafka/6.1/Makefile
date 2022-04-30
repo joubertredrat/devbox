@@ -1,19 +1,21 @@
+DEVBOX_KAFKA61_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}ksh
+
 DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT ?= 22181
 DEVBOX_KAFKA61_KAFROP_EXPORT_PORT ?= 29092
 DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT ?= 29093
 DEVBOX_KAFKA61_KOWL_EXPORT_PORT ?= 29094
 
 kafka6.1-up:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} up -d
 
 kafka6.1-down:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} down --volumes
 
 kafka6.1-status:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} ps
 
 kafka6.1-logs:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} logs -f
 
 kafka6.1-help:
 	@echo

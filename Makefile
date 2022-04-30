@@ -2,7 +2,7 @@
 
 DOCKER_DEFAULT_PLATFORM = linux/amd64
 
-DEVBOX_PROJECT_NAME = devbox
+DEVBOX_PROJECT_PREFIX = devbox
 
 .PHONY: default
 default: help ;

@@ -1,3 +1,5 @@
+DEVBOX_MARIADB105_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}cyf
+
 DEVBOX_MARIADB105_ROOT_PASSWORD ?= password
 DEVBOX_MARIADB105_DB_EXPORT_PORT ?= 13306
 DEVBOX_MARIADB105_PMA_EXPORT_PORT ?= 13307
@@ -5,19 +7,19 @@ DEVBOX_MARIADB105_ADMINER_EXPORT_PORT ?= 13308
 DEVBOX_MARIADB105_DBGATE_EXPORT_PORT ?= 13309
 
 mariadb10.5-up:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} up -d
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} up -d
 
 mariadb10.5-down:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} down
 
 mariadb10.5-status:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} ps
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} ps
 
 mariadb10.5-logs:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} logs -f
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} logs -f
 
 mariadb10.5-purge:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_PROJECT_NAME} down --volumes
+	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} down --volumes
 
 mariadb10.5-help:
 	@echo
