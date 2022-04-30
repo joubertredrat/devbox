@@ -23,12 +23,12 @@ Download or clone this repository and run `make help` to see all informations.
 
 * MySQL [5.7](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/)
 * MariaDB [10.5](https://mariadb.com/kb/en/mariadb-server-105/)
-* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html)
-* Postgres [14.2](https://www.postgresql.org/docs/14/release-14-2.html)
+* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html)
 * Redis [6.2](https://redis.io)
 * MongoDB [4.4](https://docs.mongodb.com/manual/release-notes/4.4/)
 * [MinIO](https://min.io/)
 * Apache Kafka 2.7 on Confluent Platform [6.1.1](https://docs.confluent.io/platform/6.1.1/release-notes/index.html)
+* Memcached [1.6](https://memcached.org/)
 
 ## License
 [MIT](/license) license, logo by [Burhan Adiatma](https://www.vecteezy.com/members/gembuls).

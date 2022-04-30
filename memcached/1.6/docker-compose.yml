@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  cache.memcached16.devbox.local:
+    image: memcached:1.6-alpine
+    networks:
+      - memcached16_network_local
+    ports:
+      - ${DEVBOX_MEMCACHED16_CACHE_PORT:-21211}:11211
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "11211"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+  memcached-admin.memcached16.devbox.local:
+    image: hatamiarash7/memcached-admin:latest
+    depends_on:
+      - cache.memcached16.devbox.local
+    environment:
+      MEMCACHED_HOST: cache.memcached16.devbox.local
+      MEMCACHED_PORT: 11211
+    networks:
+      - memcached16_network_local
+    ports:
+      - ${DEVBOX_MEMCACHED16_ADMIN_PORT:-21212}:80
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+networks:
+  memcached16_network_local:
+    driver: bridge
