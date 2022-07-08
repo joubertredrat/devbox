@@ -4,6 +4,8 @@ DOCKER_DEFAULT_PLATFORM = linux/amd64
 
 DEVBOX_PROJECT_PREFIX = devbox
 
+DOCKER_COMPOSE_CMD = docker compose
+
 .PHONY: default
 default: help ;
 

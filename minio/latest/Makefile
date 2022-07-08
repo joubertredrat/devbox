@@ -9,19 +9,22 @@ DEVBOX_MINIO_CONSOLE_ROOT_USER ?= root
 DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD ?= password
 
 minio-up:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} up -d
+	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} up -d
 
 minio-down:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down
+	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down
 
 minio-status:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} ps
+	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} ps
 
 minio-logs:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} logs -f
+	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} logs -f
 
 minio-purge:
-	docker-compose -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down --volumes
+	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down --volumes
+
+minio-command:
+	@echo "${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME}"
 
 minio-help:
 	@echo
@@ -33,6 +36,7 @@ minio-help:
 	@echo "  make minio-logs		Logs from running services"
 	@echo "  make minio-purge		Delete all MinIO latest data"
 	@echo "  make minio-info		Information about the services for use"
+	@echo "  make minio-command		Print docker compose command"
 	@echo "  make minio-help		This help :)"
 	@echo
 	@echo "Available configurable environment variables:"

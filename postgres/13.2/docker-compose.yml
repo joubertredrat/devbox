@@ -15,13 +15,14 @@ services:
       - ${DEVBOX_POSTGRES132_DB_EXPORT_PORT:-15432}:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
+      interval: 3s
       timeout: 10s
-      retries: 3
+      retries: 10
   pgadmin.postgres132.devbox.local:
     image: dpage/pgadmin4:5
     depends_on:
-      - db.postgres132.devbox.local
+      db.postgres132.devbox.local:
+        condition: service_healthy
     environment:
       PGADMIN_DEFAULT_EMAIL: ${DEVBOX_POSTGRES132_PGADMIN_EMAIL:-pgadmin4@devbox.local}
       PGADMIN_DEFAULT_PASSWORD: ${DEVBOX_POSTGRES132_PGADMIN_PASSWORD:-password}
@@ -32,20 +33,32 @@ services:
       - postgres132_network_local
     ports:
       - ${DEVBOX_POSTGRES132_PGADMIN_EXPORT_PORT:-15433}:80
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 80 || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 50
   pgweb.postgres132.devbox.local:
     image: sosedoff/pgweb:latest
     depends_on:
-      - db.postgres132.devbox.local
+      db.postgres132.devbox.local:
+        condition: service_healthy
     environment:
       DATABASE_URL: postgres://${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}@db.postgres132.devbox.local:5432/${DEVBOX_POSTGRES132_POSTGRES_DB:-dev}?sslmode=disable
     networks:
       - postgres132_network_local
     ports:
       - ${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT:-15434}:8081
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 8081 || exit 1"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
   dbgate.postgres132.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
-      - db.postgres132.devbox.local
+      db.postgres132.devbox.local:
+        condition: service_healthy
     environment:
       CONNECTIONS: postgres1
       ENGINE_postgres1: postgres@dbgate-plugin-postgres
@@ -58,6 +71,11 @@ services:
       - postgres132_network_local
     ports:
       - ${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT:-15435}:3000
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
 
 volumes:
   postgres132_db_data:

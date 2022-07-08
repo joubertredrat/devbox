@@ -4,19 +4,22 @@ DEVBOX_MEMCACHED16_CACHE_PORT ?= 21211
 DEVBOX_MEMCACHED16_ADMIN_PORT ?= 21212
 
 memcached1.6-up:
-	docker-compose -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} up -d
+	${DOCKER_COMPOSE_CMD} -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} up -d
 
 memcached1.6-down:
-	docker-compose -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} down
+	${DOCKER_COMPOSE_CMD} -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} down
 
 memcached1.6-status:
-	docker-compose -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} ps
+	${DOCKER_COMPOSE_CMD} -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} ps
 
 memcached1.6-logs:
-	docker-compose -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} logs -f
+	${DOCKER_COMPOSE_CMD} -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} logs -f
 
 memcached1.6-purge:
-	docker-compose -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} down --volumes
+	${DOCKER_COMPOSE_CMD} -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME} down --volumes
+
+memcached1.6-command:
+	@echo "${DOCKER_COMPOSE_CMD} -f memcached/1.6/docker-compose.yml -p ${DEVBOX_MEMCACHED16_PROJECT_NAME}"
 
 memcached1.6-help:
 	@echo
@@ -28,6 +31,7 @@ memcached1.6-help:
 	@echo "  make memcached1.6-logs	Logs from running services"
 	@echo "  make memcached1.6-purge	Delete all Memcached 1.6 data"
 	@echo "  make memcached1.6-info	Information about the services for use"
+	@echo "  make memcached1.6-command	Print docker compose command"
 	@echo "  make memcached1.6-help	This help :)"
 	@echo
 	@echo "Available configurable environment variables:"

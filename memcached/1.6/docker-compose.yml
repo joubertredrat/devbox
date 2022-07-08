@@ -16,7 +16,8 @@ services:
   memcached-admin.memcached16.devbox.local:
     image: hatamiarash7/memcached-admin:latest
     depends_on:
-      - cache.memcached16.devbox.local
+      cache.memcached16.devbox.local:
+        condition: service_healthy
     environment:
       MEMCACHED_HOST: cache.memcached16.devbox.local
       MEMCACHED_PORT: 11211

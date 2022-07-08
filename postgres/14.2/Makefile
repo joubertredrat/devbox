@@ -11,19 +11,22 @@ DEVBOX_POSTGRES142_PGWEB_EXPORT_PORT ?= 15444
 DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT ?= 15445
 
 postgres14.2-up:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} up -d
+	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} up -d
 
 postgres14.2-down:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down
+	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down
 
 postgres14.2-status:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} ps
+	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} ps
 
 postgres14.2-logs:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} logs -f
+	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} logs -f
 
 postgres14.2-purge:
-	docker-compose -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down --volumes
+	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down --volumes
+
+postgres14.2-command:
+	@echo "${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES132_PROJECT_NAME}"
 
 postgres14.2-help:
 	@echo
@@ -35,6 +38,7 @@ postgres14.2-help:
 	@echo "  make postgres14.2-logs	Logs from running services"
 	@echo "  make postgres14.2-purge	Delete all Postgres 14.2 data"
 	@echo "  make postgres14.2-info	Information about the services for use"
+	@echo "  make postgres14.2-command	Print docker compose command"
 	@echo "  make postgres14.2-help	This help :)"
 	@echo
 	@echo "Available configurable environment variables:"

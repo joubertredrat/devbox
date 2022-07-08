@@ -7,19 +7,22 @@ DEVBOX_MYSQL57_ADMINER_EXPORT_PORT ?= 13308
 DEVBOX_MYSQL57_DBGATE_EXPORT_PORT ?= 13309
 
 mysql5.7-up:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} up -d
+	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} up -d
 
 mysql5.7-down:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down
+	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down
 
 mysql5.7-status:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} ps
+	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} ps
 
 mysql5.7-logs:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} logs -f
+	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} logs -f
 
 mysql5.7-purge:
-	docker-compose -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down --volumes
+	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down --volumes
+
+mysql5.7-command:
+	@echo "${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME}"
 
 mysql5.7-help:
 	@echo
@@ -31,6 +34,7 @@ mysql5.7-help:
 	@echo "  make mysql5.7-logs		Logs from running services"
 	@echo "  make mysql5.7-purge		Delete all MySQL 5.7 data"
 	@echo "  make mysql5.7-info		Information about the services for use"
+	@echo "  make mysql5.7-command		Print docker compose command"
 	@echo "  make mysql5.7-help		This help :)"
 	@echo
 	@echo "Available configurable environment variables:"
