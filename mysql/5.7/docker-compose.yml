@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   db.mysql57.devbox.local:
+    platform: linux/amd64
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: ${DEVBOX_MYSQL57_ROOT_PASSWORD:-password}
@@ -11,10 +12,17 @@ services:
       - mysql57_network_local
     ports:
       - ${DEVBOX_MYSQL57_DB_EXPORT_PORT:-13306}:3306
+    healthcheck:
+      test: mysqladmin -p${DEVBOX_MYSQL57_ROOT_PASSWORD:-password} ping -h localhost
+      start_period: 10s
+      interval: 3s
+      timeout: 10s
+      retries: 10
   phpmyadmin.mysql57.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
-      - db.mysql57.devbox.local
+      db.mysql57.devbox.local:
+        condition: service_healthy
     environment:
       PMA_HOST: db.mysql57.devbox.local
       PMA_USER: root
@@ -23,20 +31,32 @@ services:
       - mysql57_network_local
     ports:
       - ${DEVBOX_MYSQL57_PMA_EXPORT_PORT:-23306}:80
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
   adminer.mysql57.devbox.local:
     image: adminer:4
     depends_on:
-      - db.mysql57.devbox.local
+      db.mysql57.devbox.local:
+        condition: service_healthy
     environment:
       ADMINER_DEFAULT_SERVER: db.mysql57.devbox.local
     networks:
       - mysql57_network_local
     ports:
       - ${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT:-33306}:8080
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:8080 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
   dbgate.mysql57.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
-      - db.mysql57.devbox.local
+      db.mysql57.devbox.local:
+        condition: service_healthy
     environment:
       CONNECTIONS: mysql1
       LABEL_mysql1: db.mysql57.devbox.local
@@ -49,6 +69,11 @@ services:
       - mysql57_network_local
     ports:
       - ${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT:-43306}:3000
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
 
 volumes:
   mysql57_data:

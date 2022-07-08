@@ -9,10 +9,16 @@ services:
       - redis62_network_local
     ports:
       - ${DEVBOX_REDIS62_DB_EXPORT_PORT:-16379}:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
   phpredisadmin.redis62.devbox.local:
     image: erikdubbelboer/phpredisadmin:latest
     depends_on:
-      - db.redis62.devbox.local
+      db.redis62.devbox.local:
+        condition: service_healthy
     environment:
       REDIS_1_NAME: db.redis62.devbox.local
       REDIS_1_HOST: db.redis62.devbox.local
@@ -21,16 +27,27 @@ services:
       - redis62_network_local
     ports:
       - ${DEVBOX_REDIS62_PRA_EXPORT_PORT:-26379}:80
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
   redis-commander.redis62.devbox.local:
     image: rediscommander/redis-commander:latest
     depends_on:
-      - db.redis62.devbox.local
+      db.redis62.devbox.local:
+        condition: service_healthy
     environment:
       REDIS_HOSTS: db.redis62.devbox.local:db.redis62.devbox.local:6379
     networks:
       - redis62_network_local
     ports:
       - ${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT:-36379}:8081
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
 
 volumes:
   redis62_db_data:

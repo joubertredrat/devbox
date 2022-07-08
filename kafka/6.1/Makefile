@@ -6,16 +6,19 @@ DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT ?= 29093
 DEVBOX_KAFKA61_KOWL_EXPORT_PORT ?= 29094
 
 kafka6.1-up:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} up -d
+	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} up -d
 
 kafka6.1-down:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} down --volumes
+	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} down --volumes
 
 kafka6.1-status:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} ps
+	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} ps
 
 kafka6.1-logs:
-	docker-compose -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} logs -f
+	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} logs -f
+
+kafka6.1-command:
+	@echo "${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME}"
 
 kafka6.1-help:
 	@echo
@@ -26,6 +29,7 @@ kafka6.1-help:
 	@echo "  make kafka6.1-status		Status from running services"
 	@echo "  make kafka6.1-logs		Logs from running services"
 	@echo "  make kafka6.1-info		Information about the services for use"
+	@echo "  make kafka6.1-command		Print docker compose command"
 	@echo "  make kafka6.1-help		This help :)"
 	@echo
 	@echo "Available configurable environment variables:"

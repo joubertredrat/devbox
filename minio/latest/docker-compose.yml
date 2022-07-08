@@ -17,6 +17,11 @@ services:
     ports:
       - ${DEVBOX_MINIO_API_EXPORT_PORT:-29000}:9000
       - ${DEVBOX_MINIO_CONSOLE_EXPORT_PORT:-29001}:9001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
 
 volumes:
   minio-latest_storage_data:

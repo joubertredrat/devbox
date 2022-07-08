@@ -11,10 +11,17 @@ services:
       - mariadb105_network_local
     ports:
       - ${DEVBOX_MARIADB105_DB_EXPORT_PORT:-13306}:3306
+    healthcheck:
+      test: mysqladmin -p${DEVBOX_MARIADB105_ROOT_PASSWORD:-password} ping -h localhost
+      start_period: 10s
+      interval: 3s
+      timeout: 10s
+      retries: 10
   phpmyadmin.mariadb105.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
-      - db.mariadb105.devbox.local
+      db.mariadb105.devbox.local:
+        condition: service_healthy
     environment:
       PMA_HOST: db.mariadb105.devbox.local
       PMA_USER: root
@@ -23,20 +30,32 @@ services:
       - mariadb105_network_local
     ports:
       - ${DEVBOX_MARIADB105_PMA_EXPORT_PORT:-23306}:80
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
   adminer.mariadb105.devbox.local:
     image: adminer:4
     depends_on:
-      - db.mariadb105.devbox.local
+      db.mariadb105.devbox.local:
+        condition: service_healthy
     environment:
       ADMINER_DEFAULT_SERVER: db.mariadb105.devbox.local
     networks:
       - mariadb105_network_local
     ports:
       - ${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT:-33306}:8080
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:8080 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
   dbgate.mariadb105.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
-      - db.mariadb105.devbox.local
+      db.mariadb105.devbox.local:
+        condition: service_healthy
     environment:
       CONNECTIONS: mariadb1
       LABEL_mariadb1: db.mariadb105.devbox.local
@@ -49,6 +68,11 @@ services:
       - mariadb105_network_local
     ports:
       - ${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT:-43306}:3000
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
 
 volumes:
   mariadb105_data:

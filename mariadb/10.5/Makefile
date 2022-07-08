@@ -7,19 +7,22 @@ DEVBOX_MARIADB105_ADMINER_EXPORT_PORT ?= 13308
 DEVBOX_MARIADB105_DBGATE_EXPORT_PORT ?= 13309
 
 mariadb10.5-up:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} up -d
+	${DOCKER_COMPOSE_CMD} -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} up -d
 
 mariadb10.5-down:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} down
+	${DOCKER_COMPOSE_CMD} -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} down
 
 mariadb10.5-status:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} ps
+	${DOCKER_COMPOSE_CMD} -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} ps
 
 mariadb10.5-logs:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} logs -f
+	${DOCKER_COMPOSE_CMD} -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} logs -f
 
 mariadb10.5-purge:
-	docker-compose -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} down --volumes
+	${DOCKER_COMPOSE_CMD} -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME} down --volumes
+
+mariadb10.5-command:
+	@echo "${DOCKER_COMPOSE_CMD} -f mariadb/10.5/docker-compose.yml -p ${DEVBOX_MARIADB105_PROJECT_NAME}"
 
 mariadb10.5-help:
 	@echo
@@ -31,6 +34,7 @@ mariadb10.5-help:
 	@echo "  make mariadb10.5-logs		Logs from running services"
 	@echo "  make mariadb10.5-purge	Delete all MariaDB 10.5 data"
 	@echo "  make mariadb10.5-info		Information about the services for use"
+	@echo "  make mariadb10.5-command	Print docker compose command"
 	@echo "  make mariadb10.5-help		This help :)"
 	@echo
 	@echo "Available configurable environment variables:"
