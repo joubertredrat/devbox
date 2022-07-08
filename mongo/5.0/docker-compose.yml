@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  db.mongo50.devbox.local:
+    image: mongo:5.0-focal
+    volumes:
+      - mongo50_db_data:/data/db
+    networks:
+      - mongo50_network_local
+    ports:
+      - ${DEVBOX_MONGO50_DB_EXPORT_PORT:-28017}:27017
+    healthcheck:
+      test: ["CMD", "mongo", "--quiet", "127.0.0.1/test", "--eval", "'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)'"]
+      start_period: 20s
+      interval: 10s
+      timeout: 10s
+      retries: 10
+  mongo-express.mongo50.devbox.local:
+    image: mongo-express:0.54
+    depends_on:
+      db.mongo50.devbox.local:
+        condition: service_healthy
+    environment:
+      ME_CONFIG_MONGODB_SERVER: db.mongo50.devbox.local
+    networks:
+      - mongo50_network_local
+    ports:
+      - ${DEVBOX_MONGO50_EXPRESS_EXPORT_PORT:-28018}:8081
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 8081 || exit 1"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
+  dbgate.mongo50.devbox.local:
+    image: dbgate/dbgate:latest
+    depends_on:
+      db.mongo50.devbox.local:
+        condition: service_healthy
+    environment:
+      CONNECTIONS: mongo1
+      ENGINE_mongo1: mongo@dbgate-plugin-mongo
+      LABEL_mongo1: db.mongo50.devbox.local
+      SERVER_mongo1: db.mongo50.devbox.local
+      PORT_mongo1: 27017
+    networks:
+      - mongo50_network_local
+    ports:
+      - ${DEVBOX_MONGO50_DBGATE_EXPORT_PORT:-28019}:3000
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
+  nosqlclient.mongo50.devbox.local:
+    image: mongoclient/mongoclient:4.0.1
+    depends_on:
+      db.mongo50.devbox.local:
+        condition: service_healthy
+    environment:
+      MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://db.mongo50.devbox.local:27017
+    volumes:
+      - mongo50_nosqlclient_data:/data/db
+    networks:
+      - mongo50_network_local
+    ports:
+      - ${DEVBOX_MONGO50_NOSQLCLIENT_EXPORT_PORT:-28020}:3000
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:3000 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+volumes:
+  mongo50_db_data:
+  mongo50_nosqlclient_data:
+
+networks:
+  mongo50_network_local:
+    driver: bridge
