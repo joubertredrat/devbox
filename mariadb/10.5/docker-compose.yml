@@ -29,7 +29,7 @@ services:
     networks:
       - mariadb105_network_local
     ports:
-      - ${DEVBOX_MARIADB105_PMA_EXPORT_PORT:-23306}:80
+      - ${DEVBOX_MARIADB105_PMA_EXPORT_PORT:-13307}:80
     healthcheck:
       test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
       interval: 5s
@@ -45,7 +45,7 @@ services:
     networks:
       - mariadb105_network_local
     ports:
-      - ${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT:-33306}:8080
+      - ${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT:-13308}:8080
     healthcheck:
       test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:8080 > /dev/null || exit 1"]
       interval: 5s
@@ -67,7 +67,7 @@ services:
     networks:
       - mariadb105_network_local
     ports:
-      - ${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT:-43306}:3000
+      - ${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT:-13309}:3000
     healthcheck:
       test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
       interval: 3s

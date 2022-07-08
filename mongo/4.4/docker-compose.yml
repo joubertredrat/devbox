@@ -25,7 +25,7 @@ services:
     networks:
       - mongo44_network_local
     ports:
-      - ${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT:-37017}:8081
+      - ${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT:-27018}:8081
     healthcheck:
       test: ["CMD-SHELL", "nc -z 127.0.0.1 8081 || exit 1"]
       interval: 3s
@@ -45,7 +45,7 @@ services:
     networks:
       - mongo44_network_local
     ports:
-      - ${DEVBOX_MONGO44_DBGATE_EXPORT_PORT:-47017}:3000
+      - ${DEVBOX_MONGO44_DBGATE_EXPORT_PORT:-27019}:3000
     healthcheck:
       test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
       interval: 3s
@@ -63,7 +63,7 @@ services:
     networks:
       - mongo44_network_local
     ports:
-      - ${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT:-57017}:3000
+      - ${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT:-27020}:3000
     healthcheck:
       test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:3000 > /dev/null || exit 1"]
       interval: 5s
