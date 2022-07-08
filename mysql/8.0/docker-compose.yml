@@ -1,74 +1,74 @@
 version: "3.8"
 
 services:
-  db.mysql57.devbox.local:
+  db.mysql80.devbox.local:
     platform: linux/amd64
-    image: mysql:5.7
+    image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: ${DEVBOX_MYSQL57_ROOT_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DEVBOX_MYSQL80_ROOT_PASSWORD:-password}
     volumes:
-      - mysql57_data:/var/lib/mysql
+      - mysql80_data:/var/lib/mysql
     networks:
-      - mysql57_network_local
+      - mysql80_network_local
     ports:
-      - ${DEVBOX_MYSQL57_DB_EXPORT_PORT:-13306}:3306
+      - ${DEVBOX_MYSQL80_DB_EXPORT_PORT:-13406}:3306
     healthcheck:
-      test: mysqladmin -p${DEVBOX_MYSQL57_ROOT_PASSWORD:-password} ping -h localhost
+      test: mysqladmin -p${DEVBOX_MYSQL80_ROOT_PASSWORD:-password} ping -h localhost
       start_period: 10s
       interval: 3s
       timeout: 10s
       retries: 10
-  phpmyadmin.mysql57.devbox.local:
+  phpmyadmin.mysql80.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
-      db.mysql57.devbox.local:
+      db.mysql80.devbox.local:
         condition: service_healthy
     environment:
-      PMA_HOST: db.mysql57.devbox.local
+      PMA_HOST: db.mysql80.devbox.local
       PMA_USER: root
-      PMA_PASSWORD: ${DEVBOX_MYSQL57_ROOT_PASSWORD:-password}
+      PMA_PASSWORD: ${DEVBOX_MYSQL80_ROOT_PASSWORD:-password}
     networks:
-      - mysql57_network_local
+      - mysql80_network_local
     ports:
-      - ${DEVBOX_MYSQL57_PMA_EXPORT_PORT:-13407}:80
+      - ${DEVBOX_MYSQL80_PMA_EXPORT_PORT:-13407}:80
     healthcheck:
       test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
       interval: 5s
       timeout: 2s
       retries: 60
-  adminer.mysql57.devbox.local:
+  adminer.mysql80.devbox.local:
     image: adminer:4
     depends_on:
-      db.mysql57.devbox.local:
+      db.mysql80.devbox.local:
         condition: service_healthy
     environment:
-      ADMINER_DEFAULT_SERVER: db.mysql57.devbox.local
+      ADMINER_DEFAULT_SERVER: db.mysql80.devbox.local
     networks:
-      - mysql57_network_local
+      - mysql80_network_local
     ports:
-      - ${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT:-13408}:8080
+      - ${DEVBOX_MYSQL80_ADMINER_EXPORT_PORT:-13408}:8080
     healthcheck:
       test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:8080 > /dev/null || exit 1"]
       interval: 5s
       timeout: 2s
       retries: 60
-  dbgate.mysql57.devbox.local:
+  dbgate.mysql80.devbox.local:
     image: dbgate/dbgate:latest
     depends_on:
-      db.mysql57.devbox.local:
+      db.mysql80.devbox.local:
         condition: service_healthy
     environment:
       CONNECTIONS: mysql1
-      LABEL_mysql1: db.mysql57.devbox.local
-      SERVER_mysql1: db.mysql57.devbox.local
+      LABEL_mysql1: db.mysql80.devbox.local
+      SERVER_mysql1: db.mysql80.devbox.local
       USER_mysql1: root
-      PASSWORD_mysql1: ${DEVBOX_MYSQL57_ROOT_PASSWORD:-password}
+      PASSWORD_mysql1: ${DEVBOX_MYSQL80_ROOT_PASSWORD:-password}
       PORT_mysql1: 3306
       ENGINE_mysql1: mysql@dbgate-plugin-mysql
     networks:
-      - mysql57_network_local
+      - mysql80_network_local
     ports:
-      - ${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT:-13409}:3000
+      - ${DEVBOX_MYSQL80_DBGATE_EXPORT_PORT:-13409}:3000
     healthcheck:
       test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
       interval: 3s
@@ -76,8 +76,8 @@ services:
       retries: 10
 
 volumes:
-  mysql57_data:
+  mysql80_data:
 
 networks:
-  mysql57_network_local:
+  mysql80_network_local:
     driver: bridge

@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  broker.rabbitmq310.devbox.local:
+    image: rabbitmq:3.10-management-alpine
+    networks:
+      - rabbitmq310_network_local
+    ports:
+      - ${DEVBOX_RABBITMQ310_BROKER_PORT:-15671}:5672
+      - ${DEVBOX_RABBITMQ310_MANAGEMENT_PORT:-15672}:15672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+networks:
+  rabbitmq310_network_local:
+    driver: bridge
