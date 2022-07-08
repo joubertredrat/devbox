@@ -26,6 +26,7 @@ help:
 	@echo "  make postgres14.2-help		Help about Postgres 14.2 services"
 	@echo "  make rabbitmq3.10-help		Help about RabbitMQ 3.10 services"
 	@echo "  make redis6.2-help			Help about Redis 6.2 services"
+	@echo "  make redis7.0-help			Help about Redis 7.0 services"
 	@echo
 
 include kafka/6.1/Makefile
@@ -40,3 +41,4 @@ include postgres/13.2/Makefile
 include postgres/14.2/Makefile
 include rabbitmq/3.10/Makefile
 include redis/6.2/Makefile
+include redis/7.0/Makefile

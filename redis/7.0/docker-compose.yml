@@ -1,48 +1,48 @@
 version: "3.8"
 
 services:
-  db.redis62.devbox.local:
-    image: redis:6.2-alpine
+  db.redis70.devbox.local:
+    image: redis:7.0-alpine
     volumes:
-      - redis62_db_data:/var/lib/redis
+      - redis70_db_data:/var/lib/redis
     networks:
-      - redis62_network_local
+      - redis70_network_local
     ports:
-      - ${DEVBOX_REDIS62_DB_EXPORT_PORT:-16379}:6379
+      - ${DEVBOX_REDIS70_DB_EXPORT_PORT:-17379}:6379
     healthcheck:
       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
       interval: 5s
       timeout: 2s
       retries: 10
-  phpredisadmin.redis62.devbox.local:
+  phpredisadmin.redis70.devbox.local:
     image: erikdubbelboer/phpredisadmin:latest
     depends_on:
-      db.redis62.devbox.local:
+      db.redis70.devbox.local:
         condition: service_healthy
     environment:
-      REDIS_1_NAME: db.redis62.devbox.local
-      REDIS_1_HOST: db.redis62.devbox.local
+      REDIS_1_NAME: db.redis70.devbox.local
+      REDIS_1_HOST: db.redis70.devbox.local
       REDIS_1_PORT: 6379
     networks:
-      - redis62_network_local
+      - redis70_network_local
     ports:
-      - ${DEVBOX_REDIS62_PRA_EXPORT_PORT:-16380}:80
+      - ${DEVBOX_REDIS70_PRA_EXPORT_PORT:-17380}:80
     healthcheck:
       test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
       interval: 5s
       timeout: 2s
       retries: 20
-  redis-commander.redis62.devbox.local:
+  redis-commander.redis70.devbox.local:
     image: rediscommander/redis-commander:latest
     depends_on:
-      db.redis62.devbox.local:
+      db.redis70.devbox.local:
         condition: service_healthy
     environment:
-      REDIS_HOSTS: db.redis62.devbox.local:db.redis62.devbox.local:6379
+      REDIS_HOSTS: db.redis70.devbox.local:db.redis70.devbox.local:6379
     networks:
-      - redis62_network_local
+      - redis70_network_local
     ports:
-      - ${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT:-16381}:8081
+      - ${DEVBOX_REDIS70_COMMANDER_EXPORT_PORT:-17381}:8081
     healthcheck:
       test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
       interval: 5s
@@ -50,8 +50,8 @@ services:
       retries: 20
 
 volumes:
-  redis62_db_data:
+  redis70_db_data:
 
 networks:
-  redis62_network_local:
+  redis70_network_local:
     driver: bridge
