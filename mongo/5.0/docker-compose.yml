@@ -3,6 +3,9 @@ version: "3.8"
 services:
   db.mongo50.devbox.local:
     image: mongo:5.0-focal
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DEVBOX_MONGO50_DB_USER:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${DEVBOX_MONGO50_DB_PASSWORD:-password}
     volumes:
       - mongo50_db_data:/data/db
     networks:
@@ -22,6 +25,9 @@ services:
         condition: service_healthy
     environment:
       ME_CONFIG_MONGODB_SERVER: db.mongo50.devbox.local
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DEVBOX_MONGO50_DB_USER:-root}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DEVBOX_MONGO50_DB_PASSWORD:-password}
     networks:
       - mongo50_network_local
     ports:
@@ -42,6 +48,8 @@ services:
       LABEL_mongo1: db.mongo50.devbox.local
       SERVER_mongo1: db.mongo50.devbox.local
       PORT_mongo1: 27017
+      USER_mongo1: ${DEVBOX_MONGO50_DB_USER:-root}
+      PASSWORD_mongo1: ${DEVBOX_MONGO50_DB_PASSWORD:-password}
     networks:
       - mongo50_network_local
     ports:
@@ -57,7 +65,7 @@ services:
       db.mongo50.devbox.local:
         condition: service_healthy
     environment:
-      MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://db.mongo50.devbox.local:27017
+      MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://${DEVBOX_MONGO50_DB_USER:-root}:${DEVBOX_MONGO50_DB_PASSWORD:-password}@db.mongo50.devbox.local:27017
     volumes:
       - mongo50_nosqlclient_data:/data/db
     networks:
