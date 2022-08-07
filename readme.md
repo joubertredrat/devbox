@@ -30,6 +30,7 @@ Download or clone this repository and run `make help` to see all informations.
 * Apache Kafka 2.7 on Confluent Platform [6.1.1](https://docs.confluent.io/platform/6.1.1/release-notes/index.html)
 * Memcached [1.6](https://memcached.org/)
 * RabbitMQ [3.10](https://blog.rabbitmq.com/tags/v3.10.x/)
+* Beanstalkd [1.12](https://beanstalkd.github.io/2020/06/04/1.12-release-notes.html)
 
 ## License
 [MIT](/license) license, logo by [Burhan Adiatma](https://www.vecteezy.com/members/gembuls).
