@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  broker.beanstalkd112.devbox.local:
+    image: maateen/docker-beanstalkd:1.12-alpine-latest
+    volumes:
+      - beanstalkd112_broker_data:/var/cache/beanstalkd
+    networks:
+      - beanstalkd112_network_local
+    ports:
+      - ${DEVBOX_BEANSTALKD112_BROKER_PORT:-21300}:11300
+  beanstalk-console.beanstalkd112.devbox.local:
+    image: joubertredrat/devbox:ptrofimov-beanstalk-console-1.7.15
+    depends_on:
+      broker.beanstalkd112.devbox.local:
+        condition: service_healthy
+    environment:
+      BEANSTALKD_HOST: broker.beanstalkd112.devbox.local
+      BEANSTALKD_PORT: 11300
+    networks:
+      - beanstalkd112_network_local
+    ports:
+      - ${DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT:-21301}:80
+    healthcheck:
+      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
+
+volumes:
+  beanstalkd112_broker_data:
+
+networks:
+  beanstalkd112_network_local:
+    driver: bridge

@@ -14,6 +14,7 @@ help:
 	@echo "Devbox: Easily developer environments using docker"
 	@echo "Help commands:"
 	@echo
+	@echo "  make beanstalkd1.12-help		Help about Beanstalkd 1.12 services"
 	@echo "  make kafka6.1-help			Help about Kafka 6.1 services"
 	@echo "  make mariadb10.5-help			Help about MariaDB 10.5 services"
 	@echo "  make mariadb10.6-help			Help about MariaDB 10.6 services"
@@ -30,6 +31,7 @@ help:
 	@echo "  make redis7.0-help			Help about Redis 7.0 services"
 	@echo
 
+include beanstalkd/1.12/Makefile
 include kafka/6.1/Makefile
 include mariadb/10.5/Makefile
 include mariadb/10.6/Makefile
