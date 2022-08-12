@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This project provides a easy and fast way to run development environments using docker, instead installing these locally in your machine. Using this, you can run anyone [services](#services-provided) listed below with web interfaces to manage them.
+This project provides a easy and fast way to run development environments using docker for your project or tests, instead installing these locally in your machine. Using this, you can run anyone [services](#services-provided) listed below with web interfaces to manage them.
 
 ## How to use?
 
