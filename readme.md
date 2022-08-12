@@ -2,8 +2,7 @@
   <img alt="Devbox" src="https://raw.githubusercontent.com/joubertredrat/devbox/master/cube-11.png" />
 </p>
 <h1 align="center">Devbox</h1>
-
-Run dev environments easily and fastly using docker
+<p align="center">Run dev environments easily and fastly using docker</p>
 
 ## Purpose
 
