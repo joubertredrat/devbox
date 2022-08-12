@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Devbox" src="https://raw.githubusercontent.com/joubertredrat/devbox/master/cube-11.png" />
+  <img alt="Devbox" src="./cube-11.png" />
 </p>
 <h1 align="center">Devbox</h1>
 <p align="center">Run dev environments easily and fastly using docker</p>
@@ -7,6 +7,10 @@
 ## Purpose
 
 This project provides a easy and fast way to run development environments using docker for your project or tests, instead installing these locally in your machine. Using this, you can run anyone [services](#services-provided) listed below with web interfaces to manage them.
+
+<p align="center">
+  <img alt="Terminal" src="./terminal.gif" />
+</p>
 
 ## How to use?
 
