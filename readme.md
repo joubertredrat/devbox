@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Devbox</h1>
 
-Run dev environments fastly using docker
+Run dev environments easily and fastly using docker
 
 ## Purpose
 
