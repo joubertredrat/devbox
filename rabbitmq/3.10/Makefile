@@ -40,9 +40,9 @@ rabbitmq3.10-info:
 	@echo
 	@echo "RabbitMQ 3.10 information"
 	@echo
-	@echo "  Broker Host: 		0.0.0.0"
+	@echo "  Broker Host: 		127.0.0.1"
 	@echo "  Broker Port: 		${DEVBOX_RABBITMQ310_BROKER_PORT}"
-	@echo "  Management: 		http://0.0.0.0:${DEVBOX_RABBITMQ310_MANAGEMENT_PORT}"
+	@echo "  Management: 		http://127.0.0.1:${DEVBOX_RABBITMQ310_MANAGEMENT_PORT}"
 	@echo "  Management user: 	guest"
 	@echo "  Management password: 	guest"
 	@echo

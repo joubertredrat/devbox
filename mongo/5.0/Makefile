@@ -52,12 +52,12 @@ mongo5.0-info:
 	@echo
 	@echo "MongoDB 5.0 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_MONGO50_DB_EXPORT_PORT}"
 	@echo "  User: 		${DEVBOX_MONGO50_DB_USER}"
 	@echo "  Password: 		${DEVBOX_MONGO50_DB_PASSWORD}"
-	@echo "  Url: 			mongodb://${DEVBOX_MONGO50_DB_USER}:${DEVBOX_MONGO50_DB_PASSWORD}@db.mongo50.devbox.local:${DEVBOX_MONGO50_DB_EXPORT_PORT}"
-	@echo "  Mongo Express: 	http://0.0.0.0:${DEVBOX_MONGO50_EXPRESS_EXPORT_PORT}"
-	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MONGO50_DBGATE_EXPORT_PORT}"
-	@echo "  Nosqlclient: 		http://0.0.0.0:${DEVBOX_MONGO50_NOSQLCLIENT_EXPORT_PORT}"
+	@echo "  Url: 			mongodb://${DEVBOX_MONGO50_DB_USER}:${DEVBOX_MONGO50_DB_PASSWORD}@127.0.0.1:${DEVBOX_MONGO50_DB_EXPORT_PORT}"
+	@echo "  Mongo Express: 	http://127.0.0.1:${DEVBOX_MONGO50_EXPRESS_EXPORT_PORT}"
+	@echo "  DbGate: 		http://127.0.0.1:${DEVBOX_MONGO50_DBGATE_EXPORT_PORT}"
+	@echo "  Nosqlclient: 		http://127.0.0.1:${DEVBOX_MONGO50_NOSQLCLIENT_EXPORT_PORT}"
 	@echo

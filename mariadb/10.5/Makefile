@@ -50,11 +50,11 @@ mariadb10.5-info:
 	@echo
 	@echo "MariaDB 10.5 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_MARIADB105_DB_EXPORT_PORT}"
 	@echo "  User: 		root"
 	@echo "  Password: 		${DEVBOX_MARIADB105_ROOT_PASSWORD}"
-	@echo "  PhpMyAdmin: 		http://0.0.0.0:${DEVBOX_MARIADB105_PMA_EXPORT_PORT}"
-	@echo "  Adminer: 		http://0.0.0.0:${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT}"
-	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT}"
+	@echo "  PhpMyAdmin: 		http://127.0.0.1:${DEVBOX_MARIADB105_PMA_EXPORT_PORT}"
+	@echo "  Adminer: 		http://127.0.0.1:${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT}"
+	@echo "  DbGate: 		http://127.0.0.1:${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT}"
 	@echo

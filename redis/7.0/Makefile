@@ -46,8 +46,8 @@ redis7.0-info:
 	@echo
 	@echo "Redis 7.0 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_REDIS70_DB_EXPORT_PORT}"
-	@echo "  phpRedisAdmin: 	http://0.0.0.0:${DEVBOX_REDIS70_PRA_EXPORT_PORT}"
-	@echo "  Redis Commander: 	http://0.0.0.0:${DEVBOX_REDIS70_COMMANDER_EXPORT_PORT}"
+	@echo "  phpRedisAdmin: 	http://127.0.0.1:${DEVBOX_REDIS70_PRA_EXPORT_PORT}"
+	@echo "  Redis Commander: 	http://127.0.0.1:${DEVBOX_REDIS70_COMMANDER_EXPORT_PORT}"
 	@echo

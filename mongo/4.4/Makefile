@@ -48,9 +48,9 @@ mongo4.4-info:
 	@echo
 	@echo "MongoDB 4.4 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_MONGO44_DB_EXPORT_PORT}"
-	@echo "  Mongo Express: 	http://0.0.0.0:${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT}"
-	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MONGO44_DBGATE_EXPORT_PORT}"
-	@echo "  Nosqlclient: 		http://0.0.0.0:${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT}"
+	@echo "  Mongo Express: 	http://127.0.0.1:${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT}"
+	@echo "  DbGate: 		http://127.0.0.1:${DEVBOX_MONGO44_DBGATE_EXPORT_PORT}"
+	@echo "  Nosqlclient: 		http://127.0.0.1:${DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT}"
 	@echo
