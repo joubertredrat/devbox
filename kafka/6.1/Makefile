@@ -44,12 +44,12 @@ kafka6.1-info:
 	@echo
 	@echo "Kafka 6.1 information"
 	@echo
-	@echo "  Brokers Host: 	0.0.0.0"
+	@echo "  Brokers Host: 	127.0.0.1"
 	@echo "  Broker 1 Port: 	9092"
 	@echo "  Broker 2 Port: 	9093"
 	@echo "  Broker 3 Port: 	9094"
 	@echo "  Zookeeper Port: 	${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT}"
-	@echo "  Kafdrop: 		http://0.0.0.0:${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT}"
-	@echo "  Kafka UI: 		http://0.0.0.0:${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT}"
-	@echo "  Kowl: 		http://0.0.0.0:${DEVBOX_KAFKA61_KOWL_EXPORT_PORT}"
+	@echo "  Kafdrop: 		http://127.0.0.1:${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT}"
+	@echo "  Kafka UI: 		http://127.0.0.1:${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT}"
+	@echo "  Kowl: 		http://127.0.0.1:${DEVBOX_KAFKA61_KOWL_EXPORT_PORT}"
 	@echo

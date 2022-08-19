@@ -13,10 +13,11 @@ services:
     ports:
       - ${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT:-22181}:2181
     healthcheck:
-      test: ["CMD", "nc", "-vz", "zookeeper.kafka61.devbox.local", "2181"]
-      interval: 2s
-      timeout: 2s
-      retries: 60
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "2181"]
+      start_period: 5s
+      interval: 3s
+      timeout: 1s
+      retries: 20
   broker1.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -36,10 +37,11 @@ services:
     ports:
       - 9092:9092
     healthcheck:
-      test: ["CMD", "nc", "-vz", "broker1.kafka61.devbox.local", "19092"]
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "9092"]
+      start_period: 80s
       interval: 3s
-      timeout: 5s
-      retries: 60
+      timeout: 1s
+      retries: 20
   broker2.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -60,10 +62,11 @@ services:
     ports:
       - 9093:9093
     healthcheck:
-      test: ["CMD", "nc", "-vz", "broker2.kafka61.devbox.local", "19093"]
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "9093"]
+      start_period: 80s
       interval: 3s
-      timeout: 5s
-      retries: 60
+      timeout: 1s
+      retries: 20
   broker3.kafka61.devbox.local:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
@@ -86,10 +89,11 @@ services:
     ports:
       - 9094:9094
     healthcheck:
-      test: ["CMD", "nc", "-vz", "broker3.kafka61.devbox.local", "19094"]
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "9094"]
+      start_period: 80s
       interval: 3s
-      timeout: 5s
-      retries: 160
+      timeout: 1s
+      retries: 20
   kafdrop.kafka61.devbox.local:
     image: obsidiandynamics/kafdrop:3.27.0
     depends_on:
@@ -106,10 +110,10 @@ services:
     ports:
       - ${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT:-29092}:9000
     healthcheck:
-      test: ["CMD", "nc", "-vz", "kafdrop.kafka61.devbox.local", "9000"]
-      interval: 2s
-      timeout: 5s
-      retries: 10
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:9000"]
+      interval: 3s
+      timeout: 1s
+      retries: 40
   kafka-ui.kafka61.devbox.local:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
@@ -128,10 +132,10 @@ services:
     ports:
       - ${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT:-29093}:8080
     healthcheck:
-      test: ["CMD", "nc", "-vz", "kafka-ui.kafka61.devbox.local", "8080"]
-      interval: 2s
-      timeout: 5s
-      retries: 10
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:8080"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
   kowl.kafka61.devbox.local:
     image: quay.io/cloudhut/kowl:master
     depends_on:
@@ -148,10 +152,10 @@ services:
     ports:
       - ${DEVBOX_KAFKA61_KOWL_EXPORT_PORT:-29094}:8080
     healthcheck:
-      test: ["CMD", "nc", "-vz", "kowl.kafka61.devbox.local", "8080"]
-      interval: 2s
-      timeout: 5s
-      retries: 10
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "8080"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
 
 volumes:
   kafka61_zookeeper_data:

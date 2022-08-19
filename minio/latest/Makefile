@@ -54,8 +54,8 @@ minio-info:
 	@echo
 	@echo "MinIO latest information"
 	@echo
-	@echo "  API: 			http://0.0.0.0:${DEVBOX_MINIO_API_EXPORT_PORT}"
-	@echo "  Console web: 		http://0.0.0.0:${DEVBOX_MINIO_CONSOLE_EXPORT_PORT}"
+	@echo "  API: 			http://127.0.0.1:${DEVBOX_MINIO_API_EXPORT_PORT}"
+	@echo "  Console web: 		http://127.0.0.1:${DEVBOX_MINIO_CONSOLE_EXPORT_PORT}"
 	@echo "  Region: 		${DEVBOX_MINIO_STORAGE_REGION}"
 	@echo "  Access key: 		${DEVBOX_MINIO_STORAGE_ACCESS_KEY}"
 	@echo "  Secret key: 		${DEVBOX_MINIO_STORAGE_SECRET_KEY}"

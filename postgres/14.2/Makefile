@@ -26,7 +26,7 @@ postgres14.2-purge:
 	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down --volumes
 
 postgres14.2-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES132_PROJECT_NAME}"
+	@echo "${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME}"
 
 postgres14.2-help:
 	@echo
@@ -58,14 +58,15 @@ postgres14.2-info:
 	@echo
 	@echo "Postgres 14.2 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_POSTGRES142_DB_EXPORT_PORT}"
 	@echo "  User: 		${DEVBOX_POSTGRES142_POSTGRES_USER}"
 	@echo "  Password: 		${DEVBOX_POSTGRES142_POSTGRES_PASSWORD}"
 	@echo "  Database: 		${DEVBOX_POSTGRES142_POSTGRES_DB}"
-	@echo "  PgAdmin: 		http://0.0.0.0:${DEVBOX_POSTGRES142_PGADMIN_EXPORT_PORT}"
+	@echo "  Url:			postgres://${DEVBOX_POSTGRES142_POSTGRES_USER}:${DEVBOX_POSTGRES142_POSTGRES_PASSWORD}@127.0.0.1:${DEVBOX_POSTGRES142_DB_EXPORT_PORT}/${DEVBOX_POSTGRES142_POSTGRES_DB}?sslmode=disable"
+	@echo "  PgAdmin: 		http://127.0.0.1:${DEVBOX_POSTGRES142_PGADMIN_EXPORT_PORT}"
 	@echo "  PgAdmin user: 	${DEVBOX_POSTGRES142_PGADMIN_EMAIL}"
 	@echo "  PgAdmin password: 	${DEVBOX_POSTGRES142_PGADMIN_PASSWORD}"
-	@echo "  Pgweb: 		http://0.0.0.0:${DEVBOX_POSTGRES142_PGWEB_EXPORT_PORT}"
-	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT}"
+	@echo "  Pgweb: 		http://127.0.0.1:${DEVBOX_POSTGRES142_PGWEB_EXPORT_PORT}"
+	@echo "  DbGate: 		http://127.0.0.1:${DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT}"
 	@echo

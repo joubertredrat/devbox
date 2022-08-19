@@ -50,11 +50,11 @@ mysql5.7-info:
 	@echo
 	@echo "MySQL 5.7 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_MYSQL57_DB_EXPORT_PORT}"
 	@echo "  User: 		root"
 	@echo "  Password: 		${DEVBOX_MYSQL57_ROOT_PASSWORD}"
-	@echo "  PhpMyAdmin: 		http://0.0.0.0:${DEVBOX_MYSQL57_PMA_EXPORT_PORT}"
-	@echo "  Adminer: 		http://0.0.0.0:${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT}"
-	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT}"
+	@echo "  PhpMyAdmin: 		http://127.0.0.1:${DEVBOX_MYSQL57_PMA_EXPORT_PORT}"
+	@echo "  Adminer: 		http://127.0.0.1:${DEVBOX_MYSQL57_ADMINER_EXPORT_PORT}"
+	@echo "  DbGate: 		http://127.0.0.1:${DEVBOX_MYSQL57_DBGATE_EXPORT_PORT}"
 	@echo

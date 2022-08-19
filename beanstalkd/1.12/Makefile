@@ -38,3 +38,12 @@ beanstalkd1.12-help:
 	@echo
 	@echo "  DEVBOX_BEANSTALKD112_BROKER_PORT		Port to expose Beanstalkd 1.12 in docker for your environment"
 	@echo "  DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT	Port to expose Beanstalkd console in docker for access in your browser"
+
+beanstalkd1.12-info:
+	@echo
+	@echo "Beanstalkd 1.12 information"
+	@echo
+	@echo "  Broker Host: 		127.0.0.1"
+	@echo "  Broker Port: 		${DEVBOX_BEANSTALKD112_BROKER_PORT}"
+	@echo "  Management: 		http://127.0.0.1:${DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT}"
+	@echo

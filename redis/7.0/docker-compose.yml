@@ -11,9 +11,9 @@ services:
       - ${DEVBOX_REDIS70_DB_EXPORT_PORT:-17379}:6379
     healthcheck:
       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-      interval: 5s
-      timeout: 2s
-      retries: 10
+      interval: 3s
+      timeout: 1s
+      retries: 20
   phpredisadmin.redis70.devbox.local:
     image: erikdubbelboer/phpredisadmin:latest
     depends_on:
@@ -28,9 +28,9 @@ services:
     ports:
       - ${DEVBOX_REDIS70_PRA_EXPORT_PORT:-17380}:80
     healthcheck:
-      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
-      interval: 5s
-      timeout: 2s
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
+      interval: 3s
+      timeout: 1s
       retries: 20
   redis-commander.redis70.devbox.local:
     image: rediscommander/redis-commander:latest
@@ -45,8 +45,8 @@ services:
       - ${DEVBOX_REDIS70_COMMANDER_EXPORT_PORT:-17381}:8081
     healthcheck:
       test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
-      interval: 5s
-      timeout: 2s
+      interval: 3s
+      timeout: 1s
       retries: 20
 
 volumes:

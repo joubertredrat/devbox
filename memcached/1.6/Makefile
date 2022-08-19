@@ -44,7 +44,7 @@ memcached1.6-info:
 	@echo
 	@echo "Memcached 1.6 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_MEMCACHED16_CACHE_PORT}"
-	@echo "  Memcached admin: 	http://0.0.0.0:${DEVBOX_MEMCACHED16_ADMIN_PORT}"
+	@echo "  Memcached admin: 	http://127.0.0.1:${DEVBOX_MEMCACHED16_ADMIN_PORT}"
 	@echo

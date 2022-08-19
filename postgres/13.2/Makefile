@@ -58,14 +58,15 @@ postgres13.2-info:
 	@echo
 	@echo "Postgres 13.2 information"
 	@echo
-	@echo "  Host: 		0.0.0.0"
+	@echo "  Host: 		127.0.0.1"
 	@echo "  Port: 		${DEVBOX_POSTGRES132_DB_EXPORT_PORT}"
 	@echo "  User: 		${DEVBOX_POSTGRES132_POSTGRES_USER}"
 	@echo "  Password: 		${DEVBOX_POSTGRES132_POSTGRES_PASSWORD}"
 	@echo "  Database: 		${DEVBOX_POSTGRES132_POSTGRES_DB}"
-	@echo "  PgAdmin: 		http://0.0.0.0:${DEVBOX_POSTGRES132_PGADMIN_EXPORT_PORT}"
+	@echo "  Url:			postgres://${DEVBOX_POSTGRES132_POSTGRES_USER}:${DEVBOX_POSTGRES132_POSTGRES_PASSWORD}@127.0.0.1:${DEVBOX_POSTGRES132_DB_EXPORT_PORT}/${DEVBOX_POSTGRES132_POSTGRES_DB}?sslmode=disable"
+	@echo "  PgAdmin: 		http://127.0.0.1:${DEVBOX_POSTGRES132_PGADMIN_EXPORT_PORT}"
 	@echo "  PgAdmin user: 	${DEVBOX_POSTGRES132_PGADMIN_EMAIL}"
 	@echo "  PgAdmin password: 	${DEVBOX_POSTGRES132_PGADMIN_PASSWORD}"
-	@echo "  Pgweb: 		http://0.0.0.0:${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT}"
-	@echo "  DbGate: 		http://0.0.0.0:${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT}"
+	@echo "  Pgweb: 		http://127.0.0.1:${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT}"
+	@echo "  DbGate: 		http://127.0.0.1:${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT}"
 	@echo
