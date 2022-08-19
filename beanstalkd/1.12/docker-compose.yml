@@ -22,10 +22,10 @@ services:
     ports:
       - ${DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT:-21301}:80
     healthcheck:
-      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
-      interval: 5s
-      timeout: 2s
-      retries: 60
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
 
 volumes:
   beanstalkd112_broker_data:

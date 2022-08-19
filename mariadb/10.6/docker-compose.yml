@@ -13,10 +13,10 @@ services:
       - ${DEVBOX_MARIADB106_DB_EXPORT_PORT:-14306}:3306
     healthcheck:
       test: mysqladmin -p${DEVBOX_MARIADB106_ROOT_PASSWORD:-password} ping -h localhost
-      start_period: 10s
+      start_period: 5s
       interval: 3s
-      timeout: 10s
-      retries: 10
+      timeout: 1s
+      retries: 20
   phpmyadmin.mariadb106.devbox.local:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
@@ -31,10 +31,10 @@ services:
     ports:
       - ${DEVBOX_MARIADB106_PMA_EXPORT_PORT:-14307}:80
     healthcheck:
-      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1 > /dev/null || exit 1"]
-      interval: 5s
-      timeout: 2s
-      retries: 60
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
   adminer.mariadb106.devbox.local:
     image: adminer:4
     depends_on:
@@ -47,12 +47,12 @@ services:
     ports:
       - ${DEVBOX_MARIADB106_ADMINER_EXPORT_PORT:-14308}:8080
     healthcheck:
-      test: ["CMD-SHELL", "curl --connect-timeout 5 -s http://127.0.0.1:8080 > /dev/null || exit 1"]
-      interval: 5s
-      timeout: 2s
-      retries: 60
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:8080"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
   dbgate.mariadb106.devbox.local:
-    image: dbgate/dbgate:latest
+    image: dbgate/dbgate:alpine
     depends_on:
       db.mariadb106.devbox.local:
         condition: service_healthy
@@ -69,10 +69,10 @@ services:
     ports:
       - ${DEVBOX_MARIADB106_DBGATE_EXPORT_PORT:-14309}:3000
     healthcheck:
-      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "3000"]
       interval: 3s
-      timeout: 10s
-      retries: 10
+      timeout: 1s
+      retries: 20
 
 volumes:
   mariadb106_data:
