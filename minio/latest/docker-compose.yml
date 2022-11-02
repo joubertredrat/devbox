@@ -1,7 +1,7 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  storage.minio-latest.devbox.local:
+  bucket:
     image: minio/minio:latest
     environment:
       MINIO_REGION: ${DEVBOX_MINIO_STORAGE_REGION:-us-east-1}
@@ -14,6 +14,7 @@ services:
     command: server --address 0.0.0.0:9000 --console-address 0.0.0.0:9001 /data
     networks:
       - minio-latest_network_local
+    hostname: bucket.minio-latest.devbox.local
     ports:
       - ${DEVBOX_MINIO_API_EXPORT_PORT:-29000}:9000
       - ${DEVBOX_MINIO_CONSOLE_EXPORT_PORT:-29001}:9001

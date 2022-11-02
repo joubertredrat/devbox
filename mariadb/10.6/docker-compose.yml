@@ -1,7 +1,7 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  db.mariadb106.devbox.local:
+  db:
     image: mariadb:10.6
     environment:
       MYSQL_ROOT_PASSWORD: ${DEVBOX_MARIADB106_ROOT_PASSWORD:-password}
@@ -9,6 +9,7 @@ services:
       - mariadb106_data:/var/lib/mysql
     networks:
       - mariadb106_network_local
+    hostname: db.mariadb106.devbox.local
     ports:
       - ${DEVBOX_MARIADB106_DB_EXPORT_PORT:-14306}:3306
     healthcheck:
@@ -17,10 +18,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  phpmyadmin.mariadb106.devbox.local:
+  phpmyadmin:
     image: phpmyadmin/phpmyadmin:5
     depends_on:
-      db.mariadb106.devbox.local:
+      db:
         condition: service_healthy
     environment:
       PMA_HOST: db.mariadb106.devbox.local
@@ -28,6 +29,7 @@ services:
       PMA_PASSWORD: ${DEVBOX_MARIADB106_ROOT_PASSWORD:-password}
     networks:
       - mariadb106_network_local
+    hostname: phpmyadmin.mariadb106.devbox.local
     ports:
       - ${DEVBOX_MARIADB106_PMA_EXPORT_PORT:-14307}:80
     healthcheck:
@@ -35,15 +37,16 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  adminer.mariadb106.devbox.local:
+  adminer:
     image: adminer:4
     depends_on:
-      db.mariadb106.devbox.local:
+      db:
         condition: service_healthy
     environment:
       ADMINER_DEFAULT_SERVER: db.mariadb106.devbox.local
     networks:
       - mariadb106_network_local
+    hostname: adminer.mariadb106.devbox.local
     ports:
       - ${DEVBOX_MARIADB106_ADMINER_EXPORT_PORT:-14308}:8080
     healthcheck:
@@ -51,10 +54,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  dbgate.mariadb106.devbox.local:
+  dbgate:
     image: dbgate/dbgate:alpine
     depends_on:
-      db.mariadb106.devbox.local:
+      db:
         condition: service_healthy
     environment:
       CONNECTIONS: mariadb1
@@ -66,6 +69,7 @@ services:
       ENGINE_mariadb1: mysql@dbgate-plugin-mysql
     networks:
       - mariadb106_network_local
+    hostname: dbgate.mariadb106.devbox.local
     ports:
       - ${DEVBOX_MARIADB106_DBGATE_EXPORT_PORT:-14309}:3000
     healthcheck:

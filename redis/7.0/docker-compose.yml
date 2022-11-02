@@ -1,12 +1,13 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  db.redis70.devbox.local:
+  db:
     image: redis:7.0-alpine
     volumes:
       - redis70_db_data:/var/lib/redis
     networks:
       - redis70_network_local
+    hostname: db.redis70.devbox.local
     ports:
       - ${DEVBOX_REDIS70_DB_EXPORT_PORT:-17379}:6379
     healthcheck:
@@ -14,10 +15,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  phpredisadmin.redis70.devbox.local:
+  phpredisadmin:
     image: erikdubbelboer/phpredisadmin:latest
     depends_on:
-      db.redis70.devbox.local:
+      db:
         condition: service_healthy
     environment:
       REDIS_1_NAME: db.redis70.devbox.local
@@ -25,6 +26,7 @@ services:
       REDIS_1_PORT: 6379
     networks:
       - redis70_network_local
+    hostname: phpredisadmin.redis70.devbox.local
     ports:
       - ${DEVBOX_REDIS70_PRA_EXPORT_PORT:-17380}:80
     healthcheck:
@@ -32,15 +34,16 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  redis-commander.redis70.devbox.local:
+  redis-commander:
     image: rediscommander/redis-commander:latest
     depends_on:
-      db.redis70.devbox.local:
+      db:
         condition: service_healthy
     environment:
       REDIS_HOSTS: db.redis70.devbox.local:db.redis70.devbox.local:6379
     networks:
       - redis70_network_local
+    hostname: redis-commander.redis70.devbox.local
     ports:
       - ${DEVBOX_REDIS70_COMMANDER_EXPORT_PORT:-17381}:8081
     healthcheck:

@@ -1,7 +1,7 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  zookeeper.kafka61.devbox.local:
+  zookeeper:
     image: confluentinc/cp-zookeeper:6.1.1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -10,6 +10,7 @@ services:
       - kafka61_zookeeper_data:/data
     networks:
       - kafka61_network_local
+    hostname: zookeeper.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT:-22181}:2181
     healthcheck:
@@ -18,10 +19,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  broker1.kafka61.devbox.local:
+  broker1:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
-      zookeeper.kafka61.devbox.local:
+      zookeeper:
         condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 1
@@ -34,6 +35,7 @@ services:
       - kafka61_broker1_data:/var/lib/kafka/data
     networks:
       - kafka61_network_local
+    hostname: broker1.kafka61.devbox.local
     ports:
       - 9092:9092
     healthcheck:
@@ -42,12 +44,12 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  broker2.kafka61.devbox.local:
+  broker2:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
-      zookeeper.kafka61.devbox.local:
+      zookeeper:
         condition: service_healthy
-      broker1.kafka61.devbox.local:
+      broker1:
         condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 2
@@ -59,6 +61,7 @@ services:
       - kafka61_broker2_data:/var/lib/kafka/data
     networks:
       - kafka61_network_local
+    hostname: broker2.kafka61.devbox.local
     ports:
       - 9093:9093
     healthcheck:
@@ -67,14 +70,14 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  broker3.kafka61.devbox.local:
+  broker3:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
-      zookeeper.kafka61.devbox.local:
+      zookeeper:
         condition: service_healthy
-      broker1.kafka61.devbox.local:
+      broker1:
         condition: service_healthy
-      broker2.kafka61.devbox.local:
+      broker2:
         condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 3
@@ -86,6 +89,7 @@ services:
       - kafka61_broker3_data:/var/lib/kafka/data
     networks:
       - kafka61_network_local
+    hostname: broker3.kafka61.devbox.local
     ports:
       - 9094:9094
     healthcheck:
@@ -94,19 +98,20 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  kafdrop.kafka61.devbox.local:
+  kafdrop:
     image: obsidiandynamics/kafdrop:3.27.0
     depends_on:
-      broker1.kafka61.devbox.local:
+      broker1:
         condition: service_healthy
-      broker2.kafka61.devbox.local:
+      broker2:
         condition: service_healthy
-      broker3.kafka61.devbox.local:
+      broker3:
         condition: service_healthy
     environment:
       KAFKA_BROKERCONNECT: broker1.kafka61.devbox.local:19092
     networks:
       - kafka61_network_local
+    hostname: kafdrop.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT:-29092}:9000
     healthcheck:
@@ -114,14 +119,14 @@ services:
       interval: 3s
       timeout: 1s
       retries: 40
-  kafka-ui.kafka61.devbox.local:
+  kafka-ui:
     image: provectuslabs/kafka-ui:0.0.10
     depends_on:
-      broker1.kafka61.devbox.local:
+      broker1:
         condition: service_healthy
-      broker2.kafka61.devbox.local:
+      broker2:
         condition: service_healthy
-      broker3.kafka61.devbox.local:
+      broker3:
         condition: service_healthy
     environment:
       KAFKA_CLUSTERS_0_NAME: broker1.kafka61.devbox.local:19092
@@ -129,6 +134,7 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper.kafka61.devbox.local:2181
     networks:
       - kafka61_network_local
+    hostname: kafka-ui.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT:-29093}:8080
     healthcheck:
@@ -136,19 +142,20 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  kowl.kafka61.devbox.local:
+  kowl:
     image: quay.io/cloudhut/kowl:master
     depends_on:
-      broker1.kafka61.devbox.local:
+      broker1:
         condition: service_healthy
-      broker2.kafka61.devbox.local:
+      broker2:
         condition: service_healthy
-      broker3.kafka61.devbox.local:
+      broker3:
         condition: service_healthy
     environment:
       KAFKA_BROKERS: broker1.kafka61.devbox.local:19092
     networks:
       - kafka61_network_local
+    hostname: kowl.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_KOWL_EXPORT_PORT:-29094}:8080
     healthcheck:

@@ -1,24 +1,26 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  broker.beanstalkd112.devbox.local:
+  broker:
     image: maateen/docker-beanstalkd:1.12-alpine-latest
     volumes:
       - beanstalkd112_broker_data:/var/cache/beanstalkd
     networks:
       - beanstalkd112_network_local
+    hostname: broker.beanstalkd112.devbox.local
     ports:
       - ${DEVBOX_BEANSTALKD112_BROKER_PORT:-21300}:11300
-  beanstalk-console.beanstalkd112.devbox.local:
+  beanstalk-console:
     image: joubertredrat/devbox:ptrofimov-beanstalk-console-1.7.15
     depends_on:
-      broker.beanstalkd112.devbox.local:
+      broker:
         condition: service_healthy
     environment:
       BEANSTALKD_HOST: broker.beanstalkd112.devbox.local
       BEANSTALKD_PORT: 11300
     networks:
       - beanstalkd112_network_local
+    hostname: beanstalk-console.beanstalkd112.devbox.local
     ports:
       - ${DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT:-21301}:80
     healthcheck:
