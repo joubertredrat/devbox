@@ -1,10 +1,11 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  broker.rabbitmq310.devbox.local:
+  broker:
     image: rabbitmq:3.10-management-alpine
     networks:
       - rabbitmq310_network_local
+    hostname: broker.rabbitmq310.devbox.local
     ports:
       - ${DEVBOX_RABBITMQ310_BROKER_PORT:-15671}:5672
       - ${DEVBOX_RABBITMQ310_MANAGEMENT_PORT:-15672}:15672

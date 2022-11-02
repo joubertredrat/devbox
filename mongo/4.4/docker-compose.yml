@@ -1,12 +1,13 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  db.mongo44.devbox.local:
+  db:
     image: mongo:4.4-bionic
     volumes:
       - mongo44_db_data:/data/db
     networks:
       - mongo44_network_local
+    hostname: db.mongo44.devbox.local
     ports:
       - ${DEVBOX_MONGO44_DB_EXPORT_PORT:-27017}:27017
     healthcheck:
@@ -15,15 +16,16 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  mongo-express.mongo44.devbox.local:
+  mongo-express:
     image: mongo-express:0.54
     depends_on:
-      db.mongo44.devbox.local:
+      db:
         condition: service_healthy
     environment:
       ME_CONFIG_MONGODB_SERVER: db.mongo44.devbox.local
     networks:
       - mongo44_network_local
+    hostname: mongo-express.mongo44.devbox.local
     ports:
       - ${DEVBOX_MONGO44_EXPRESS_EXPORT_PORT:-27018}:8081
     healthcheck:
@@ -31,10 +33,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  dbgate.mongo44.devbox.local:
+  dbgate:
     image: dbgate/dbgate:alpine
     depends_on:
-      db.mongo44.devbox.local:
+      db:
         condition: service_healthy
     environment:
       CONNECTIONS: mongo1
@@ -44,6 +46,7 @@ services:
       PORT_mongo1: 27017
     networks:
       - mongo44_network_local
+    hostname: dbgate.mongo44.devbox.local
     ports:
       - ${DEVBOX_MONGO44_DBGATE_EXPORT_PORT:-27019}:3000
     healthcheck:
@@ -51,15 +54,16 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  nosqlclient.mongo44.devbox.local:
+  nosqlclient:
     image: mongoclient/mongoclient:4.0.1
     depends_on:
-      db.mongo44.devbox.local:
+      db:
         condition: service_healthy
     environment:
       MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://db.mongo44.devbox.local:27017
     volumes:
       - mongo44_nosqlclient_data:/data/db
+    hostname: nosqlclient.mongo44.devbox.local
     networks:
       - mongo44_network_local
     ports:

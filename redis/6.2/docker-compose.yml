@@ -1,12 +1,13 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  db.redis62.devbox.local:
+  db:
     image: redis:6.2-alpine
     volumes:
       - redis62_db_data:/var/lib/redis
     networks:
       - redis62_network_local
+    hostname: db.redis62.devbox.local
     ports:
       - ${DEVBOX_REDIS62_DB_EXPORT_PORT:-16379}:6379
     healthcheck:
@@ -14,10 +15,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  phpredisadmin.redis62.devbox.local:
+  phpredisadmin:
     image: erikdubbelboer/phpredisadmin:latest
     depends_on:
-      db.redis62.devbox.local:
+      db:
         condition: service_healthy
     environment:
       REDIS_1_NAME: db.redis62.devbox.local
@@ -25,6 +26,7 @@ services:
       REDIS_1_PORT: 6379
     networks:
       - redis62_network_local
+    hostname: phpredisadmin.redis62.devbox.local
     ports:
       - ${DEVBOX_REDIS62_PRA_EXPORT_PORT:-16380}:80
     healthcheck:
@@ -32,15 +34,16 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  redis-commander.redis62.devbox.local:
+  redis-commander:
     image: rediscommander/redis-commander:latest
     depends_on:
-      db.redis62.devbox.local:
+      db:
         condition: service_healthy
     environment:
       REDIS_HOSTS: db.redis62.devbox.local:db.redis62.devbox.local:6379
     networks:
       - redis62_network_local
+    hostname: redis-commander.redis62.devbox.local
     ports:
       - ${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT:-16381}:8081
     healthcheck:

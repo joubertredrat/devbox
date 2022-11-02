@@ -1,10 +1,11 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  cache.memcached16.devbox.local:
+  cache:
     image: memcached:1.6-alpine
     networks:
       - memcached16_network_local
+    hostname: cache.memcached16.devbox.local
     ports:
       - ${DEVBOX_MEMCACHED16_CACHE_PORT:-21211}:11211
     healthcheck:
@@ -12,16 +13,17 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  memcached-admin.memcached16.devbox.local:
+  memcached-admin:
     image: hatamiarash7/memcached-admin:latest
     depends_on:
-      cache.memcached16.devbox.local:
+      cache:
         condition: service_healthy
     environment:
       MEMCACHED_HOST: cache.memcached16.devbox.local
       MEMCACHED_PORT: 11211
     networks:
       - memcached16_network_local
+    hostname: memcached-admin.memcached16.devbox.local
     ports:
       - ${DEVBOX_MEMCACHED16_ADMIN_PORT:-21212}:80
     healthcheck:

@@ -1,7 +1,7 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  db.postgres132.devbox.local:
+  db:
     image: postgres:13.2-alpine
     environment:
       POSTGRES_USER: ${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}
@@ -11,6 +11,7 @@ services:
       - postgres132_db_data:/var/lib/postgresql/data
     networks:
       - postgres132_network_local
+    hostname: db.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_DB_EXPORT_PORT:-15432}:5432
     healthcheck:
@@ -19,10 +20,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  pgadmin.postgres132.devbox.local:
+  pgadmin:
     image: dpage/pgadmin4:5
     depends_on:
-      db.postgres132.devbox.local:
+      db:
         condition: service_healthy
     environment:
       PGADMIN_DEFAULT_EMAIL: ${DEVBOX_POSTGRES132_PGADMIN_EMAIL:-pgadmin4@devbox.local}
@@ -32,6 +33,7 @@ services:
       - ./config/pgpassfile:/pgadmin4/pgpassfile
     networks:
       - postgres132_network_local
+    hostname: pgadmin.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_PGADMIN_EXPORT_PORT:-15433}:80
     healthcheck:
@@ -40,15 +42,16 @@ services:
       interval: 3s
       timeout: 1s
       retries: 60
-  pgweb.postgres132.devbox.local:
+  pgweb:
     image: sosedoff/pgweb:latest
     depends_on:
-      db.postgres132.devbox.local:
+      db:
         condition: service_healthy
     environment:
       DATABASE_URL: postgres://${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}@db.postgres132.devbox.local:5432/${DEVBOX_POSTGRES132_POSTGRES_DB:-dev}?sslmode=disable
     networks:
       - postgres132_network_local
+    hostname: pgweb.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT:-15434}:8081
     healthcheck:
@@ -56,10 +59,10 @@ services:
       interval: 3s
       timeout: 1s
       retries: 20
-  dbgate.postgres132.devbox.local:
+  dbgate:
     image: dbgate/dbgate:alpine
     depends_on:
-      db.postgres132.devbox.local:
+      db:
         condition: service_healthy
     environment:
       CONNECTIONS: postgres1
@@ -71,6 +74,7 @@ services:
       PASSWORD_postgres1: ${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}
     networks:
       - postgres132_network_local
+    hostname: dbgate.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT:-15435}:3000
     healthcheck:
