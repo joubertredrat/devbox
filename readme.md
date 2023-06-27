@@ -26,7 +26,7 @@ Clone this repository or download and run `make help` to see all informations.
 * [MinIO](https://min.io/)
 * MongoDB [4.4](https://docs.mongodb.com/manual/release-notes/4.4/), [5.0](https://docs.mongodb.com/manual/release-notes/5.0/)
 * MySQL [5.7](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/), [8.0](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/)
-* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html)
+* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html), [15.3](https://www.postgresql.org/docs/15/release-15-3.html)
 * RabbitMQ [3.10](https://blog.rabbitmq.com/tags/v3.10.x/)
 * Redis [6.2](https://redis.io), [7.0](https://redis.io)
 
