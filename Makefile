@@ -18,6 +18,7 @@ help:
 	@echo "  make kafka6.1-help			Help about Kafka 6.1 services"
 	@echo "  make mariadb10.5-help			Help about MariaDB 10.5 services"
 	@echo "  make mariadb10.6-help			Help about MariaDB 10.6 services"
+	@echo "  make mariadb11.0-help			Help about MariaDB 11.0 services"
 	@echo "  make memcached1.6-help		Help about Memcached 1.6 services"
 	@echo "  make minio-help			Help about MinIO latest services"
 	@echo "  make mongo4.4-help			Help about Mongo 4.4 services"
@@ -35,6 +36,7 @@ include beanstalkd/1.12/Makefile
 include kafka/6.1/Makefile
 include mariadb/10.5/Makefile
 include mariadb/10.6/Makefile
+include mariadb/11.0/Makefile
 include memcached/1.6/Makefile
 include minio/latest/Makefile
 include mongo/4.4/Makefile
