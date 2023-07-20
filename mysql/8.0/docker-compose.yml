@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   db:
-    platform: linux/amd64
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: ${DEVBOX_MYSQL80_ROOT_PASSWORD:-password}
@@ -12,7 +11,7 @@ services:
       - mysql80_network_local
     hostname: db.mysql80.devbox.local
     ports:
-      - ${DEVBOX_MYSQL80_DB_EXPORT_PORT:-13406}:3306
+      - ${DEVBOX_MYSQL80_DB_EXPORT_PORT:-14406}:3306
     healthcheck:
       test: mysqladmin -p${DEVBOX_MYSQL80_ROOT_PASSWORD:-password} ping -h localhost
       start_period: 5s
@@ -32,7 +31,7 @@ services:
       - mysql80_network_local
     hostname: phpmyadmin.mysql80.devbox.local
     ports:
-      - ${DEVBOX_MYSQL80_PMA_EXPORT_PORT:-13407}:80
+      - ${DEVBOX_MYSQL80_PMA_EXPORT_PORT:-14407}:80
     healthcheck:
       test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
       interval: 3s
@@ -49,7 +48,7 @@ services:
       - mysql80_network_local
     hostname: adminer.mysql80.devbox.local
     ports:
-      - ${DEVBOX_MYSQL80_ADMINER_EXPORT_PORT:-13408}:8080
+      - ${DEVBOX_MYSQL80_ADMINER_EXPORT_PORT:-14408}:8080
     healthcheck:
       test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:8080"]
       interval: 3s
@@ -72,7 +71,7 @@ services:
       - mysql80_network_local
     hostname: dbgate.mysql80.devbox.local
     ports:
-      - ${DEVBOX_MYSQL80_DBGATE_EXPORT_PORT:-13409}:3000
+      - ${DEVBOX_MYSQL80_DBGATE_EXPORT_PORT:-14409}:3000
     healthcheck:
       test: ["CMD", "nc", "-vz", "127.0.0.1", "3000"]
       interval: 3s
