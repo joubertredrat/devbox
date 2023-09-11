@@ -7,23 +7,23 @@ DEVBOX_MONGO50_EXPRESS_EXPORT_PORT ?= 28018
 DEVBOX_MONGO50_DBGATE_EXPORT_PORT ?= 28019
 DEVBOX_MONGO50_NOSQLCLIENT_EXPORT_PORT ?= 28020
 
-mongo5.0-up:
-	${DOCKER_COMPOSE_CMD} -f mongo/5.0/docker-compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} up -d
+mongo5.0-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/5.0/compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} up -d
 
-mongo5.0-down:
-	${DOCKER_COMPOSE_CMD} -f mongo/5.0/docker-compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} down
+mongo5.0-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/5.0/compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} down
 
-mongo5.0-status:
-	${DOCKER_COMPOSE_CMD} -f mongo/5.0/docker-compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} ps
+mongo5.0-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/5.0/compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} ps
 
-mongo5.0-logs:
-	${DOCKER_COMPOSE_CMD} -f mongo/5.0/docker-compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} logs -f
+mongo5.0-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/5.0/compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} logs -f
 
-mongo5.0-purge:
-	${DOCKER_COMPOSE_CMD} -f mongo/5.0/docker-compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} down --volumes
+mongo5.0-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/5.0/compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME} down --volumes
 
-mongo5.0-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f mongo/5.0/docker-compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME}"
+mongo5.0-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f mongo/5.0/compose.yml -p ${DEVBOX_MONGO50_PROJECT_NAME}"
 
 mongo5.0-help:
 	@echo

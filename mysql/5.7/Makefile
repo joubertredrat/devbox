@@ -6,23 +6,23 @@ DEVBOX_MYSQL57_PMA_EXPORT_PORT ?= 13407
 DEVBOX_MYSQL57_ADMINER_EXPORT_PORT ?= 13408
 DEVBOX_MYSQL57_DBGATE_EXPORT_PORT ?= 13409
 
-mysql5.7-up:
-	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} up -d
+mysql5.7-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/5.7/compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} up -d
 
-mysql5.7-down:
-	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down
+mysql5.7-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/5.7/compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down
 
-mysql5.7-status:
-	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} ps
+mysql5.7-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/5.7/compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} ps
 
-mysql5.7-logs:
-	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} logs -f
+mysql5.7-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/5.7/compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} logs -f
 
-mysql5.7-purge:
-	${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down --volumes
+mysql5.7-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/5.7/compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME} down --volumes
 
-mysql5.7-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f mysql/5.7/docker-compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME}"
+mysql5.7-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f mysql/5.7/compose.yml -p ${DEVBOX_MYSQL57_PROJECT_NAME}"
 
 mysql5.7-help:
 	@echo

@@ -8,7 +8,9 @@ services:
     volumes:
       - mysql80_data:/var/lib/mysql
     networks:
-      - mysql80_network_local
+      mysql80_network_local:
+        aliases:
+          - db.mysql80.devbox.local
     hostname: db.mysql80.devbox.local
     ports:
       - ${DEVBOX_MYSQL80_DB_EXPORT_PORT:-14406}:3306
@@ -28,7 +30,9 @@ services:
       PMA_USER: root
       PMA_PASSWORD: ${DEVBOX_MYSQL80_ROOT_PASSWORD:-password}
     networks:
-      - mysql80_network_local
+      mysql80_network_local:
+        aliases:
+          - phpmyadmin.mysql80.devbox.local
     hostname: phpmyadmin.mysql80.devbox.local
     ports:
       - ${DEVBOX_MYSQL80_PMA_EXPORT_PORT:-14407}:80
@@ -45,12 +49,14 @@ services:
     environment:
       ADMINER_DEFAULT_SERVER: db.mysql80.devbox.local
     networks:
-      - mysql80_network_local
+      mysql80_network_local:
+        aliases:
+          - adminer.mysql80.devbox.local
     hostname: adminer.mysql80.devbox.local
     ports:
       - ${DEVBOX_MYSQL80_ADMINER_EXPORT_PORT:-14408}:8080
     healthcheck:
-      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:8080"]
+      test: "php -r 'exit(strpos(file_get_contents(\"http://localhost:8080/\"), \"Adminer\") !== false ? 0 : 1);'"
       interval: 3s
       timeout: 1s
       retries: 20
@@ -68,7 +74,9 @@ services:
       PORT_mysql1: 3306
       ENGINE_mysql1: mysql@dbgate-plugin-mysql
     networks:
-      - mysql80_network_local
+      mysql80_network_local:
+        aliases:
+          - dbgate.mysql80.devbox.local
     hostname: dbgate.mysql80.devbox.local
     ports:
       - ${DEVBOX_MYSQL80_DBGATE_EXPORT_PORT:-14409}:3000

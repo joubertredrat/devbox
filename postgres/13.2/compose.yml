@@ -10,7 +10,9 @@ services:
     volumes:
       - postgres132_db_data:/var/lib/postgresql/data
     networks:
-      - postgres132_network_local
+      postgres132_network_local:
+        aliases:
+          - db.postgres132.devbox.local
     hostname: db.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_DB_EXPORT_PORT:-15432}:5432
@@ -32,16 +34,18 @@ services:
       - ./config/servers.json:/pgadmin4/servers.json
       - ./config/pgpassfile:/pgadmin4/pgpassfile
     networks:
-      - postgres132_network_local
+      postgres132_network_local:
+        aliases:
+          - pgadmin.postgres132.devbox.local
     hostname: pgadmin.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_PGADMIN_EXPORT_PORT:-15433}:80
     healthcheck:
       test: ["CMD", "nc", "-vz", "127.0.0.1", "80"]
-      start_period: 100s
+      start_period: 30s
       interval: 3s
       timeout: 1s
-      retries: 60
+      retries: 160
   pgweb:
     image: sosedoff/pgweb:latest
     depends_on:
@@ -50,7 +54,9 @@ services:
     environment:
       DATABASE_URL: postgres://${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}@db.postgres132.devbox.local:5432/${DEVBOX_POSTGRES132_POSTGRES_DB:-dev}?sslmode=disable
     networks:
-      - postgres132_network_local
+      postgres132_network_local:
+        aliases:
+          - pgweb.postgres132.devbox.local
     hostname: pgweb.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_PGWEB_EXPORT_PORT:-15434}:8081
@@ -73,7 +79,9 @@ services:
       USER_postgres1: ${DEVBOX_POSTGRES132_POSTGRES_USER:-postgres}
       PASSWORD_postgres1: ${DEVBOX_POSTGRES132_POSTGRES_PASSWORD:-password}
     networks:
-      - postgres132_network_local
+      postgres132_network_local:
+        aliases:
+          - dbgate.postgres132.devbox.local
     hostname: dbgate.postgres132.devbox.local
     ports:
       - ${DEVBOX_POSTGRES132_DBGATE_EXPORT_PORT:-15435}:3000

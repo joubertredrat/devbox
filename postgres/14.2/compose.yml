@@ -10,7 +10,9 @@ services:
     volumes:
       - postgres142_db_data:/var/lib/postgresql/data
     networks:
-      - postgres142_network_local
+      postgres142_network_local:
+        aliases:
+          - db.postgres142.devbox.local
     hostname: db.postgres142.devbox.local
     ports:
       - ${DEVBOX_POSTGRES142_DB_EXPORT_PORT:-15442}:5432
@@ -32,7 +34,9 @@ services:
       - ./config/servers.json:/pgadmin4/servers.json
       - ./config/pgpassfile:/pgadmin4/pgpassfile
     networks:
-      - postgres142_network_local
+      postgres142_network_local:
+        aliases:
+          - pgadmin.postgres142.devbox.local
     hostname: pgadmin.postgres142.devbox.local
     ports:
       - ${DEVBOX_POSTGRES142_PGADMIN_EXPORT_PORT:-15443}:80
@@ -50,7 +54,9 @@ services:
     environment:
       DATABASE_URL: postgres://${DEVBOX_POSTGRES142_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES142_POSTGRES_PASSWORD:-password}@db.postgres142.devbox.local:5432/${DEVBOX_POSTGRES142_POSTGRES_DB:-dev}?sslmode=disable
     networks:
-      - postgres142_network_local
+      postgres142_network_local:
+        aliases:
+          - pgweb.postgres142.devbox.local
     hostname: pgweb.postgres142.devbox.local
     ports:
       - ${DEVBOX_POSTGRES142_PGWEB_EXPORT_PORT:-15444}:8081
@@ -73,7 +79,9 @@ services:
       USER_postgres1: ${DEVBOX_POSTGRES142_POSTGRES_USER:-postgres}
       PASSWORD_postgres1: ${DEVBOX_POSTGRES142_POSTGRES_PASSWORD:-password}
     networks:
-      - postgres142_network_local
+      postgres142_network_local:
+        aliases:
+          - dbgate.postgres142.devbox.local
     hostname: dbgate.postgres142.devbox.local
     ports:
       - ${DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT:-15445}:3000

@@ -6,7 +6,9 @@ services:
     volumes:
       - redis62_db_data:/var/lib/redis
     networks:
-      - redis62_network_local
+      redis62_network_local:
+        aliases:
+          - db.redis62.devbox.local
     hostname: db.redis62.devbox.local
     ports:
       - ${DEVBOX_REDIS62_DB_EXPORT_PORT:-16379}:6379
@@ -25,7 +27,9 @@ services:
       REDIS_1_HOST: db.redis62.devbox.local
       REDIS_1_PORT: 6379
     networks:
-      - redis62_network_local
+      redis62_network_local:
+        aliases:
+          - phpredisadmin.redis62.devbox.local
     hostname: phpredisadmin.redis62.devbox.local
     ports:
       - ${DEVBOX_REDIS62_PRA_EXPORT_PORT:-16380}:80
@@ -42,7 +46,9 @@ services:
     environment:
       REDIS_HOSTS: db.redis62.devbox.local:db.redis62.devbox.local:6379
     networks:
-      - redis62_network_local
+      redis62_network_local:
+        aliases:
+          - redis-commander.redis62.devbox.local
     hostname: redis-commander.redis62.devbox.local
     ports:
       - ${DEVBOX_REDIS62_COMMANDER_EXPORT_PORT:-16381}:8081

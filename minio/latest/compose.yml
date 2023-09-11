@@ -13,7 +13,9 @@ services:
       - minio-latest_storage_data:/data
     command: server --address 0.0.0.0:9000 --console-address 0.0.0.0:9001 /data
     networks:
-      - minio-latest_network_local
+      minio-latest_network_local:
+        aliases:
+          - bucket.minio-latest.devbox.local
     hostname: bucket.minio-latest.devbox.local
     ports:
       - ${DEVBOX_MINIO_API_EXPORT_PORT:-29000}:9000

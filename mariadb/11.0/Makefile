@@ -6,23 +6,23 @@ DEVBOX_MARIADB110_PMA_EXPORT_PORT ?= 15307
 DEVBOX_MARIADB110_ADMINER_EXPORT_PORT ?= 15308
 DEVBOX_MARIADB110_DBGATE_EXPORT_PORT ?= 15309
 
-mariadb11.0-up:
-	${DOCKER_COMPOSE_CMD} -f mariadb/11.0/docker-compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} up -d
+mariadb11.0-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mariadb/11.0/compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} up -d
 
-mariadb11.0-down:
-	${DOCKER_COMPOSE_CMD} -f mariadb/11.0/docker-compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} down
+mariadb11.0-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mariadb/11.0/compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} down
 
-mariadb11.0-status:
-	${DOCKER_COMPOSE_CMD} -f mariadb/11.0/docker-compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} ps
+mariadb11.0-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mariadb/11.0/compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} ps
 
-mariadb11.0-logs:
-	${DOCKER_COMPOSE_CMD} -f mariadb/11.0/docker-compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} logs -f
+mariadb11.0-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mariadb/11.0/compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} logs -f
 
-mariadb11.0-purge:
-	${DOCKER_COMPOSE_CMD} -f mariadb/11.0/docker-compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} down --volumes
+mariadb11.0-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mariadb/11.0/compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME} down --volumes
 
-mariadb11.0-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f mariadb/11.0/docker-compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME}"
+mariadb11.0-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f mariadb/11.0/compose.yml -p ${DEVBOX_MARIADB110_PROJECT_NAME}"
 
 mariadb11.0-help:
 	@echo

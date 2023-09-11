@@ -3,23 +3,23 @@ DEVBOX_BEANSTALKD112_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}g1l
 DEVBOX_BEANSTALKD112_BROKER_PORT ?= 21300
 DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT ?= 21301
 
-beanstalkd1.12-up:
-	${DOCKER_COMPOSE_CMD} -f beanstalkd/1.12/docker-compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} up -d
+beanstalkd1.12-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f beanstalkd/1.12/compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} up -d
 
-beanstalkd1.12-down:
-	${DOCKER_COMPOSE_CMD} -f beanstalkd/1.12/docker-compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} down
+beanstalkd1.12-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f beanstalkd/1.12/compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} down
 
-beanstalkd1.12-status:
-	${DOCKER_COMPOSE_CMD} -f beanstalkd/1.12/docker-compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} ps
+beanstalkd1.12-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f beanstalkd/1.12/compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} ps
 
-beanstalkd1.12-logs:
-	${DOCKER_COMPOSE_CMD} -f beanstalkd/1.12/docker-compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} logs -f
+beanstalkd1.12-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f beanstalkd/1.12/compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} logs -f
 
-beanstalkd1.12-purge:
-	${DOCKER_COMPOSE_CMD} -f beanstalkd/1.12/docker-compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} down --volumes
+beanstalkd1.12-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f beanstalkd/1.12/compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME} down --volumes
 
-beanstalkd1.12-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f beanstalkd/1.12/docker-compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME}"
+beanstalkd1.12-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f beanstalkd/1.12/compose.yml -p ${DEVBOX_BEANSTALKD112_PROJECT_NAME}"
 
 beanstalkd1.12-help:
 	@echo

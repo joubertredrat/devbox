@@ -4,7 +4,9 @@ services:
   cache:
     image: memcached:1.6-alpine
     networks:
-      - memcached16_network_local
+      memcached16_network_local:
+        aliases:
+          - cache.memcached16.devbox.local
     hostname: cache.memcached16.devbox.local
     ports:
       - ${DEVBOX_MEMCACHED16_CACHE_PORT:-21211}:11211
@@ -22,7 +24,9 @@ services:
       MEMCACHED_HOST: cache.memcached16.devbox.local
       MEMCACHED_PORT: 11211
     networks:
-      - memcached16_network_local
+      memcached16_network_local:
+        aliases:
+          - memcached-admin.memcached16.devbox.local
     hostname: memcached-admin.memcached16.devbox.local
     ports:
       - ${DEVBOX_MEMCACHED16_ADMIN_PORT:-21212}:80

@@ -6,12 +6,14 @@ services:
     volumes:
       - beanstalkd112_broker_data:/var/cache/beanstalkd
     networks:
-      - beanstalkd112_network_local
+      beanstalkd112_network_local:
+        aliases:
+          - broker.beanstalkd112.devbox.local
     hostname: broker.beanstalkd112.devbox.local
     ports:
       - ${DEVBOX_BEANSTALKD112_BROKER_PORT:-21300}:11300
   beanstalk-console:
-    image: joubertredrat/devbox:ptrofimov-beanstalk-console-1.7.15
+    image: ghcr.io/joubertredrat/devbox-containers/ptrofimov-beanstalk-console:1.7.19
     depends_on:
       broker:
         condition: service_healthy
@@ -19,7 +21,9 @@ services:
       BEANSTALKD_HOST: broker.beanstalkd112.devbox.local
       BEANSTALKD_PORT: 11300
     networks:
-      - beanstalkd112_network_local
+      beanstalkd112_network_local:
+        aliases:
+          - beanstalk-console.beanstalkd112.devbox.local
     hostname: beanstalk-console.beanstalkd112.devbox.local
     ports:
       - ${DEVBOX_BEANSTALKD112_BEANSTALK_CONSOLE_PORT:-21301}:80

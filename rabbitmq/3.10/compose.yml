@@ -4,7 +4,9 @@ services:
   broker:
     image: rabbitmq:3.10-management-alpine
     networks:
-      - rabbitmq310_network_local
+      rabbitmq310_network_local:
+        aliases:
+          - broker.rabbitmq310.devbox.local
     hostname: broker.rabbitmq310.devbox.local
     ports:
       - ${DEVBOX_RABBITMQ310_BROKER_PORT:-15671}:5672
