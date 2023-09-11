@@ -8,14 +8,16 @@ This project provides a easy and fast way to run common services for development
 
 <p align="center"><a href="./terminal.gif?raw=true"><img alt="Terminal" src="./terminal.gif?raw=true" /></a></p>
 
-## How to use?
-
-Clone this repository or download and run `make help` to see all informations.
-
 ## Dependencies
 
 * [make](https://www.gnu.org/software/make/)
 * [Docker](https://www.docker.com/) or [Podman](https://podman.io/) with [Podman compose](https://github.com/containers/podman-compose)
+
+## How to use?
+
+Clone this repository or download and run `make help` to see all informations.
+
+This project is using Docker by default, if you want to use Podman instead, you need to use `DEVBOX_COMPOSE_CMD` variable before run the command. Example: `DEVBOX_ENGINE=podman make redis7.0-up`.
 
 ## Services provided
 
