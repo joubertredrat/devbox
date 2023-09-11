@@ -10,7 +10,9 @@ services:
     volumes:
       - postgres153_db_data:/var/lib/postgresql/data
     networks:
-      - postgres153_network_local
+      postgres153_network_local:
+        aliases:
+          - db.postgres153.devbox.local
     hostname: db.postgres153.devbox.local
     ports:
       - ${DEVBOX_POSTGRES153_DB_EXPORT_PORT:-16442}:5432
@@ -29,7 +31,9 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${DEVBOX_POSTGRES153_PGADMIN_EMAIL:-pgadmin4@devbox.local}
       PGADMIN_DEFAULT_PASSWORD: ${DEVBOX_POSTGRES153_PGADMIN_PASSWORD:-password}
     networks:
-      - postgres153_network_local
+      postgres153_network_local:
+        aliases:
+          - pgadmin.postgres153.devbox.local
     hostname: pgadmin.postgres153.devbox.local
     ports:
       - ${DEVBOX_POSTGRES153_PGADMIN_EXPORT_PORT:-16443}:80
@@ -47,7 +51,9 @@ services:
     environment:
       DATABASE_URL: postgres://${DEVBOX_POSTGRES153_POSTGRES_USER:-postgres}:${DEVBOX_POSTGRES153_POSTGRES_PASSWORD:-password}@db.postgres153.devbox.local:5432/${DEVBOX_POSTGRES153_POSTGRES_DB:-dev}?sslmode=disable
     networks:
-      - postgres153_network_local
+      postgres153_network_local:
+        aliases:
+          - pgweb.postgres153.devbox.local
     hostname: pgweb.postgres153.devbox.local
     ports:
       - ${DEVBOX_POSTGRES153_PGWEB_EXPORT_PORT:-16444}:8081
@@ -70,7 +76,9 @@ services:
       USER_postgres1: ${DEVBOX_POSTGRES153_POSTGRES_USER:-postgres}
       PASSWORD_postgres1: ${DEVBOX_POSTGRES153_POSTGRES_PASSWORD:-password}
     networks:
-      - postgres153_network_local
+      postgres153_network_local:
+        aliases:
+          - dbgate.postgres153.devbox.local
     hostname: dbgate.postgres153.devbox.local
     ports:
       - ${DEVBOX_POSTGRES153_DBGATE_EXPORT_PORT:-16445}:3000

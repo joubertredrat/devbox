@@ -8,7 +8,9 @@ services:
     volumes:
       - mariadb105_data:/var/lib/mysql
     networks:
-      - mariadb105_network_local
+      mariadb105_network_local:
+        aliases:
+          - db.mariadb105.devbox.local
     hostname: db.mariadb105.devbox.local
     ports:
       - ${DEVBOX_MARIADB105_DB_EXPORT_PORT:-13306}:3306
@@ -28,7 +30,9 @@ services:
       PMA_USER: root
       PMA_PASSWORD: ${DEVBOX_MARIADB105_ROOT_PASSWORD:-password}
     networks:
-      - mariadb105_network_local
+      mariadb105_network_local:
+        aliases:
+          - phpmyadmin.mariadb105.devbox.local
     hostname: phpmyadmin.mariadb105.devbox.local
     ports:
       - ${DEVBOX_MARIADB105_PMA_EXPORT_PORT:-13307}:80
@@ -45,12 +49,14 @@ services:
     environment:
       ADMINER_DEFAULT_SERVER: db.mariadb105.devbox.local
     networks:
-      - mariadb105_network_local
+      mariadb105_network_local:
+        aliases:
+          - adminer.mariadb105.devbox.local
     hostname: adminer.mariadb105.devbox.local
     ports:
       - ${DEVBOX_MARIADB105_ADMINER_EXPORT_PORT:-13308}:8080
     healthcheck:
-      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:8080"]
+      test: "php -r 'exit(strpos(file_get_contents(\"http://localhost:8080/\"), \"Adminer\") !== false ? 0 : 1);'"
       interval: 3s
       timeout: 1s
       retries: 20
@@ -68,7 +74,9 @@ services:
       PORT_mariadb1: 3306
       ENGINE_mariadb1: mysql@dbgate-plugin-mysql
     networks:
-      - mariadb105_network_local
+      mariadb105_network_local:
+        aliases:
+          - dbgate.mariadb105.devbox.local
     hostname: dbgate.mariadb105.devbox.local
     ports:
       - ${DEVBOX_MARIADB105_DBGATE_EXPORT_PORT:-13309}:3000

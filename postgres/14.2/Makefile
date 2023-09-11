@@ -10,23 +10,23 @@ DEVBOX_POSTGRES142_PGADMIN_PASSWORD ?= password
 DEVBOX_POSTGRES142_PGWEB_EXPORT_PORT ?= 15444
 DEVBOX_POSTGRES142_DBGATE_EXPORT_PORT ?= 15445
 
-postgres14.2-up:
-	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} up -d
+postgres14.2-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f postgres/14.2/compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} up -d
 
-postgres14.2-down:
-	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down
+postgres14.2-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f postgres/14.2/compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down
 
-postgres14.2-status:
-	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} ps
+postgres14.2-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f postgres/14.2/compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} ps
 
-postgres14.2-logs:
-	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} logs -f
+postgres14.2-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f postgres/14.2/compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} logs -f
 
-postgres14.2-purge:
-	${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down --volumes
+postgres14.2-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f postgres/14.2/compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME} down --volumes
 
-postgres14.2-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f postgres/14.2/docker-compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME}"
+postgres14.2-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f postgres/14.2/compose.yml -p ${DEVBOX_POSTGRES142_PROJECT_NAME}"
 
 postgres14.2-help:
 	@echo

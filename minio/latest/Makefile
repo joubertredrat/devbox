@@ -8,23 +8,23 @@ DEVBOX_MINIO_STORAGE_SECRET_KEY ?= wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
 DEVBOX_MINIO_CONSOLE_ROOT_USER ?= root
 DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD ?= password
 
-minio-up:
-	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} up -d
+minio-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f minio/latest/compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} up -d
 
-minio-down:
-	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down
+minio-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f minio/latest/compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down
 
-minio-status:
-	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} ps
+minio-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f minio/latest/compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} ps
 
-minio-logs:
-	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} logs -f
+minio-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f minio/latest/compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} logs -f
 
-minio-purge:
-	${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down --volumes
+minio-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f minio/latest/compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME} down --volumes
 
-minio-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f minio/latest/docker-compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME}"
+minio-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f minio/latest/compose.yml -p ${DEVBOX_MINIO_PROJECT_NAME}"
 
 minio-help:
 	@echo

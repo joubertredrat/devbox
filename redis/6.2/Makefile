@@ -4,23 +4,23 @@ DEVBOX_REDIS62_DB_EXPORT_PORT ?= 16379
 DEVBOX_REDIS62_PRA_EXPORT_PORT ?= 16380
 DEVBOX_REDIS62_COMMANDER_EXPORT_PORT ?= 16381
 
-redis6.2-up:
-	${DOCKER_COMPOSE_CMD} -f redis/6.2/docker-compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} up -d
+redis6.2-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f redis/6.2/compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} up -d
 
-redis6.2-down:
-	${DOCKER_COMPOSE_CMD} -f redis/6.2/docker-compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} down
+redis6.2-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f redis/6.2/compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} down
 
-redis6.2-status:
-	${DOCKER_COMPOSE_CMD} -f redis/6.2/docker-compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} ps
+redis6.2-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f redis/6.2/compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} ps
 
-redis6.2-logs:
-	${DOCKER_COMPOSE_CMD} -f redis/6.2/docker-compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} logs -f
+redis6.2-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f redis/6.2/compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} logs -f
 
-redis6.2-purge:
-	${DOCKER_COMPOSE_CMD} -f redis/6.2/docker-compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} down --volumes
+redis6.2-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f redis/6.2/compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME} down --volumes
 
-redis6.2-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f redis/6.2/docker-compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME}"
+redis6.2-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f redis/6.2/compose.yml -p ${DEVBOX_REDIS62_PROJECT_NAME}"
 
 redis6.2-help:
 	@echo

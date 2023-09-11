@@ -3,20 +3,20 @@ DEVBOX_RABBITMQ310_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}uhs
 DEVBOX_RABBITMQ310_BROKER_PORT ?= 15671
 DEVBOX_RABBITMQ310_MANAGEMENT_PORT ?= 15672
 
-rabbitmq3.10-up:
-	${DOCKER_COMPOSE_CMD} -f rabbitmq/3.10/docker-compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} up -d
+rabbitmq3.10-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f rabbitmq/3.10/compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} up -d
 
-rabbitmq3.10-down:
-	${DOCKER_COMPOSE_CMD} -f rabbitmq/3.10/docker-compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} down --volumes
+rabbitmq3.10-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f rabbitmq/3.10/compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} down --volumes
 
-rabbitmq3.10-status:
-	${DOCKER_COMPOSE_CMD} -f rabbitmq/3.10/docker-compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} ps
+rabbitmq3.10-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f rabbitmq/3.10/compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} ps
 
-rabbitmq3.10-logs:
-	${DOCKER_COMPOSE_CMD} -f rabbitmq/3.10/docker-compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} logs -f
+rabbitmq3.10-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f rabbitmq/3.10/compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME} logs -f
 
-rabbitmq3.10-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f rabbitmq/3.10/docker-compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME}"
+rabbitmq3.10-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f rabbitmq/3.10/compose.yml -p ${DEVBOX_RABBITMQ310_PROJECT_NAME}"
 
 rabbitmq3.10-help:
 	@echo

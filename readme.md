@@ -15,7 +15,7 @@ Clone this repository or download and run `make help` to see all informations.
 ## Dependencies
 
 * [make](https://www.gnu.org/software/make/)
-* [docker](https://www.docker.com/)
+* [Docker](https://www.docker.com/) or [Podman](https://podman.io/) with [Podman compose](https://github.com/containers/podman-compose)
 
 ## Services provided
 

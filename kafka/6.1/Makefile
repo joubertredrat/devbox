@@ -5,20 +5,20 @@ DEVBOX_KAFKA61_KAFROP_EXPORT_PORT ?= 29092
 DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT ?= 29093
 DEVBOX_KAFKA61_KOWL_EXPORT_PORT ?= 29094
 
-kafka6.1-up:
-	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} up -d
+kafka6.1-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f kafka/6.1/compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} up -d
 
-kafka6.1-down:
-	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} down --volumes
+kafka6.1-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f kafka/6.1/compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} down --volumes
 
-kafka6.1-status:
-	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} ps
+kafka6.1-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f kafka/6.1/compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} ps
 
-kafka6.1-logs:
-	${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} logs -f
+kafka6.1-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f kafka/6.1/compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME} logs -f
 
-kafka6.1-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f kafka/6.1/docker-compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME}"
+kafka6.1-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f kafka/6.1/compose.yml -p ${DEVBOX_KAFKA61_PROJECT_NAME}"
 
 kafka6.1-help:
 	@echo

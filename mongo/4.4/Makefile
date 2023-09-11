@@ -5,23 +5,23 @@ DEVBOX_MONGO44_EXPRESS_EXPORT_PORT ?= 27018
 DEVBOX_MONGO44_DBGATE_EXPORT_PORT ?= 27019
 DEVBOX_MONGO44_NOSQLCLIENT_EXPORT_PORT ?= 27020
 
-mongo4.4-up:
-	${DOCKER_COMPOSE_CMD} -f mongo/4.4/docker-compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} up -d
+mongo4.4-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/4.4/compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} up -d
 
-mongo4.4-down:
-	${DOCKER_COMPOSE_CMD} -f mongo/4.4/docker-compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} down
+mongo4.4-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/4.4/compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} down
 
-mongo4.4-status:
-	${DOCKER_COMPOSE_CMD} -f mongo/4.4/docker-compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} ps
+mongo4.4-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/4.4/compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} ps
 
-mongo4.4-logs:
-	${DOCKER_COMPOSE_CMD} -f mongo/4.4/docker-compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} logs -f
+mongo4.4-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/4.4/compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} logs -f
 
-mongo4.4-purge:
-	${DOCKER_COMPOSE_CMD} -f mongo/4.4/docker-compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} down --volumes
+mongo4.4-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mongo/4.4/compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME} down --volumes
 
-mongo4.4-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f mongo/4.4/docker-compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME}"
+mongo4.4-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f mongo/4.4/compose.yml -p ${DEVBOX_MONGO44_PROJECT_NAME}"
 
 mongo4.4-help:
 	@echo

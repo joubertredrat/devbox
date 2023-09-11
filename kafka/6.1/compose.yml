@@ -9,7 +9,9 @@ services:
     volumes:
       - kafka61_zookeeper_data:/data
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - zookeeper.kafka61.devbox.local
     hostname: zookeeper.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_ZOOKEEPER_EXPORT_PORT:-22181}:2181
@@ -34,7 +36,9 @@ services:
     volumes:
       - kafka61_broker1_data:/var/lib/kafka/data
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - broker1.kafka61.devbox.local
     hostname: broker1.kafka61.devbox.local
     ports:
       - 9092:9092
@@ -60,7 +64,9 @@ services:
     volumes:
       - kafka61_broker2_data:/var/lib/kafka/data
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - broker2.kafka61.devbox.local
     hostname: broker2.kafka61.devbox.local
     ports:
       - 9093:9093
@@ -88,7 +94,9 @@ services:
     volumes:
       - kafka61_broker3_data:/var/lib/kafka/data
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - broker3.kafka61.devbox.local
     hostname: broker3.kafka61.devbox.local
     ports:
       - 9094:9094
@@ -110,7 +118,9 @@ services:
     environment:
       KAFKA_BROKERCONNECT: broker1.kafka61.devbox.local:19092
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - kafdrop.kafka61.devbox.local
     hostname: kafdrop.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_KAFROP_EXPORT_PORT:-29092}:9000
@@ -133,7 +143,9 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker1.kafka61.devbox.local:19092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper.kafka61.devbox.local:2181
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - kafka-ui.kafka61.devbox.local
     hostname: kafka-ui.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_KAFKAUI_EXPORT_PORT:-29093}:8080
@@ -154,7 +166,9 @@ services:
     environment:
       KAFKA_BROKERS: broker1.kafka61.devbox.local:19092
     networks:
-      - kafka61_network_local
+      kafka61_network_local:
+        aliases:
+          - kowl.kafka61.devbox.local
     hostname: kowl.kafka61.devbox.local
     ports:
       - ${DEVBOX_KAFKA61_KOWL_EXPORT_PORT:-29094}:8080

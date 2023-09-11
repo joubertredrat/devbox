@@ -1,13 +1,19 @@
 .EXPORT_ALL_VARIABLES:
 
-DOCKER_DEFAULT_PLATFORM = linux/amd64
-
+DEVBOX_ENGINE ?= ""
 DEVBOX_PROJECT_PREFIX = devbox
-
-DOCKER_COMPOSE_CMD = docker compose
 
 .PHONY: default
 default: help ;
+
+compose-cmd:
+DEVBOX_COMPOSE_CMD = docker compose
+ifeq ($(strip $(DEVBOX_ENGINE)),docker)
+DEVBOX_COMPOSE_CMD = docker compose
+endif
+ifeq ($(strip $(DEVBOX_ENGINE)),podman)
+DEVBOX_COMPOSE_CMD = podman-compose
+endif
 
 help:
 	@echo

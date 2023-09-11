@@ -6,23 +6,23 @@ DEVBOX_MYSQL80_PMA_EXPORT_PORT ?= 14407
 DEVBOX_MYSQL80_ADMINER_EXPORT_PORT ?= 14408
 DEVBOX_MYSQL80_DBGATE_EXPORT_PORT ?= 14409
 
-mysql8.0-up:
-	${DOCKER_COMPOSE_CMD} -f mysql/8.0/docker-compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} up -d
+mysql8.0-up: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/8.0/compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} up -d
 
-mysql8.0-down:
-	${DOCKER_COMPOSE_CMD} -f mysql/8.0/docker-compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} down
+mysql8.0-down: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/8.0/compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} down
 
-mysql8.0-status:
-	${DOCKER_COMPOSE_CMD} -f mysql/8.0/docker-compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} ps
+mysql8.0-status: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/8.0/compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} ps
 
-mysql8.0-logs:
-	${DOCKER_COMPOSE_CMD} -f mysql/8.0/docker-compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} logs -f
+mysql8.0-logs: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/8.0/compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} logs -f
 
-mysql8.0-purge:
-	${DOCKER_COMPOSE_CMD} -f mysql/8.0/docker-compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} down --volumes
+mysql8.0-purge: compose-cmd ;
+	${DEVBOX_COMPOSE_CMD} -f mysql/8.0/compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME} down --volumes
 
-mysql8.0-command:
-	@echo "${DOCKER_COMPOSE_CMD} -f mysql/8.0/docker-compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME}"
+mysql8.0-command: compose-cmd ;
+	@echo "${DEVBOX_COMPOSE_CMD} -f mysql/8.0/compose.yml -p ${DEVBOX_MYSQL80_PROJECT_NAME}"
 
 mysql8.0-help:
 	@echo
