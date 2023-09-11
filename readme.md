@@ -1,6 +1,6 @@
 <p align="center"><img alt="Devbox" src="./cube-11.png" /></p>
 <h1 align="center">Devbox</h1>
-<p align="center">Run dev environments easily and fastly using docker</p>
+<p align="center">Run dev environments easily and fastly using Podman or Docker</p>
 
 ## Purpose
 
