@@ -29,6 +29,8 @@ help:
 	@echo "  make minio-help			Help about MinIO latest services"
 	@echo "  make mongo4.4-help			Help about Mongo 4.4 services"
 	@echo "  make mongo5.0-help			Help about Mongo 5.0 services"
+	@echo "  make mongo6.0-help			Help about Mongo 6.0 services"
+	@echo "  make mongo7.0-help			Help about Mongo 7.0 services"
 	@echo "  make mysql5.7-help			Help about MySQL 5.7 services"
 	@echo "  make mysql8.0-help			Help about MySQL 8.0 services"
 	@echo "  make postgres13.2-help		Help about Postgres 13.2 services"
@@ -48,6 +50,8 @@ include memcached/1.6/Makefile
 include minio/latest/Makefile
 include mongo/4.4/Makefile
 include mongo/5.0/Makefile
+include mongo/6.0/Makefile
+include mongo/7.0/Makefile
 include mysql/5.7/Makefile
 include mysql/8.0/Makefile
 include postgres/13.2/Makefile
