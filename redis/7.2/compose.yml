@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  db:
+    image: redis:7.2-alpine
+    volumes:
+      - redis72_db_data:/var/lib/redis
+    networks:
+      redis72_network_local:
+        aliases:
+          - db.redis72.devbox.local
+    hostname: db.redis72.devbox.local
+    ports:
+      - ${DEVBOX_REDIS72_DB_EXPORT_PORT:-18379}:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      REDIS_1_NAME: db.redis72.devbox.local
+      REDIS_1_HOST: db.redis72.devbox.local
+      REDIS_1_PORT: 6379
+    networks:
+      redis72_network_local:
+        aliases:
+          - phpredisadmin.redis72.devbox.local
+    hostname: phpredisadmin.redis72.devbox.local
+    ports:
+      - ${DEVBOX_REDIS72_PRA_EXPORT_PORT:-18380}:80
+    healthcheck:
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      REDIS_HOSTS: db.redis72.devbox.local:db.redis72.devbox.local:6379
+    networks:
+      redis72_network_local:
+        aliases:
+          - redis-commander.redis72.devbox.local
+    hostname: redis-commander.redis72.devbox.local
+    ports:
+      - ${DEVBOX_REDIS72_COMMANDER_EXPORT_PORT:-18381}:8081
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+
+volumes:
+  redis72_db_data:
+
+networks:
+  redis72_network_local:
+    driver: bridge

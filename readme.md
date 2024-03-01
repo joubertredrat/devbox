@@ -10,7 +10,7 @@ This project provides a easy and fast way to run common services for development
 
 ## Dependencies
 
-* [make](https://www.gnu.org/software/make/)
+* [Make](https://www.gnu.org/software/make/)
 * [Docker](https://www.docker.com/) or [Podman](https://podman.io/) with [Podman compose](https://github.com/containers/podman-compose)
 
 ## How to use?
@@ -30,7 +30,7 @@ This project is using Docker by default, if you want to use Podman instead, you 
 * MySQL [5.7](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/), [8.0](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/)
 * Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html), [15.3](https://www.postgresql.org/docs/15/release-15-3.html)
 * RabbitMQ [3.10](https://blog.rabbitmq.com/tags/v3.10.x/)
-* Redis [6.2](https://redis.io), [7.0](https://redis.io)
+* Redis [6.2](https://raw.githubusercontent.com/redis/redis/6.2/00-RELEASENOTES), [7.0](https://raw.githubusercontent.com/redis/redis/7.0/00-RELEASENOTES), [7.2](https://raw.githubusercontent.com/redis/redis/7.2/00-RELEASENOTES)
 
 ## License
 [MIT](/license) license, logo by [Burhan Adiatma](https://www.vecteezy.com/members/gembuls).
