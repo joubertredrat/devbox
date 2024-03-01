@@ -39,6 +39,7 @@ help:
 	@echo "  make rabbitmq3.10-help		Help about RabbitMQ 3.10 services"
 	@echo "  make redis6.2-help			Help about Redis 6.2 services"
 	@echo "  make redis7.0-help			Help about Redis 7.0 services"
+	@echo "  make redis7.2-help			Help about Redis 7.2 services"
 	@echo
 
 include beanstalkd/1.12/Makefile
@@ -60,3 +61,4 @@ include postgres/15.3/Makefile
 include rabbitmq/3.10/Makefile
 include redis/6.2/Makefile
 include redis/7.0/Makefile
+include redis/7.2/Makefile
