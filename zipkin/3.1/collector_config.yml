@@ -1,0 +1,28 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+exporters:
+  zipkin:
+    endpoint: http://tracing.zipkin31.devbox.local:9411/api/v2/spans
+  debug:
+    verbosity: detailed
+processors:
+  batch:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 4000
+    spike_limit_mib: 512
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [zipkin]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [debug]
