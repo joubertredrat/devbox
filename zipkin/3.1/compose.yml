@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  tracing:
+    image: openzipkin/zipkin:3.1
+    networks:
+      zipkin31_network_local:
+        aliases:
+          - tracing.zipkin31.devbox.local
+    hostname: tracing.zipkin31.devbox.local
+    ports:
+      - ${DEVBOX_ZIPKIN31_TRACING_EXPORT_PORT:-19411}:9411
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.96.0
+    volumes:
+      - ./collector_config.yml:/etc/otel-collector/config.yml
+    command: ["--config=/etc/otel-collector/config.yml"]
+    networks:
+      zipkin31_network_local:
+        aliases:
+          - collector.zipkin31.devbox.local
+    hostname: collector.zipkin31.devbox.local
+    ports:
+      - ${DEVBOX_ZIPKIN31_COLLECTOR_GRPC_PORT:-14317}:4317
+      - ${DEVBOX_ZIPKIN31_COLLECTOR_HTTP_PORT:-14318}:4318
+
+networks:
+  zipkin31_network_local:
+    driver: bridge

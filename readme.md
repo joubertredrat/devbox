@@ -31,6 +31,7 @@ This project is using Docker by default, if you want to use Podman instead, you 
 * Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html), [15.3](https://www.postgresql.org/docs/15/release-15-3.html)
 * RabbitMQ [3.10](https://blog.rabbitmq.com/tags/v3.10.x/)
 * Redis [6.2](https://raw.githubusercontent.com/redis/redis/6.2/00-RELEASENOTES), [7.0](https://raw.githubusercontent.com/redis/redis/7.0/00-RELEASENOTES), [7.2](https://raw.githubusercontent.com/redis/redis/7.2/00-RELEASENOTES)
+* Zipkin [3.1](https://github.com/openzipkin/zipkin/releases/tag/3.1.0)
 
 ## License
 [MIT](/license) license, logo by [Burhan Adiatma](https://www.vecteezy.com/members/gembuls).

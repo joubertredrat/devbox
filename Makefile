@@ -62,3 +62,4 @@ include rabbitmq/3.10/Makefile
 include redis/6.2/Makefile
 include redis/7.0/Makefile
 include redis/7.2/Makefile
+include zipkin/3.1/Makefile
