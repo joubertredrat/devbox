@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+  idp:
+    image: quay.io/keycloak/keycloak:24.0
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: db.keycloak240.devbox.local
+      KC_DB_URL_DATABASE: idp_keycloak
+      KC_DB_PASSWORD: password
+      KC_DB_USERNAME: postgres
+      KC_DB_SCHEMA: public
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: ${DEVBOX_KEYCLOAK240_IDP_ADMIN_USERNAME:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${DEVBOX_KEYCLOAK240_IDP_ADMIN_PASSWORD:-password}
+    command: start-dev
+    hostname: idp.keycloak240.devbox.local
+    networks:
+      keycloak240_network_local:
+        aliases:
+          - idp.keycloak240.devbox.local
+    ports:
+      - ${DEVBOX_KEYCLOAK240_IDP_EXPORT_PORT:-18977}:8080
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+  db:
+    image: postgres:15.3-alpine
+    volumes:
+      - keycloak240_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: idp_keycloak
+    networks:
+      keycloak240_network_local:
+        aliases:
+          - db.keycloak240.devbox.local
+    hostname: db.keycloak240.devbox.local
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      start_period: 5s
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:24.0
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./conf/cloudbeaver.conf:/opt/cloudbeaver/conf/cloudbeaver.conf
+      - ./conf/initial-data.conf:/opt/cloudbeaver/conf/initial-data.conf
+      - ./conf/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf
+    environment:
+      CB_SERVER_NAME: Cloudbeaver Server
+      CB_SERVER_URL: https://0.0.0.0:${DEVBOX_KEYCLOAK240_CLOUDBEAVER_EXPORT_PORT:-18978}/
+      CB_ADMIN_NAME: cbadmin
+      CB_ADMIN_PASSWORD: password
+    networks:
+      keycloak240_network_local:
+        aliases:
+          - cloudbeaver.keycloak240.devbox.local
+    hostname: cloudbeaver.keycloak240.devbox.local
+    ports:
+      - ${DEVBOX_KEYCLOAK240_CLOUDBEAVER_EXPORT_PORT:-18978}:8978
+    healthcheck:
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:8978"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+
+volumes:
+  keycloak240_db_data:
+
+networks:
+  keycloak240_network_local:
+    driver: bridge
