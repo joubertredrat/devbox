@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  idp:
+    image: quay.io/keycloak/keycloak:24.0
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: db.keycloak240.devbox.local
+      KC_DB_URL_DATABASE: idp_keycloak
+      KC_DB_PASSWORD: password
+      KC_DB_USERNAME: postgres
+      KC_DB_SCHEMA: public
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev
+    hostname: idp.keycloak240.devbox.local
+    networks:
+      keycloak240_network_local:
+        aliases:
+          - idp.keycloak240.devbox.local
+    ports:
+      - 8080:8080
+  db:
+    image: postgres:15.3-alpine
+    volumes:
+      - keycloak240_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: idp_keycloak
+    networks:
+      keycloak240_network_local:
+        aliases:
+          - db.keycloak240.devbox.local
+    hostname: db.keycloak240.devbox.local
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      start_period: 5s
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:24.0
+    volumes:
+      # - ./workspace/GlobalConfiguration/.dbeaver/credentials-config.json:/opt/cloudbeaver/workspace/GlobalConfiguration/.dbeaver/credentials-config.json
+      # - ./workspace/GlobalConfiguration/.dbeaver/data-sources.json:/opt/cloudbeaver/workspace/GlobalConfiguration/.dbeaver/data-sources.json
+      # - ./workspace/GlobalConfiguration/.dbeaver:/opt/cloudbeaver/workspace/GlobalConfiguration/.dbeaver
+      - ./workspace:/opt/cloudbeaver/workspace
+      - ./conf/initial-data.conf:/opt/cloudbeaver/conf/initial-data.conf
+      - ./conf/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf
+    environment:
+      CB_SERVER_NAME: Cloudbeaver Server
+      CB_SERVER_URL: https://0.0.0.0:18978/
+      CLOUDBEAVER_POLICY_REQUIRE_MIXED_CASE: false
+      CLOUDBEAVER_POLICY_MIN_NUMBER_COUNT: 0
+      CLOUDBEAVER_POLICY_MIN_SYMBOL_COUNT: 0
+      CB_ADMIN_NAME: cbadmin
+      CB_ADMIN_PASSWORD: password
+    networks:
+      keycloak240_network_local:
+        aliases:
+          - cloudbeaver.keycloak240.devbox.local
+    hostname: cloudbeaver.keycloak240.devbox.local
+    ports:
+      - 18978:8978
+
+volumes:
+  keycloak240_db_data:
+
+networks:
+  keycloak240_network_local:
+    driver: bridge

@@ -44,6 +44,7 @@ help:
 
 include beanstalkd/1.12/Makefile
 include kafka/6.1/Makefile
+include keycloak/24.0/Makefile
 include mariadb/10.5/Makefile
 include mariadb/10.6/Makefile
 include mariadb/11.0/Makefile
