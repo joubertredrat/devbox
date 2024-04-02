@@ -41,7 +41,7 @@ keycloak24.0-help:
 	@echo "  DEVBOX_KEYCLOAK240_IDP_ADMIN_USERNAME		Default Keycloak admin username"
 	@echo "  DEVBOX_KEYCLOAK240_IDP_ADMIN_PASSWORD		Default Keycloak ${DEVBOX_KEYCLOAK240_IDP_ADMIN_USERNAME} password"
 	@echo "  DEVBOX_KEYCLOAK240_IDP_EXPORT_PORT		Port to expose Keycloak in docker for access in your browser"
-	@echo "  DEVBOX_KEYCLOAK240_CLOUDBEAVER_EXPORT_PORT		Port to expose Cloudbeaver in docker for access in your browser"
+	@echo "  DEVBOX_KEYCLOAK240_CLOUDBEAVER_EXPORT_PORT	Port to expose Cloudbeaver in docker for access in your browser"
 	@echo
 
 keycloak24.0-info:
