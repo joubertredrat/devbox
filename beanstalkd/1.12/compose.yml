@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   broker:
     image: maateen/docker-beanstalkd:1.12-alpine-latest

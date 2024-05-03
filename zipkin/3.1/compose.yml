@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   tracing:
     image: openzipkin/zipkin:3.1
