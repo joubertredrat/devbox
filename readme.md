@@ -23,7 +23,7 @@ This project is using Docker by default, if you want to use Podman instead, you 
 
 * Apache Kafka 2.7 on Confluent Platform [6.1.1](https://docs.confluent.io/platform/6.1.1/release-notes/index.html)
 * Beanstalkd [1.12](https://beanstalkd.github.io/2020/06/04/1.12-release-notes.html)
-* Keycloak [24.0](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-24-0-0)
+* Keycloak [24.0](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-24-0-0), [25.0](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-25-0-0)
 * MariaDB [10.5](https://mariadb.com/kb/en/mariadb-server-10-5/), [10.6](https://mariadb.com/kb/en/mariadb-server-10-6/), [11.0](https://mariadb.com/kb/en/mariadb-server-11-0/)
 * Memcached [1.6](https://memcached.org/)
 * [MinIO](https://min.io/)

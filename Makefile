@@ -23,6 +23,7 @@ help:
 	@echo "  make beanstalkd1.12-help		Help about Beanstalkd 1.12 services"
 	@echo "  make kafka6.1-help			Help about Kafka 6.1 services"
 	@echo "  make keycloak24.0-help		Help about Keycloak 24.0 services"
+	@echo "  make keycloak25.0-help		Help about Keycloak 25.0 services"
 	@echo "  make mariadb10.5-help			Help about MariaDB 10.5 services"
 	@echo "  make mariadb10.6-help			Help about MariaDB 10.6 services"
 	@echo "  make mariadb11.0-help			Help about MariaDB 11.0 services"
@@ -47,6 +48,7 @@ help:
 include beanstalkd/1.12/Makefile
 include kafka/6.1/Makefile
 include keycloak/24.0/Makefile
+include keycloak/25.0/Makefile
 include mariadb/10.5/Makefile
 include mariadb/10.6/Makefile
 include mariadb/11.0/Makefile
