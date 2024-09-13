@@ -35,6 +35,8 @@ help:
 	@echo "  make mongo7.0-help			Help about Mongo 7.0 services"
 	@echo "  make mysql5.7-help			Help about MySQL 5.7 services"
 	@echo "  make mysql8.0-help			Help about MySQL 8.0 services"
+	@echo "  make mysql8.4-help			Help about MySQL 8.4 services"
+	@echo "  make mysql9.0-help			Help about MySQL 9.0 services"
 	@echo "  make postgres13.2-help		Help about Postgres 13.2 services"
 	@echo "  make postgres14.2-help		Help about Postgres 14.2 services"
 	@echo "  make postgres15.3-help		Help about Postgres 15.3 services"
@@ -60,6 +62,8 @@ include mongo/6.0/Makefile
 include mongo/7.0/Makefile
 include mysql/5.7/Makefile
 include mysql/8.0/Makefile
+include mysql/8.4/Makefile
+include mysql/9.0/Makefile
 include postgres/13.2/Makefile
 include postgres/14.2/Makefile
 include postgres/15.3/Makefile
