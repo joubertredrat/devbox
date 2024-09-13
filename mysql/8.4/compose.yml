@@ -1,0 +1,92 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DEVBOX_MYSQL84_ROOT_PASSWORD:-password}
+    volumes:
+      - mysql84_data:/var/lib/mysql
+    networks:
+      mysql84_network_local:
+        aliases:
+          - db.mysql84.devbox.local
+    hostname: db.mysql84.devbox.local
+    ports:
+      - ${DEVBOX_MYSQL84_DB_EXPORT_PORT:-15406}:3306
+    healthcheck:
+      test: mysqladmin -p${DEVBOX_MYSQL84_ROOT_PASSWORD:-password} ping -h localhost
+      start_period: 5s
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db.mysql84.devbox.local
+      PMA_USER: root
+      PMA_PASSWORD: ${DEVBOX_MYSQL84_ROOT_PASSWORD:-password}
+    networks:
+      mysql84_network_local:
+        aliases:
+          - phpmyadmin.mysql84.devbox.local
+    hostname: phpmyadmin.mysql84.devbox.local
+    ports:
+      - ${DEVBOX_MYSQL84_PMA_EXPORT_PORT:-15407}:80
+    healthcheck:
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  adminer:
+    image: adminer:4
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: db.mysql84.devbox.local
+    networks:
+      mysql84_network_local:
+        aliases:
+          - adminer.mysql84.devbox.local
+    hostname: adminer.mysql84.devbox.local
+    ports:
+      - ${DEVBOX_MYSQL84_ADMINER_EXPORT_PORT:-15408}:8080
+    healthcheck:
+      test: ["CMD", "php", "-r", "if (@file_get_contents('http://localhost:8080') === false) { exit(1); }"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  dbgate:
+    image: dbgate/dbgate:alpine
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      CONNECTIONS: mysql1
+      LABEL_mysql1: db.mysql84.devbox.local
+      SERVER_mysql1: db.mysql84.devbox.local
+      USER_mysql1: root
+      PASSWORD_mysql1: ${DEVBOX_MYSQL84_ROOT_PASSWORD:-password}
+      PORT_mysql1: 3306
+      ENGINE_mysql1: mysql@dbgate-plugin-mysql
+    networks:
+      mysql84_network_local:
+        aliases:
+          - dbgate.mysql84.devbox.local
+    hostname: dbgate.mysql84.devbox.local
+    ports:
+      - ${DEVBOX_MYSQL84_DBGATE_EXPORT_PORT:-15409}:3000
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "3000"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+
+volumes:
+  mysql84_data:
+
+networks:
+  mysql84_network_local:
+    driver: bridge
