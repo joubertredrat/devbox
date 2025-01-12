@@ -3,8 +3,6 @@ DEVBOX_MINIO_PROJECT_NAME = ${DEVBOX_PROJECT_PREFIX}0xc
 DEVBOX_MINIO_API_EXPORT_PORT ?= 29000
 DEVBOX_MINIO_CONSOLE_EXPORT_PORT ?= 29001
 DEVBOX_MINIO_STORAGE_REGION ?= us-east-1
-DEVBOX_MINIO_STORAGE_ACCESS_KEY ?= AKIAIOSFODNN7EXAMPLE
-DEVBOX_MINIO_STORAGE_SECRET_KEY ?= wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY
 DEVBOX_MINIO_CONSOLE_ROOT_USER ?= root
 DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD ?= password
 
@@ -44,8 +42,6 @@ minio-help:
 	@echo "  DEVBOX_MINIO_API_EXPORT_PORT		Port to expose MinIO API latest in docker for your environment"
 	@echo "  DEVBOX_MINIO_CONSOLE_EXPORT_PORT	Port to expose MinIO console web latest in docker for your environment"
 	@echo "  DEVBOX_MINIO_STORAGE_REGION		Region to configure into MinIO"
-	@echo "  DEVBOX_MINIO_STORAGE_ACCESS_KEY	Access key to configure into MinIO"
-	@echo "  DEVBOX_MINIO_STORAGE_SECRET_KEY	Secret key to configure into MinIO"
 	@echo "  DEVBOX_MINIO_CONSOLE_ROOT_USER	Root user to access console web into MinIO"
 	@echo "  DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD	Root password to access console web into MinIO"
 	@echo
@@ -54,11 +50,9 @@ minio-info:
 	@echo
 	@echo "MinIO latest information"
 	@echo
-	@echo "  API: 			http://127.0.0.1:${DEVBOX_MINIO_API_EXPORT_PORT}"
-	@echo "  Console web: 		http://127.0.0.1:${DEVBOX_MINIO_CONSOLE_EXPORT_PORT}"
-	@echo "  Region: 		${DEVBOX_MINIO_STORAGE_REGION}"
-	@echo "  Access key: 		${DEVBOX_MINIO_STORAGE_ACCESS_KEY}"
-	@echo "  Secret key: 		${DEVBOX_MINIO_STORAGE_SECRET_KEY}"
-	@echo "  Root user: 		${DEVBOX_MINIO_CONSOLE_ROOT_USER}"
-	@echo "  Root password:	${DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD}"
+	@echo "  API: 				http://127.0.0.1:${DEVBOX_MINIO_API_EXPORT_PORT}"
+	@echo "  Console web: 			http://127.0.0.1:${DEVBOX_MINIO_CONSOLE_EXPORT_PORT}"
+	@echo "  Region: 			${DEVBOX_MINIO_STORAGE_REGION}"
+	@echo "  Root user and access key: 	${DEVBOX_MINIO_CONSOLE_ROOT_USER}"
+	@echo "  Root password and secret key:	${DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD}"
 	@echo
