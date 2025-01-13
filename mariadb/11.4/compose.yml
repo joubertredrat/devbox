@@ -1,0 +1,92 @@
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DEVBOX_MARIADB114_ROOT_PASSWORD:-password}
+    volumes:
+      - mariadb114_data:/var/lib/mysql
+    networks:
+      mariadb114_network_local:
+        aliases:
+          - db.mariadb114.devbox.local
+    hostname: db.mariadb114.devbox.local
+    ports:
+      - ${DEVBOX_MARIADB114_DB_EXPORT_PORT:-16306}:3306
+    healthcheck:
+      test: /usr/local/bin/healthcheck.sh --su-mysql --connect --innodb_initialized
+      start_period: 5s
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db.mariadb114.devbox.local
+      PMA_USER: root
+      PMA_PASSWORD: ${DEVBOX_MARIADB114_ROOT_PASSWORD:-password}
+    networks:
+      mariadb114_network_local:
+        aliases:
+          - phpmyadmin.mariadb114.devbox.local
+    hostname: phpmyadmin.mariadb114.devbox.local
+    ports:
+      - ${DEVBOX_MARIADB114_PMA_EXPORT_PORT:-16307}:80
+    healthcheck:
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  adminer:
+    image: adminer:4
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: db.mariadb114.devbox.local
+    networks:
+      mariadb114_network_local:
+        aliases:
+          - adminer.mariadb114.devbox.local
+    hostname: adminer.mariadb114.devbox.local
+    ports:
+      - ${DEVBOX_MARIADB114_ADMINER_EXPORT_PORT:-16308}:8080
+    healthcheck:
+      test: "php -r 'exit(strpos(file_get_contents(\"http://localhost:8080/\"), \"Adminer\") !== false ? 0 : 1);'"
+      interval: 3s
+      timeout: 1s
+      retries: 20
+  dbgate:
+    image: dbgate/dbgate:alpine
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      CONNECTIONS: mariadb1
+      LABEL_mariadb1: db.mariadb114.devbox.local
+      SERVER_mariadb1: db.mariadb114.devbox.local
+      USER_mariadb1: root
+      PASSWORD_mariadb1: ${DEVBOX_MARIADB114_ROOT_PASSWORD:-password}
+      PORT_mariadb1: 3306
+      ENGINE_mariadb1: mysql@dbgate-plugin-mysql
+    networks:
+      mariadb114_network_local:
+        aliases:
+          - dbgate.mariadb114.devbox.local
+    hostname: dbgate.mariadb114.devbox.local
+    ports:
+      - ${DEVBOX_MARIADB114_DBGATE_EXPORT_PORT:-16309}:3000
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "3000"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+
+volumes:
+  mariadb114_data:
+
+networks:
+  mariadb114_network_local:
+    driver: bridge

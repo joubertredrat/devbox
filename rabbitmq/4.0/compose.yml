@@ -1,0 +1,20 @@
+services:
+  broker:
+    image: rabbitmq:4.0-management-alpine
+    networks:
+      rabbitmq40_network_local:
+        aliases:
+          - broker.rabbitmq40.devbox.local
+    hostname: broker.rabbitmq40.devbox.local
+    ports:
+      - ${DEVBOX_RABBITMQ40_BROKER_PORT:-16671}:5672
+      - ${DEVBOX_RABBITMQ40_MANAGEMENT_PORT:-16672}:15672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 3s
+      timeout: 1s
+      retries: 20
+
+networks:
+  rabbitmq40_network_local:
+    driver: bridge
