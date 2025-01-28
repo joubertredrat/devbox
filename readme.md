@@ -29,7 +29,7 @@ This project is using Docker by default, if you want to use Podman instead, you 
 * [MinIO](https://min.io/).
 * MongoDB [4.4](https://docs.mongodb.com/manual/release-notes/4.4/), [5.0](https://docs.mongodb.com/manual/release-notes/5.0/), [6.0](https://docs.mongodb.com/manual/release-notes/6.0/), [7.0](https://docs.mongodb.com/manual/release-notes/7.0/), [8.0](https://docs.mongodb.com/manual/release-notes/8.0/).
 * MySQL [5.7](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/), [8.0](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/), [8.4](https://dev.mysql.com/doc/relnotes/mysql/8.4/en/), [9.0](https://dev.mysql.com/doc/relnotes/mysql/9.0/en/).
-* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html), [15.3](https://www.postgresql.org/docs/15/release-15-3.html).
+* Postgres [13.2](https://www.postgresql.org/docs/13/release-13-2.html), [14.2](https://www.postgresql.org/docs/14/release-14-2.html), [15.3](https://www.postgresql.org/docs/15/release-15-3.html), [16](https://www.postgresql.org/docs/16/release.html), [17](https://www.postgresql.org/docs/17/release.html).
 * RabbitMQ [3.10](https://blog.rabbitmq.com/tags/v3.10.x/), [4.0](https://www.rabbitmq.com/blog/tags/rabbit-mq-4-0).
 * Redis [6.2](https://raw.githubusercontent.com/redis/redis/6.2/00-RELEASENOTES), [7.0](https://raw.githubusercontent.com/redis/redis/7.0/00-RELEASENOTES), [7.2](https://raw.githubusercontent.com/redis/redis/7.2/00-RELEASENOTES).
 * Zipkin [3.1](https://github.com/openzipkin/zipkin/releases/tag/3.1.0).

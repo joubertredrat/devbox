@@ -42,6 +42,7 @@ help:
 	@echo "  make postgres13.2-help		Help about Postgres 13.2 services"
 	@echo "  make postgres14.2-help		Help about Postgres 14.2 services"
 	@echo "  make postgres15.3-help		Help about Postgres 15.3 services"
+	@echo "  make postgres16-help			Help about Postgres 16 services"
 	@echo "  make postgres17-help			Help about Postgres 17 services"
 	@echo "  make rabbitmq3.10-help		Help about RabbitMQ 3.10 services"
 	@echo "  make rabbitmq4.0-help			Help about RabbitMQ 4.0 services"
@@ -73,6 +74,7 @@ include mysql/9.0/Makefile
 include postgres/13.2/Makefile
 include postgres/14.2/Makefile
 include postgres/15.3/Makefile
+include postgres/16/Makefile
 include postgres/17/Makefile
 include rabbitmq/3.10/Makefile
 include rabbitmq/4.0/Makefile
