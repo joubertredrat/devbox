@@ -12,7 +12,7 @@ ifeq ($(strip $(DEVBOX_ENGINE)),docker)
 DEVBOX_COMPOSE_CMD = docker compose
 endif
 ifeq ($(strip $(DEVBOX_ENGINE)),podman)
-DEVBOX_COMPOSE_CMD = podman-compose
+DEVBOX_COMPOSE_CMD = podman compose
 endif
 
 help:
