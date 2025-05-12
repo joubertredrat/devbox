@@ -5,6 +5,7 @@ services:
       MINIO_REGION: ${DEVBOX_MINIO_STORAGE_REGION:-us-east-1}
       MINIO_ROOT_USER: ${DEVBOX_MINIO_CONSOLE_ROOT_USER:-root}
       MINIO_ROOT_PASSWORD: ${DEVBOX_MINIO_CONSOLE_ROOT_PASSWORD:-password}
+      MINIO_BROWSER_REDIRECT_URL: http://127.0.0.1:${DEVBOX_MINIO_CONSOLE_EXPORT_PORT:-29001}
     volumes:
       - minio-latest_storage_data:/data
     command: server --address 0.0.0.0:9000 --console-address 0.0.0.0:9001 /data
