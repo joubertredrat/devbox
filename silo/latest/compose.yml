@@ -1,0 +1,31 @@
+services:
+  bucket:
+    image: docker.io/pgsty/silo:latest
+    environment:
+      MINIO_REGION: ${DEVBOX_SILO_STORAGE_REGION:-us-east-1}
+      MINIO_ROOT_USER: ${DEVBOX_SILO_CONSOLE_ROOT_USER:-root}
+      MINIO_ROOT_PASSWORD: ${DEVBOX_SILO_CONSOLE_ROOT_PASSWORD:-password}
+      MINIO_BROWSER_REDIRECT_URL: http://127.0.0.1:${DEVBOX_SILO_CONSOLE_EXPORT_PORT:-29001}
+    volumes:
+      - silo-latest_storage_data:/data
+    command: server --address 0.0.0.0:9000 --console-address 0.0.0.0:9001 /data
+    networks:
+      silo-latest_network_local:
+        aliases:
+          - bucket.silo-latest.devbox.local
+    hostname: bucket.silo-latest.devbox.local
+    ports:
+      - ${DEVBOX_SILO_API_EXPORT_PORT:-29000}:9000
+      - ${DEVBOX_SILO_CONSOLE_EXPORT_PORT:-29001}:9001
+    healthcheck:
+      test: ["CMD", "curl", "--connect-timeout", "1", "-s", "http://127.0.0.1:9000/silo/health/live"]
+      interval: 3s
+      timeout: 1s
+      retries: 20
+
+volumes:
+  silo-latest_storage_data:
+
+networks:
+  silo-latest_network_local:
+    driver: bridge

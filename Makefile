@@ -29,7 +29,7 @@ help:
 	@echo "  make mariadb11.0-help			Help about MariaDB 11.0 services"
 	@echo "  make mariadb11.4-help			Help about MariaDB 11.4 services"
 	@echo "  make memcached1.6-help		Help about Memcached 1.6 services"
-	@echo "  make minio-help			Help about MinIO latest services"
+	@echo "  make silo-help			Help about Silo latest services"
 	@echo "  make mongo4.4-help			Help about Mongo 4.4 services"
 	@echo "  make mongo5.0-help			Help about Mongo 5.0 services"
 	@echo "  make mongo6.0-help			Help about Mongo 6.0 services"
@@ -61,7 +61,7 @@ include mariadb/10.6/Makefile
 include mariadb/11.0/Makefile
 include mariadb/11.4/Makefile
 include memcached/1.6/Makefile
-include minio/latest/Makefile
+include silo/latest/Makefile
 include mongo/4.4/Makefile
 include mongo/5.0/Makefile
 include mongo/6.0/Makefile
