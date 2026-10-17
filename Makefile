@@ -1,18 +1,31 @@
 .EXPORT_ALL_VARIABLES:
 
-DEVBOX_ENGINE ?= ""
+DEVBOX_ENGINE ?=
 DEVBOX_PROJECT_PREFIX = devbox
 
-.PHONY: default
+.PHONY: default compose-cmd
 default: help ;
 
-compose-cmd:
-DEVBOX_COMPOSE_CMD = docker compose
-ifeq ($(strip $(DEVBOX_ENGINE)),docker)
-DEVBOX_COMPOSE_CMD = docker compose
+# Empty DEVBOX_ENGINE means auto-detect: podman compose first, then docker compose.
+ifeq ($(strip $(DEVBOX_ENGINE)),)
+ifneq ($(shell podman compose version >/dev/null 2>&1 && echo ok),)
+DEVBOX_COMPOSE_CMD := podman compose
+else ifneq ($(shell docker compose version >/dev/null 2>&1 && echo ok),)
+DEVBOX_COMPOSE_CMD := docker compose
+else
+DEVBOX_COMPOSE_CMD :=
 endif
-ifeq ($(strip $(DEVBOX_ENGINE)),podman)
-DEVBOX_COMPOSE_CMD = podman compose
+else ifeq ($(strip $(DEVBOX_ENGINE)),docker)
+DEVBOX_COMPOSE_CMD := docker compose
+else ifeq ($(strip $(DEVBOX_ENGINE)),podman)
+DEVBOX_COMPOSE_CMD := podman compose
+else
+$(error Invalid DEVBOX_ENGINE '$(DEVBOX_ENGINE)', use 'docker' or 'podman')
+endif
+
+compose-cmd:
+ifeq ($(strip $(DEVBOX_COMPOSE_CMD)),)
+	@echo "Error: compose command not found, install 'podman compose' or 'docker compose'" >&2; exit 1
 endif
 
 help:

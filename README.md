@@ -17,7 +17,7 @@ This project provides a easy and fast way to run common services for development
 
 Clone this repository or download and run `make help` to see all informations.
 
-This project is using Docker by default, if you want to use Podman instead, you need to use `DEVBOX_ENGINE` variable before run the command. Example: `DEVBOX_ENGINE=podman make redis7.0-up`.
+The compose command is detected automatically: `podman compose` is used if available, otherwise `docker compose`. If neither is found, an error is shown. To force an engine, use the optional `DEVBOX_ENGINE` variable (`docker` or `podman`) before run the command. Example: `DEVBOX_ENGINE=podman make redis7.0-up`.
 
 ## Services provided
 
